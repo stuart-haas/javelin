@@ -17,11 +17,24 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 function start() {
-  app.listen(PORT, () => {
-    console.log(
-      `Application is up and running on port ${PORT}`
-    );
-  });
-}
+  mongoose
+    .connect(process.env.DATABASE_URL, {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    })
+    .then(() => {
+      console.log(
+        `Database is connected to ${process.env.DATABASE_URL}`
+      );
+      app.listen(PORT, () => {
+        console.log(
+          `Application is up and running on port ${PORT}`
+        );
+      });
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+  }
 
 start();
