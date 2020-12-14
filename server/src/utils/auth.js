@@ -10,4 +10,11 @@ module.exports = {
       return next();
     }
   },
+  isAuthenticatd: (req, res, next) => {
+    if (req.isAuthenticated()) {
+      return next();
+    }
+
+    res.status(401).send({ error: true, message: 'You are not authorized' });
+  },
 };

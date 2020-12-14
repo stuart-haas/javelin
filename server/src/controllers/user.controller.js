@@ -34,7 +34,8 @@ module.exports = {
     return res.json({ success: true, message: 'Login successful' });
   },
   logout: (req, res, next) => {
-    if (req.session.passport) {
+    if (req.user) {
+      req.logout();
       req.session.destroy((error) => {
         if (error) {
           return res.json(error);
@@ -42,7 +43,7 @@ module.exports = {
         return res.json({ success: true, message: 'Logout successul' });
       });
     } else {
-      return res.json({ error: true, message: 'User not logged in' });
+      return res.json({ error: true, message: 'You are not logged in' });
     }
   },
 };
