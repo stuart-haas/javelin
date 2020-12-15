@@ -454,6 +454,11 @@ negotiator@0.6.2:
   resolved "https://registry.yarnpkg.com/negotiator/-/negotiator-0.6.2.tgz#feacf7ccf525a77ae9634436a64883ffeca346fb"
   integrity sha512-hZXc7K2e+PgeI1eDBe/10Ard4ekbfrrqG8Ep+8Jmf4JID2bNg7NvCPOZN+kfF574pFQI7mum2AUqDidoKqcTOw==
 
+node-fpe@^2.0.0:
+  version "2.0.0"
+  resolved "https://registry.yarnpkg.com/node-fpe/-/node-fpe-2.0.0.tgz#aa68d507227fe98b44fa1696ff3cb09ab9eaaedb"
+  integrity sha512-XVGcE4q5yCCR8P+f4XdJSHDrC1TBP1KWMvW6EdDKiRuOpcwzkPxP2hJ0ZBBYXr6HpDxuGJY00s9Ghy1q1iX9JQ==
+
 object-assign@^4:
   version "4.1.1"
   resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
@@ -470,6 +475,13 @@ on-headers@~1.0.2:
   version "1.0.2"
   resolved "https://registry.yarnpkg.com/on-headers/-/on-headers-1.0.2.tgz#772b0ae6aaa525c399e489adfad90c403eb3c28f"
   integrity sha512-pZAE+FJLoyITytdqK0U5s+FIpjN0JP3OzFi/u8Rx+EV5/W+JTWGXG8xFzevE7AjBfDqHv/8vL8qQsIhHnqRkrA==
+
+order-id@^2.1.0:
+  version "2.1.0"
+  resolved "https://registry.yarnpkg.com/order-id/-/order-id-2.1.0.tgz#4fb5bf7f6b08803cb89a3f9fb67329dca4185914"
+  integrity sha512-8zPwBOUaKtj4tAaYpo0zRrURDHo2QmAcrA3D7jToZ2cS7NKLTXG437zFaQuT8Z1Qm5sfHQDYzC06FsATOISfrw==
+  dependencies:
+    node-fpe "^2.0.0"
 
 parseurl@~1.3.3:
   version "1.3.3"

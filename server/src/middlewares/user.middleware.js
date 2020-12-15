@@ -1,6 +1,5 @@
 const User = require('../models/user.model');
 const { body } = require('express-validator');
-const bcrypt = require('bcryptjs');
 
 module.exports = {
   registrationRules: [

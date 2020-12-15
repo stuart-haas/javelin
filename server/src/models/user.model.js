@@ -6,15 +6,15 @@ const fields = {
     type: String,
     required: true,
   },
-}
+};
 
-const UserSchema = new Schema(fields, {
+const User = new Schema(fields, {
   timestamps: true,
   toObject: {
     virtuals: true,
   },
 });
 
-UserSchema.plugin(passportLocalMongoose); 
+User.plugin(passportLocalMongoose); 
 
-module.exports = model('User', UserSchema, 'user');
+module.exports = model('User', User, 'user');
