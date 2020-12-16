@@ -7,7 +7,7 @@ const cookieParser = require('cookie-parser');
 const passport = require('passport');
 const session = require('express-session');
 const MongoStore = require('connect-mongo')(session);
-const LocalStrategy = require("passport-local");
+const LocalStrategy = require('passport-local');
 const User = require('./models/user.model');
 const dotenv = require('dotenv');
 
@@ -30,9 +30,7 @@ mongoose
     useUnifiedTopology: true,
   })
   .then(() => {
-    console.log(
-      `Database is connected to ${process.env.DATABASE_URL}`
-    );
+    console.log(`Database is connected to ${process.env.DATABASE_URL}`);
   })
   .catch((error) => {
     console.log(error);
@@ -67,7 +65,5 @@ passport.use(new LocalStrategy(User.authenticate()));
 app.use('/api', require('./routes/api.route'));
 
 app.listen(PORT, () => {
-  console.log(
-    `Application is up and running on port ${PORT}`
-  );
+  console.log(`Application is up and running on port ${PORT}`);
 });

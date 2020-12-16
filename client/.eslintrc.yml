@@ -1,0 +1,14 @@
+root: true
+env:
+  node: true
+extends:
+  - eslint:recommended
+  - plugin:vue/essential
+  - prettier
+plugins:
+  - prettier
+parserOptions:
+  parse: babel-eslint
+rules:
+  prettier/prettier:
+    - error
