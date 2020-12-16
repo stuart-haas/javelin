@@ -1,10 +1,5 @@
 const Product = require('../models/product.model');
-
-function Cart() {
-  this.items = [];
-  this.total = 0;
-  this.count = 0;
-}
+const Cart = require('../models/cart.model');
 
 module.exports = {
   item: async(req, callback) => {
@@ -23,44 +18,54 @@ module.exports = {
   },
   add: (cart, item) => {
     cart.items.push(item);
+    calculateTotal(cart);
   },
   update: (cart, nItem) => {
     const index = cart.items.findIndex((item) => item.id === nItem.id);
     cart.items.splice(index, 1, nItem);
+    calculateTotal(cart);
   },
   remove: (cart, nItem) => {
     const index = cart.items.findIndex((item) => item.id === nItem.id);
     cart.items.splice(index, 1);
+    calculateTotal(cart);
+  },
+  empty: (req, callback) => {
+    if(req.session) {
+      const cart = new Cart();
+      const { items, total, formattedTotal } = cart;
+      callback({ items, total, formattedTotal });
+    }
   },
   save: (req, res, cart) => {
-    calculateTotals(cart);
-    req.session.cart = cart;
-    req.session.save((error) => {
-      if (error) return res.json(error);
-      const cart = req.session.cart;
-      res.json(cart);
-    });
-  },
-  empty: (req, cart) => {
     if(req.session) {
-      req.session.cart.items = [];
-      req.session.cart.total = 0;
-      req.session.cart.count = 0;
+      req.session.cart = cart;
+      res.json(cart);
     }
   },
   session: (req) => {
-    return req.session.cart || new Cart();
+    const cart = new Cart();
+    const { items, total, formattedTotal } = cart;
+    return req.session.cart || { items, total, formattedTotal };
   },
 };
 
-function calculateTotals(cart) {
+function calculateTotal(cart) {
   cart.total = 0;
-  cart.count = 0;
   cart.items.forEach((item) => {
     const price = item.price;
     const quantity = item.quantity;
     const total = price * quantity;
     cart.total += total;
-    cart.count += quantity;
   });
+  cart.formattedTotal = formatTotal(cart.total);
 };
+
+function formatTotal(value) {
+  const formatter = new Intl.NumberFormat('en-US', {
+    style: 'currency',
+    currency: 'USD',
+    minimumFractionDigits: 2
+  });
+  return formatter.format(value);
+}

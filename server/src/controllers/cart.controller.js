@@ -29,8 +29,8 @@ module.exports = {
     });
   },
   empty: (req, res) => {
-    const cart = service.session(req);
-    service.empty(req, cart);
-    service.save(req, res, cart);
+    service.empty(req, (cart) => {
+      service.save(req, res, cart);
+    });
   },
 };
