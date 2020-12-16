@@ -16,12 +16,26 @@ const mutations = {
 
 const actions = {
   async login({ commit, dispatch }, { formData }) {
-    const { user } = await dispatch(
+    const { success, user } = await dispatch(
       'post',
       { api: 'user/login', formData },
       { root: true }
     );
-    commit('setState', { name: 'user', value: user });
+    if (success) {
+      commit('setState', { name: 'user', value: user });
+      router.push('/');
+    }
+  },
+  async logout({ commit, dispatch }) {
+    const { success } = await dispatch(
+      'post',
+      { api: 'user/logout' },
+      { root: true }
+    );
+    if (success) {
+      commit('setState', { name: 'user', value: null });
+      router.push('/login');
+    }
   },
   async register({ dispatch }, { formData }) {
     const { success } = await dispatch(

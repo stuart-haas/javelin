@@ -1,42 +1,33 @@
 <template>
   <div
-    class="relative flex flex-wrap items-center justify-between px-4 py-2 bg-white border border-gray-300 border-b-1"
+    class="relative flex flex-wrap items-center justify-between px-8 py-2 bg-white border border-gray-300 border-b-1"
   >
-    <div class="relative flex justify-between">
-      <a
-        class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
-      >
-        Products
-      </a>
-      <a
-        class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
-      >
-        Categories
-      </a>
-    </div>
-    <div class="relative flex justify-between">
-      <router-link
-        v-if="!user"
-        to="/login"
-        class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black"
-        >Login</router-link
-      >
-      <div class="w-10 h-10">
-        <img
-          :src="user && user.avatar"
-          class="rounded-full max-w-full h-auto align-middle"
-        />
+    <div class="w-10/12 m-auto flex justify-between">
+      <div class="relative flex justify-between">
+        <router-link
+          to="/tools"
+          class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
+        >
+          Tools
+        </router-link>
+        <router-link
+          to="/materials"
+          class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
+        >
+          Materials
+        </router-link>
       </div>
+      <UserMenu />
     </div>
   </div>
 </template>
 
 <script>
+import UserMenu from './UserMenu.vue';
+
 export default {
-  computed: {
-    user() {
-      return this.$store.state.user.user;
-    },
+  components: {
+    UserMenu,
   },
 };
 </script>

@@ -1,5 +1,7 @@
 import Vue from 'vue';
 import axios from 'axios';
+import store from '../store/store';
+import router from '../router';
 
 const baseURL = 'http://localhost:5000/api';
 
@@ -21,6 +23,11 @@ api.interceptors.response.use(
     return Promise.resolve(next);
   },
   (error) => {
+    if (error.response) {
+      if (error.response.status === 401) {
+        store.dispatch('user/logout');
+      }
+    }
     return Promise.reject(error);
   }
 );

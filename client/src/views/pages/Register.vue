@@ -7,8 +7,11 @@
       <div class="px-4 py-4">
         <h1 class="text-4xl">Register</h1>
       </div>
-      <form @submit.prevent="submit">
-        <div class="px-4 py-5 space-y-6 sm:p-6">
+      <form
+        @submit.prevent="submit"
+        class="shadow-lg py-8 rounded border bg-white bg-opacity-75"
+      >
+        <div class="px-4 space-y-6 sm:p-6">
           <div class="grid grid-cols-6 gap-6">
             <div class="col-span-6">
               <label
@@ -77,6 +80,9 @@
           >
             Register
           </button>
+          <router-link to="/account/login" class="block pt-8 underline"
+            >Login</router-link
+          >
         </div>
       </form>
     </div>

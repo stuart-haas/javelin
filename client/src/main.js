@@ -3,6 +3,7 @@ import store from './store/store';
 import router from './router';
 import App from './App.vue';
 import './plugins/api';
+import './plugins/directives';
 import './assets/css/index.css';
 
 new Vue({

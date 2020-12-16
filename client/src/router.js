@@ -15,12 +15,12 @@ const router = new Router({
       component: Default,
       children: [
         {
-          path: 'login',
+          path: 'account/login',
           name: 'login',
           component: Login,
         },
         {
-          path: 'register',
+          path: 'account/register',
           name: 'register',
           component: Register,
         },
