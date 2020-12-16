@@ -19,7 +19,7 @@ const secret = process.env.SESSION_SECRET || 'adhere-globulin-carpet-abdias';
 const app = express();
 
 app.use(helmet());
-app.use(cors({ origin: process.env.CLIENT_ORIGIN }));
+app.use(cors({ credentials: true, origin: process.env.CLIENT_ORIGIN }));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cookieParser());

@@ -14,10 +14,18 @@ module.exports = {
           }
         });
       }),
-    body('password', 'Password required')
+    body('email', 'Email required')
       .exists()
       .trim()
-      .escape(),
+      .escape()
+      .custom((value) => {
+        return User.findOne({ email: value }).then((user) => {
+          if (user) {
+            return Promise.reject('Email already exists');
+          }
+        });
+      }),
+    body('password', 'Password required').exists().trim().escape(),
     body('passwordConfirm', 'Passwords do not match')
       .exists()
       .trim()
@@ -36,9 +44,6 @@ module.exports = {
           }
         });
       }),
-    body('password', 'Password required')
-    .exists()
-    .trim()
-    .escape()
+    body('password', 'Password required').exists().trim().escape(),
   ],
 };
