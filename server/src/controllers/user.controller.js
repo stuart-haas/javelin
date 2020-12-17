@@ -2,7 +2,7 @@ const User = require('../models/user.model');
 const passport = require('passport');
 
 module.exports = {
-  findMine: async (req, res) => {
+  find: async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id).populate('favorites', 'name slug');
     res.json(user);
@@ -12,7 +12,6 @@ module.exports = {
     if (!user) {
       return res.json({ error: true, message: 'Session expired' });
     }
-
     res.json({ user });
   },
   register: (req, res) => {
@@ -50,6 +49,15 @@ module.exports = {
     } else {
       return res.json({ error: true, message: 'You are not logged in' });
     }
+  },
+  update: async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id);
+    Object.keys(req.body).forEach((key) => {
+      user[key] = req.body[key];
+    });
+    await user.save();
+    res.json({ success: true, message: 'Account updated', user });
   },
   delete: async (req, res) => {
     const { id } = req.params;

@@ -13,6 +13,10 @@ const fields = {
     unique: true,
   },
   avatar: String,
+  street: String,
+  city: String,
+  state: String,
+  zipCode: String,
   favorites: [
     {
       type: Schema.Types.ObjectId,

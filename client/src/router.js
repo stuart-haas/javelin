@@ -4,9 +4,11 @@ import Router from 'vue-router';
 import Default from './views/layouts/Default.vue';
 import Index from './views/pages/Index.vue';
 import Login from './views/pages/account/Login.vue';
-import Account from './views/pages/account/Index.vue';
 import Register from './views/pages/account/Register.vue';
+import Account from './views/pages/account/Index.vue';
+import Orders from './views/pages/account/Orders.vue';
 import Favorites from './views/pages/account/Favorites.vue';
+import Settings from './views/pages/account/Settings.vue';
 import Products from './views/pages/products/Index.vue';
 import Product from './views/pages/products/Product.vue';
 import Cart from './views/pages/Cart.vue';
@@ -70,11 +72,14 @@ const router = new Router({
           name: 'account',
           component: Account,
           meta: { title: 'Account', requiresAuth: true },
+          redirect: () => {
+            return '/account/orders';
+          },
           children: [
             {
               path: 'orders',
               name: 'account-orders',
-              component: Favorites,
+              component: Orders,
               meta: { title: 'Orders' },
             },
             {
@@ -86,7 +91,7 @@ const router = new Router({
             {
               path: 'settings',
               name: 'account-settings',
-              component: Favorites,
+              component: Settings,
               meta: { title: 'Settings' },
             },
           ],

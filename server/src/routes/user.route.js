@@ -26,7 +26,8 @@ router.put('/favorite/:id', auth.isMe, controller.removeFavorite);
 
 router
   .route('/:id')
-  .get(auth.isMe, controller.findMine)
+  .get(auth.isMe, controller.find)
+  .put(auth.isMe, controller.update)
   .delete(auth.isMe, controller.delete);
 
 module.exports = router;
