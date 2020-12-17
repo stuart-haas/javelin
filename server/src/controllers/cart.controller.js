@@ -8,7 +8,11 @@ module.exports = {
       return item.id;
     });
     const products = await Product.find().where('_id').in(ids);
-    res.json(products);
+    const productsJSON = JSON.parse(JSON.stringify(products));
+    const merged = productsJSON.map((item, i) =>
+      Object.assign({}, item, cart.items[i])
+    );
+    res.json(merged);
   },
   get: async (req, res) => {
     const cart = service.session(req);
