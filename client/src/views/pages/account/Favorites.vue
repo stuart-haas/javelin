@@ -25,6 +25,7 @@ export default {
     async fetch() {
       const param =
         this.$store.state.user.user && this.$store.state.user.user._id;
+      if (!param) return;
       const user = await this.$store.dispatch('get', {
         api: 'user',
         param,
