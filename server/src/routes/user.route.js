@@ -22,6 +22,9 @@ router.post('/logout', controller.logout);
 router.post('/favorite/:id', auth.isMe, controller.addFavorite);
 router.put('/favorite/:id', auth.isMe, controller.removeFavorite);
 
-router.delete('/:id', auth.isMe, controller.delete);
+router
+  .route('/:id')
+  .get(auth.isMe, controller.findMine)
+  .delete(auth.isMe, controller.delete);
 
 module.exports = router;

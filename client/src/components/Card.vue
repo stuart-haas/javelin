@@ -101,10 +101,10 @@ export default {
       }
     },
     async addFavorite(favorite) {
-      const test = this.getUserFavorite(favorite);
+      const isFavorite = this.getUserFavorite(favorite);
       const param = this.$store.state.user.user._id;
       const formData = { favorite: favorite };
-      if (!test) {
+      if (!isFavorite) {
         await this.$store.dispatch('user/addFavorite', { param, formData });
       } else {
         await this.$store.dispatch('user/removeFavorite', { param, formData });

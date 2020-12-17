@@ -48,7 +48,6 @@ const actions = {
     }
   },
   async addFavorite({ commit, dispatch }, { param, formData }) {
-    console.log(param);
     const { success, user } = await dispatch(
       'post',
       { api: 'user/favorite', param, formData },

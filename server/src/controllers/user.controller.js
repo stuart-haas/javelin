@@ -2,6 +2,11 @@ const User = require('../models/user.model');
 const passport = require('passport');
 
 module.exports = {
+  findMine: async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).populate('favorites', 'name slug');
+    res.json(user);
+  },
   register: (req, res) => {
     User.register(
       new User({ username: req.body.username, email: req.body.email }),
