@@ -46,21 +46,29 @@ module.exports = {
   addFavorite: async (req, res) => {
     const { id } = req.params;
     const { favorite } = req.body;
-    const user = await User.findByIdAndUpdate(id, {
-      $addToSet: {
-        favorites: favorite,
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        $addToSet: {
+          favorites: favorite,
+        },
       },
-    });
-    res.json(user);
+      { new: true }
+    );
+    res.json({ success: true, message: 'Favorite added', user });
   },
   removeFavorite: async (req, res) => {
     const { id } = req.params;
     const { favorite } = req.body;
-    const user = await User.findByIdAndUpdate(id, {
-      $pull: {
-        favorites: favorite,
+    const user = await User.findByIdAndUpdate(
+      id,
+      {
+        $pull: {
+          favorites: favorite,
+        },
       },
-    });
-    res.json(user);
+      { new: true }
+    );
+    res.json({ success: true, message: 'Favorite removed', user });
   },
 };

@@ -26,14 +26,22 @@ module.exports = {
     calculateTotal(cart);
   },
   update: (cart, nItem) => {
-    const index = cart.items.findIndex((item) => item.id === nItem.id);
-    cart.items.splice(index, 1, nItem);
-    calculateTotal(cart);
+    const index = cart.items.findIndex(
+      (item) => String(item.id) === String(nItem.id)
+    );
+    if (index > -1) {
+      cart.items.splice(index, 1, nItem);
+      calculateTotal(cart);
+    }
   },
   remove: (cart, nItem) => {
-    const index = cart.items.findIndex((item) => item.id === nItem.id);
-    cart.items.splice(index, 1);
-    calculateTotal(cart);
+    const index = cart.items.findIndex(
+      (item) => String(item.id) === String(nItem.id)
+    );
+    if (index > -1) {
+      cart.items.splice(index, 1);
+      calculateTotal(cart);
+    }
   },
   empty: (req, callback) => {
     if (req.session) {

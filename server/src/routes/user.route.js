@@ -20,7 +20,7 @@ router.post(
 router.post('/logout', controller.logout);
 
 router.post('/favorite/:id', auth.isMe, controller.addFavorite);
-router.delete('/favorite/:id', auth.isMe, controller.removeFavorite);
+router.put('/favorite/:id', auth.isMe, controller.removeFavorite);
 
 router.delete('/:id', auth.isMe, controller.delete);
 

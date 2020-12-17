@@ -13,14 +13,17 @@ const mutations = {
 };
 
 const actions = {
-  get(ctx, { api, param = '' }) {
-    return this._vm.$api.get(`${api}/${param}`).then(returnData);
+  get(ctx, { api, param }) {
+    const route = param ? `${api}/${param}` : api;
+    return this._vm.$api.get(route).then(returnData);
   },
-  post(ctx, { api, formData }) {
-    return this._vm.$api.post(api, formData).then(returnData);
+  post(ctx, { api, param, formData }) {
+    const route = param ? `${api}/${param}` : api;
+    return this._vm.$api.post(route, formData).then(returnData);
   },
-  put(ctx, { api, formData }) {
-    return this._vm.$api.put(api, formData).then(returnData);
+  put(ctx, { api, param, formData }) {
+    const route = param ? `${api}/${param}` : api;
+    return this._vm.$api.put(route, formData).then(returnData);
   },
 };
 
