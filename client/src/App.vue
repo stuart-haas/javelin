@@ -7,7 +7,22 @@
 <script>
 export default {
   mounted() {
-    this.$store.dispatch('cart/get');
+    this.fetchCart();
+    this.fetchUser();
+  },
+  methods: {
+    fetchCart() {
+      this.$store.dispatch('cart/get');
+    },
+    async fetchUser() {
+      const { user } = await this.$store.dispatch('get', {
+        api: 'user/session',
+      });
+
+      if (user) {
+        this.$store.commit('user/setState', { name: 'user', value: user });
+      }
+    },
   },
 };
 </script>

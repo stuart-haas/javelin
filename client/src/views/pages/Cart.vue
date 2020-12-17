@@ -6,9 +6,17 @@
     <div v-if="cartItems.length">
       <div v-for="product in products" :key="product._id" class="py-2">
         <div class="flex item-center justify-between">
-          <router-link :to="`/products/${product._id}`" class="underline"
-            >{{ product.name }} - {{ getQuantity(product._id) }}</router-link
-          >
+          <span class="flex items-center justify-between">
+            <router-link :to="`/products/${product._id}`" class="underline">{{
+              product.name
+            }}</router-link>
+            <div class="ml-2 relative h-6 w-6 bg-green-700 rounded-full">
+              <span
+                class="text-white text-sm absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
+                >{{ getQuantity(product._id) }}</span
+              >
+            </div>
+          </span>
           <button
             class="shadow-lg rounded p-2 bg-orange-dark text-white hover:bg-orange-darker transition duration-200 ease-in-out"
             @click="removeFromCart({ id: product._id })"

@@ -7,6 +7,14 @@ module.exports = {
     const user = await User.findById(id).populate('favorites', 'name slug');
     res.json(user);
   },
+  session: async (req, res) => {
+    const { user } = req;
+    if (!user) {
+      return res.json({ error: true, message: 'Session expired' });
+    }
+
+    res.json({ user });
+  },
   register: (req, res) => {
     User.register(
       new User({ username: req.body.username, email: req.body.email }),

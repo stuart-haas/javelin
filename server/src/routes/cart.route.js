@@ -1,7 +1,7 @@
 const router = require('express').Router();
 const controller = require('../controllers/cart.controller');
 
-router.route('/merge').get(controller.merge);
+router.get('/merge', controller.merge);
 
 router
   .route('/')

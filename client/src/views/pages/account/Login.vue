@@ -80,11 +80,13 @@ export default {
       const { formData } = this;
       const success = await this.$store.dispatch('user/login', { formData });
 
-      const query = this.$route.query.from;
       if (success) {
-        this.$router.replace(query);
-      } else {
-        this.$router.replace('/products');
+        const query = this.$route.query.from;
+        if (query) {
+          this.$router.replace(query);
+        } else {
+          this.$router.replace('/products');
+        }
       }
     },
   },

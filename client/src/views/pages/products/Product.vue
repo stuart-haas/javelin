@@ -1,36 +1,48 @@
 <template>
-  <div class="mt-10 w-10/12 m-auto">
-    <h1 class="text-2xl">{{ product.name }}</h1>
-    <div class="my-8">
-      {{ product.description }}
-    </div>
-    <div class="mt-2">{{ product.formattedPrice }}</div>
-    <div class="my-4">
-      <button
-        class="shadow-lg rounded transition duration-200 ease-in-out bg-orange-dark p-2 hover:bg-orange-darker text-white"
-        @click="addToCart(product._id)"
-      >
-        Add to Cart
-      </button>
-    </div>
-    <span
-      v-if="user"
-      class="inline-block mt-2 border-b border-black cursor-pointer"
-      @click="toggleFavorite(product._id)"
-      >{{
-        this.getUserFavorite(product._id)
-          ? 'Remove from Favorites'
-          : 'Add to Favorites'
-      }}</span
+  <div class="product">
+    <div
+      class="bg-no-repeat bg-center h-48 bg-cover"
+      :style="{ 'background-image': `url(${image})` }"
     >
+      <div class="w-10/12 m-auto flex flex-col justify-center h-full">
+        <h1 class="text-2xl text-white">{{ product.name }}</h1>
+      </div>
+    </div>
+    <div class="w-10/12 m-auto">
+      <div class="py-8">
+        {{ product.description }}
+      </div>
+      <div class="mt-2">{{ product.formattedPrice }}</div>
+      <div class="my-4">
+        <button
+          class="shadow-lg rounded transition duration-200 ease-in-out bg-orange-dark p-2 hover:bg-orange-darker text-white"
+          @click="addToCart(product._id)"
+        >
+          Add to Cart
+        </button>
+      </div>
+      <span
+        v-if="user"
+        class="inline-block mt-2 border-b border-black cursor-pointer"
+        @click="toggleFavorite(product._id)"
+        >{{
+          this.getUserFavorite(product._id)
+            ? 'Remove from Favorites'
+            : 'Add to Favorites'
+        }}</span
+      >
+    </div>
   </div>
 </template>
 
 <script>
+import image from '../../../assets/images/tools.jpg';
+
 export default {
   data() {
     return {
       product: {},
+      image: image,
     };
   },
   computed: {

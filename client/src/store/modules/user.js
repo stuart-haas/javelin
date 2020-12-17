@@ -27,14 +27,19 @@ const actions = {
     }
   },
   async logout({ commit, dispatch }) {
-    const { success } = await dispatch(
+    const { success, error } = await dispatch(
       'post',
       { api: 'user/logout' },
       { root: true }
     );
-    if (success) {
+    if (success || error) {
       commit('setState', { name: 'user', value: null });
-      router.push('/');
+      commit(
+        'cart/setState',
+        { name: 'cart', value: { items: [], total: 0, formattedTotal: '' } },
+        { root: true }
+      );
+      router.push('/account/login');
     }
   },
   async register({ dispatch }, { formData }) {
