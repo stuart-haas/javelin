@@ -9,9 +9,15 @@ module.exports = {
     });
     const products = await Product.find().where('_id').in(ids);
     const productsJSON = JSON.parse(JSON.stringify(products));
-    const merged = productsJSON.map((item, i) =>
-      Object.assign({}, item, cart.items[i])
-    );
+    let merged = [];
+
+    for (let i = 0; i < productsJSON.length; i++) {
+      merged.push({
+        ...productsJSON[i],
+        ...cart.items.find((item) => item.id === productsJSON[i]._id),
+      });
+    }
+
     res.json(merged);
   },
   get: async (req, res) => {
