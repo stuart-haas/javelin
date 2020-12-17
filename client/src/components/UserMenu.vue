@@ -69,10 +69,6 @@ export default {
       return this.$store.state.user.user;
     },
   },
-  beforeRouteLeave(to, from, next) {
-    this.open = false;
-    next();
-  },
   methods: {
     toggle() {
       this.isOpen = !this.open;
@@ -83,6 +79,12 @@ export default {
     logout() {
       this.$store.dispatch('user/logout');
     },
+  },
+  /* eslint-disable */
+  watch: {
+    '$route' (to, from) {
+      this.isOpen = false;
+    }
   },
   directives: {
     ClickOutside,
