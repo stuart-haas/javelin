@@ -80,7 +80,7 @@
           >
             Register
           </button>
-          <router-link to="/account/login" class="block pt-8 underline"
+          <router-link to="/login" class="block pt-8 underline"
             >Login</router-link
           >
         </div>

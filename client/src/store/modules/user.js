@@ -15,6 +15,22 @@ const mutations = {
 };
 
 const actions = {
+  async initialize({ dispatch, commit }) {
+    const { user } = await dispatch(
+      'get',
+      {
+        api: 'user/session',
+      },
+      { root: true }
+    );
+
+    if (user) {
+      commit('setState', { name: 'user', value: user });
+      if (router.history.current.name === 'login') {
+        router.push('/');
+      }
+    }
+  },
   async login({ commit, dispatch }, { formData }) {
     const { success, user } = await dispatch(
       'post',
@@ -39,7 +55,7 @@ const actions = {
         { name: 'cart', value: { items: [], total: 0, formattedTotal: '' } },
         { root: true }
       );
-      router.push('/account/login');
+      router.push('/login');
     }
   },
   async register({ dispatch }, { formData }) {
@@ -49,7 +65,7 @@ const actions = {
       { root: true }
     );
     if (success) {
-      router.push('/account/login');
+      router.push('/login');
     }
   },
   async addFavorite({ commit, dispatch }, { param, formData }) {

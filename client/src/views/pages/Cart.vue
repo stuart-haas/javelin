@@ -10,7 +10,7 @@
             <router-link :to="`/products/${product._id}`" class="underline">{{
               product.name
             }}</router-link>
-            <div class="ml-2 relative h-6 w-6 bg-green-700 rounded-full">
+            <div class="ml-2 relative h-6 w-6 bg-green-500 rounded-full">
               <span
                 class="text-white text-sm absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2"
                 >{{ getQuantity(product._id) }}</span

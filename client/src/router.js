@@ -4,6 +4,7 @@ import Router from 'vue-router';
 import Default from './views/layouts/Default.vue';
 import Index from './views/pages/Index.vue';
 import Login from './views/pages/account/Login.vue';
+import Account from './views/pages/account/Index.vue';
 import Register from './views/pages/account/Register.vue';
 import Favorites from './views/pages/account/Favorites.vue';
 import Products from './views/pages/products/Index.vue';
@@ -29,6 +30,25 @@ const router = new Router({
           },
         },
         {
+          path: 'login',
+          name: 'login',
+          component: Login,
+          meta: { title: 'Login' },
+          beforeEnter: (to, from, next) => {
+            const user = store.state.user.user;
+            if (user) {
+              return next({ name: 'index' });
+            }
+            next();
+          },
+        },
+        {
+          path: 'register',
+          name: 'register',
+          component: Register,
+          meta: { title: 'Register' },
+        },
+        {
           path: 'cart',
           name: 'cart',
           component: Cart,
@@ -46,29 +66,37 @@ const router = new Router({
           meta: { title: 'Product' },
         },
         {
-          path: 'account/login',
-          name: 'account-login',
-          component: Login,
-          meta: { title: 'Login' },
-        },
-        {
-          path: 'account/register',
-          name: 'account-register',
-          component: Register,
-          meta: { title: 'Register' },
-        },
-        {
-          path: 'account/favorites',
-          name: 'account-favorites',
-          component: Favorites,
-          meta: { title: 'Your Favorites', requiresAuth: true },
+          path: 'account',
+          name: 'account',
+          component: Account,
+          meta: { title: 'Account', requiresAuth: true },
+          children: [
+            {
+              path: 'orders',
+              name: 'account-orders',
+              component: Favorites,
+              meta: { title: 'Orders' },
+            },
+            {
+              path: 'favorites',
+              name: 'account-favorites',
+              component: Favorites,
+              meta: { title: 'Favorites' },
+            },
+            {
+              path: 'settings',
+              name: 'account-settings',
+              component: Favorites,
+              meta: { title: 'Settings' },
+            },
+          ],
         },
       ],
     },
   ],
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   document.title = to.meta.title
     ? `${to.meta.title} - Full-Stack Docker`
     : 'Full-Stack Docker';
@@ -76,7 +104,7 @@ router.beforeEach((to, from, next) => {
   const user = store.state.user.user;
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
-      next({ name: 'account-login', query: { from: to.fullPath } });
+      next({ name: 'login', query: { from: to.fullPath } });
     } else {
       next();
     }

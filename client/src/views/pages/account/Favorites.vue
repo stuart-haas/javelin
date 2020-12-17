@@ -1,14 +1,14 @@
 <template>
-  <div class="mt-4 w-10/12 m-auto">
-    <div class="pt-4 pb-8">
-      <h1 class="text-4xl">Favorites</h1>
+  <div class="w-full">
+    <h1 class="text-4xl">Favorites</h1>
+    <div class="mt-6">
+      <div v-for="product in products" :key="product._id">
+        <router-link :to="`/products/${product._id}`" class="underline">{{
+          product.name
+        }}</router-link>
+      </div>
+      <div v-if="!products.length">You don't have any favoirtes yet</div>
     </div>
-    <div v-for="product in products" :key="product._id" class="py-2">
-      <router-link :to="`/products/${product._id}`" class="underline">{{
-        product.name
-      }}</router-link>
-    </div>
-    <div v-if="!products.length">You don't have any favoirtes yet</div>
   </div>
 </template>
 

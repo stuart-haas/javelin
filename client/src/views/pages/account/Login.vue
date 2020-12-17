@@ -52,7 +52,7 @@
           >
             Login
           </button>
-          <router-link to="/account/register" class="block pt-8 underline"
+          <router-link to="/register" class="block pt-8 underline"
             >Register</router-link
           >
         </div>

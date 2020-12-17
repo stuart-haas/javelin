@@ -13,6 +13,10 @@ const mutations = {
 };
 
 const actions = {
+  initialize({ dispatch }) {
+    dispatch('cart/initialize');
+    dispatch('user/initialize');
+  },
   get(ctx, { api, param }) {
     const route = param ? `${api}/${param}` : api;
     return this._vm.$api.get(route).then(returnData);

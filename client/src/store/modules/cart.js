@@ -17,6 +17,9 @@ const mutations = {
 };
 
 const actions = {
+  async initialize({ dispatch }) {
+    dispatch('get');
+  },
   async get({ commit, dispatch }) {
     const cart = await dispatch('get', { api: 'cart' }, { root: true });
     if (cart) {

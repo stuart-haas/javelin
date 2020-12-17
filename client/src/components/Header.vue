@@ -19,25 +19,41 @@
           <Icon icon="toolbox" class="text-xl" />
           <div
             v-if="cartItems.length"
-            class="absolute top-full mt-0.5 w-2 h-2 bg-orange-dark rounded-full transform left-1/2 -translate-x-1/2"
+            class="absolute top-full mt-0.5 w-2 h-2 bg-green-500 rounded-full transform left-1/2 -translate-x-1/2"
           ></div>
         </router-link>
-        <UserMenu />
+        <div class="flex justify-between">
+          <router-link
+            v-if="!user"
+            to="/login"
+            class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black ml-4"
+            >Login</router-link
+          >
+          <router-link v-if="user" to="/account" class="relative z-10">
+            <div class="flex items-center space-between px-4 cursor-pointer">
+              <div class="w-8 h-8">
+                <img
+                  :src="user && user.avatar"
+                  class="rounded-full max-w-full h-auto align-middle"
+                />
+              </div>
+              <div class="ml-4 text-sm">My Account</div>
+            </div>
+          </router-link>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import UserMenu from './UserMenu.vue';
-
 export default {
-  components: {
-    UserMenu,
-  },
   computed: {
     cartItems() {
       return this.$store.state.cart.cart.items;
+    },
+    user() {
+      return this.$store.state.user.user;
     },
   },
 };
