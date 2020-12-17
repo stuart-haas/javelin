@@ -34,7 +34,7 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'user', value: null });
-      router.push('/login');
+      router.push('/account/login');
     }
   },
   async register({ dispatch }, { formData }) {
@@ -44,7 +44,7 @@ const actions = {
       { root: true }
     );
     if (success) {
-      router.push('/login');
+      router.push('/account/login');
     }
   },
 };

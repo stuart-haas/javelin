@@ -5,7 +5,8 @@ const auth = require('../utils/auth');
 router.get('/', controller.findAll);
 router.post('/', auth.isAuthenticated, controller.create);
 
-router.route('/:id')
+router
+  .route('/:id')
   .get(controller.find)
   .put(auth.isAuthenticated, controller.update)
   .delete(auth.isAuthenticated, controller.delete);

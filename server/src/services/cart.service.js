@@ -1,13 +1,18 @@
 const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
+const fns = require('../utils/functions');
 
 module.exports = {
-  item: async(req, callback) => {
+  item: async (req, callback) => {
     try {
       const product = await Product.findById(req.body.id);
-      const item = { id: product._id, price: product.price, quantity: parseInt(req.body.quantity) };
+      const item = {
+        id: product._id,
+        price: product.price,
+        quantity: parseInt(req.body.quantity),
+      };
       callback(item);
-    } catch(error) {
+    } catch (error) {
       callback(false);
     }
   },
@@ -31,16 +36,16 @@ module.exports = {
     calculateTotal(cart);
   },
   empty: (req, callback) => {
-    if(req.session) {
+    if (req.session) {
       const cart = new Cart();
       const { items, total, formattedTotal } = cart;
       callback({ items, total, formattedTotal });
     }
   },
   save: (req, res, cart) => {
-    if(req.session) {
+    if (req.session) {
       req.session.cart = cart;
-      res.json(cart);
+      res.json({ success: true, message: 'Product added to cart', cart });
     }
   },
   session: (req) => {
@@ -58,14 +63,5 @@ function calculateTotal(cart) {
     const total = price * quantity;
     cart.total += total;
   });
-  cart.formattedTotal = formatTotal(cart.total);
-};
-
-function formatTotal(value) {
-  const formatter = new Intl.NumberFormat('en-US', {
-    style: 'currency',
-    currency: 'USD',
-    minimumFractionDigits: 2
-  });
-  return formatter.format(value);
+  cart.formattedTotal = fns.formatCurrency(cart.total);
 }

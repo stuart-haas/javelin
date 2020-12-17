@@ -76,7 +76,7 @@
         <div class="text-center px-6 mt-3">
           <button
             type="submit"
-            class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-red-500 hover:bg-red-600"
+            class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-blue-500 hover:bg-blue-600"
           >
             Register
           </button>
@@ -111,5 +111,3 @@ export default {
   },
 };
 </script>
-
-<style scoped></style>

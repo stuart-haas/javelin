@@ -13,6 +13,12 @@ const fields = {
     unique: true,
   },
   avatar: String,
+  favorites: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: 'Product',
+    },
+  ],
 };
 
 const User = new Schema(fields, {

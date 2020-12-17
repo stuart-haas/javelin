@@ -13,10 +13,12 @@ const fields = {
     required: true,
     unique: true,
   },
+  description: String,
   price: {
     type: Number,
     required: true,
   },
+  formattedPrice: String,
   inventory: {
     type: Number,
     required: true,
@@ -35,8 +37,12 @@ const Product = new Schema(fields, {
   },
 });
 
-Product.pre('save', function() {
+Product.pre('save', function () {
   this.slug = fns.slugify(this.name);
+
+  if (!this.formattedPrice) {
+    this.formattedPrice = fns.formatCurrency(this.price);
+  }
   return this;
 });
 

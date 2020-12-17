@@ -1,54 +1,52 @@
 const Product = require('../models/product.model');
 
 module.exports = {
-  findAll: async(req, res, next) => {
+  findAll: async (req, res) => {
     try {
       const products = await Product.find();
       res.json(products);
-    } catch(error) {
+    } catch (error) {
       res.json(error);
     }
   },
-  find: async(req, res, next) => {
+  find: async (req, res) => {
     const { id } = req.params;
     try {
       const product = await Product.findById(id);
       res.json(product);
-    } catch(error) {
+    } catch (error) {
       res.json(error);
     }
   },
-  create: async(req, res, next) => {
+  create: async (req, res) => {
     try {
       const product = new Product(req.body);
       await product.save();
       res.json(product);
-    } catch(error) {
+    } catch (error) {
       res.json(error);
     }
   },
-  update: async(req, res, next) => {
+  update: async (req, res) => {
     const { id } = req.params;
     try {
       const product = await Product.findById(id);
       Object.keys(req.body).forEach((key) => {
-        if (product[key]) {
-          product[key] = req.body[key];
-        }
+        product[key] = req.body[key];
       });
       await product.save();
       res.json(product);
-    } catch(error) {
+    } catch (error) {
       res.json(error);
     }
   },
-  delete: async(req, res, next) => {
+  delete: async (req, res) => {
     const { id } = req.params;
     try {
       const product = await Product.findByIdAndDelete(id);
       res.json(product);
-    } catch(error) {
+    } catch (error) {
       res.json(error);
     }
-  }
+  },
 };

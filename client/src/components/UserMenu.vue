@@ -3,7 +3,7 @@
     <router-link
       v-if="!user"
       to="/account/login"
-      class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black"
+      class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black ml-4"
       >Login</router-link
     >
     <div v-if="user" class="relative" v-click-outside="close">
@@ -11,7 +11,7 @@
         class="flex items-center space-between px-4 cursor-pointer"
         @click="toggle"
       >
-        <div class="w-10 h-10">
+        <div class="w-8 h-8">
           <img
             :src="user && user.avatar"
             class="rounded-full max-w-full h-auto align-middle"
@@ -25,12 +25,17 @@
           class="absolute top-full w-full left-1/2 transform -translate-x-1/2"
         >
           <div
-            class="space-y-3 text-center mt-2 py-4 px-2 bg-red-500 rounded-b shadow-lg border"
+            class="space-y-3 text-center mt-2 py-4 px-2 bg-blue-500 rounded-b shadow-lg border"
           >
             <router-link
               to="/account/orders"
               class="px-3 block text-white text-sm w-full hover:underline"
               >Orders</router-link
+            >
+            <router-link
+              to="/account/favorites"
+              class="px-3 block text-white text-sm w-full hover:underline"
+              >Favorites</router-link
             >
             <div class="border-t border-gray-100"></div>
             <router-link

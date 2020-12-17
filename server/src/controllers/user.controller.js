@@ -38,4 +38,29 @@ module.exports = {
       return res.json({ error: true, message: 'You are not logged in' });
     }
   },
+  delete: async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findByIdAndDelete(id);
+    res.json({ success: true, message: 'Your account has been deleted', user });
+  },
+  addFavorite: async (req, res) => {
+    const { id } = req.params;
+    const { favorite } = req.body;
+    const user = await User.findByIdAndUpdate(id, {
+      $addToSet: {
+        favorites: favorite,
+      },
+    });
+    res.json(user);
+  },
+  removeFavorite: async (req, res) => {
+    const { id } = req.params;
+    const { favorite } = req.body;
+    const user = await User.findByIdAndUpdate(id, {
+      $pull: {
+        favorites: favorite,
+      },
+    });
+    res.json(user);
+  },
 };

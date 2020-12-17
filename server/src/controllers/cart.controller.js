@@ -8,7 +8,7 @@ module.exports = {
   add: (req, res) => {
     const cart = service.session(req);
     service.item(req, (nItem) => {
-      if(nItem) {
+      if (nItem) {
         const item = service.find(cart, nItem);
         if (!item) {
           service.add(cart, nItem);

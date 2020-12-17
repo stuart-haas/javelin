@@ -3,6 +3,7 @@ import Router from 'vue-router';
 import Default from './views/layouts/Default.vue';
 import Login from './views/pages/Login.vue';
 import Register from './views/pages/Register.vue';
+import Index from './views/pages/Index.vue';
 
 Vue.use(Router);
 
@@ -14,6 +15,11 @@ const router = new Router({
       name: 'default',
       component: Default,
       children: [
+        {
+          path: '',
+          name: 'index',
+          component: Index,
+        },
         {
           path: 'account/login',
           name: 'login',
