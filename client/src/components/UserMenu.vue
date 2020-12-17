@@ -6,7 +6,7 @@
       class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black ml-4"
       >Login</router-link
     >
-    <div v-if="user" class="relative" v-click-outside="close">
+    <div v-if="user" class="relative z-10" v-click-outside="close">
       <div
         class="flex items-center space-between px-4 cursor-pointer"
         @click="toggle"
@@ -25,7 +25,7 @@
           class="absolute top-full w-full left-1/2 transform -translate-x-1/2"
         >
           <div
-            class="space-y-3 text-center mt-2 py-4 px-2 bg-blue-500 rounded-b shadow-lg border"
+            class="space-y-3 text-center mt-3 py-4 px-2 bg-orange-dark rounded-b shadow-lg"
           >
             <router-link
               to="/account/orders"

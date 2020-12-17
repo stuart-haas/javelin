@@ -1,7 +1,6 @@
 import Vue from 'vue';
 import axios from 'axios';
 import store from '../store/store';
-import router from '../router';
 
 const baseURL = 'http://localhost:5000/api';
 

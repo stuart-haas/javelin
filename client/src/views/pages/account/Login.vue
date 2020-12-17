@@ -3,8 +3,8 @@
     class="flex justify-center bg-no-repeat bg-top h-screen"
     :style="{ 'background-image': `url(${image})` }"
   >
-    <div class="pt-10 w-4/12">
-      <div class="px-4 py-4">
+    <div class="pt-10 w-10/12 md:w-8/12 lg:w-4/12">
+      <div class="py-4">
         <h1 class="text-4xl">Login</h1>
       </div>
       <form
@@ -48,7 +48,7 @@
         <div class="text-center px-6 mt-3">
           <button
             type="submit"
-            class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-blue-500 hover:bg-blue-600"
+            class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-green-500 hover:bg-green-600"
           >
             Login
           </button>
@@ -76,9 +76,16 @@ export default {
       const { name, value } = e.target;
       this.formData[name] = value;
     },
-    submit() {
+    async submit() {
       const { formData } = this;
-      this.$store.dispatch('user/login', { formData });
+      const success = await this.$store.dispatch('user/login', { formData });
+
+      const query = this.$route.query.from;
+      if (success) {
+        this.$router.replace(query);
+      } else {
+        this.$router.replace('/products');
+      }
     },
   },
 };

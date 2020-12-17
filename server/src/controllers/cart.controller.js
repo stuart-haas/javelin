@@ -1,7 +1,16 @@
 const service = require('../services/cart.service');
+const Product = require('../models/product.model');
 
 module.exports = {
-  get: (req, res) => {
+  merge: async (req, res) => {
+    const cart = service.session(req);
+    const ids = cart.items.map((item) => {
+      return item.id;
+    });
+    const products = await Product.find().where('_id').in(ids);
+    res.json(products);
+  },
+  get: async (req, res) => {
     const cart = service.session(req);
     res.json(cart);
   },

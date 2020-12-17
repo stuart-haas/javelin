@@ -8,6 +8,7 @@
         product.name
       }}</router-link>
     </div>
+    <div v-if="!products.length">You don't have any favoirtes yet</div>
   </div>
 </template>
 

@@ -5,7 +5,6 @@ const state = () => {
       total: 0,
       formattedTotal: '',
     },
-    count: 0,
   };
 };
 
@@ -18,6 +17,12 @@ const mutations = {
 };
 
 const actions = {
+  async get({ commit, dispatch }) {
+    const cart = await dispatch('get', { api: 'cart' }, { root: true });
+    if (cart) {
+      commit('setState', { name: 'cart', value: cart });
+    }
+  },
   async add({ commit, dispatch }, { formData }) {
     const { success, cart } = await dispatch(
       'post',
@@ -26,7 +31,6 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'cart', value: cart });
-      commit('setState', { name: 'count', value: cart.items.length });
     }
   },
   async remove({ commit, dispatch }, { formData }) {
@@ -37,7 +41,6 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'cart', value: cart });
-      commit('setState', { name: 'count', value: cart.items.length });
     }
   },
 };

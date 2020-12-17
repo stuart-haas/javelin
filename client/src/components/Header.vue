@@ -5,7 +5,7 @@
     <div class="w-10/12 m-auto flex justify-between">
       <div class="relative flex justify-between">
         <router-link
-          to="/"
+          to="/products"
           class="text-sm font-bold leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap uppercase text-black"
         >
           Products
@@ -17,17 +17,10 @@
           class="flex items-center relative cursor-pointer mr-8"
         >
           <Icon icon="toolbox" class="text-xl" />
-          <div class="">
-            <div
-              class="absolute bg-green-500 rounded-full w-4 h-4 top-1/2 transform -translate-y-1/2 ml-1"
-            >
-              <div
-                class="text-white text-xs absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
-              >
-                {{ cartCount }}
-              </div>
-            </div>
-          </div>
+          <div
+            v-if="cartItems.length"
+            class="absolute top-full mt-0.5 w-2 h-2 bg-orange-dark rounded-full transform left-1/2 -translate-x-1/2"
+          ></div>
         </router-link>
         <UserMenu />
       </div>
@@ -43,8 +36,8 @@ export default {
     UserMenu,
   },
   computed: {
-    cartCount() {
-      return this.$store.state.cart.count;
+    cartItems() {
+      return this.$store.state.cart.cart.items;
     },
   },
 };

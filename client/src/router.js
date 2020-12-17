@@ -2,10 +2,13 @@ import Vue from 'vue';
 import store from './store/store';
 import Router from 'vue-router';
 import Default from './views/layouts/Default.vue';
+import Index from './views/pages/Index.vue';
 import Login from './views/pages/account/Login.vue';
 import Register from './views/pages/account/Register.vue';
 import Favorites from './views/pages/account/Favorites.vue';
-import Index from './views/pages/Index.vue';
+import Products from './views/pages/products/Index.vue';
+import Product from './views/pages/products/Product.vue';
+import Cart from './views/pages/Cart.vue';
 
 Vue.use(Router);
 
@@ -21,6 +24,26 @@ const router = new Router({
           path: '',
           name: 'index',
           component: Index,
+          redirect: () => {
+            return '/products';
+          },
+        },
+        {
+          path: 'cart',
+          name: 'cart',
+          component: Cart,
+        },
+        {
+          path: 'products',
+          name: 'products',
+          component: Products,
+          meta: { title: 'Products' },
+        },
+        {
+          path: 'products/:id',
+          name: 'products-id',
+          component: Product,
+          meta: { title: 'Product' },
         },
         {
           path: 'account/login',

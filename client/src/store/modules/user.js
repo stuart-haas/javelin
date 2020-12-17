@@ -23,7 +23,7 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'user', value: user });
-      router.push('/');
+      return success;
     }
   },
   async logout({ commit, dispatch }) {
@@ -34,7 +34,7 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'user', value: null });
-      router.push('/account/login');
+      router.push('/');
     }
   },
   async register({ dispatch }, { formData }) {
