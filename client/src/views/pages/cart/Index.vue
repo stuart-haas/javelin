@@ -14,15 +14,23 @@
         Your cart is empty.
         <router-link class="underline" to="/products">Shop now.</router-link>
       </div>
-      <div v-else class="text-xl text-right">
-        <strong>Total:</strong> {{ formattedTotal }}
+      <div v-else class="text-right">
+        <p class="text-lg my-4">
+          <span class="font-medium">Total:</span> {{ formattedTotal }}
+        </p>
+        <router-link
+          to="/cart/checkout"
+          class="inline-block transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
+        >
+          Checkout
+        </router-link>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import Item from '../../components/Item.vue';
+import Item from '../../../components/Item.vue';
 
 export default {
   components: {

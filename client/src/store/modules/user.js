@@ -56,9 +56,11 @@ const actions = {
     );
     if (success || error) {
       commit('setState', { name: 'user', value: null });
+      commit('cart/setState', { name: 'items', value: [] }, { root: true });
+      commit('cart/setState', { name: 'total', value: 0 }, { root: true });
       commit(
         'cart/setState',
-        { name: 'cart', value: { items: [], total: 0, formattedTotal: '' } },
+        { name: 'formattedTotal', value: '' },
         { root: true }
       );
       router.push('/login');

@@ -11,7 +11,7 @@
             name="firstName"
             id="firstName"
             class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            v-model="formData['firstName']"
+            :value="formData['firstName']"
             @input="input"
           />
         </fieldset>
@@ -110,7 +110,7 @@ export default {
   methods: {
     async fetch() {
       const user = this.$store.state.user.user;
-      this.formData = user;
+      this.formData = user || {};
     },
     async submit() {
       const { formData } = this;
