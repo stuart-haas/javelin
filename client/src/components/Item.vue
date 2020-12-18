@@ -74,7 +74,7 @@ export default {
       const formData = { id, quantity };
       const success = await this.$store.dispatch('cart/add', { formData });
       if (success) {
-        this.message = 'Quantity updated';
+        this.message = 'Cart updated';
         this.error = false;
       }
       if (quantity == 0) {

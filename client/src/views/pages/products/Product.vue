@@ -54,7 +54,9 @@
           <Icon icon="star" />
         </button>
       </div>
-      <div v-if="message">{{ message }}</div>
+      <div v-if="message" :class="[error ? 'text-red-500' : 'text-green-500']">
+        {{ message }}
+      </div>
     </div>
   </div>
 </template>
@@ -69,6 +71,7 @@ export default {
       image: image,
       quantity: 0,
       message: '',
+      error: false,
     };
   },
   computed: {
@@ -91,8 +94,12 @@ export default {
     async addToCart(id) {
       const quantity = this.getQuantityInCart(id) + this.quantity;
       const formData = { id, quantity };
-      await this.$store.dispatch('cart/add', { formData });
+      const success = await this.$store.dispatch('cart/add', { formData });
       this.quantity = 0;
+      if (success) {
+        this.message = 'Cart updated';
+        this.error = false;
+      }
     },
     async toggleFavorite(favorite) {
       const isFavorite = this.checkFavorite(favorite);
@@ -116,8 +123,10 @@ export default {
         if (val + quantity > this.product.inventory) {
           val = this.product.inventory - quantity;
           this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
+          this.error = true;
         } else {
           this.message = '';
+          this.error = false;
         }
       }
       this.quantity = val;

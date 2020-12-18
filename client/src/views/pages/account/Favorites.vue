@@ -19,7 +19,7 @@
           >{{ product.name }}</router-link
         >
       </div>
-      <div v-if="!favorites.length">You don't have any favoirtes yet.</div>
+      <div v-if="!favorites.length">You don't have any favorites.</div>
     </div>
   </div>
 </template>
