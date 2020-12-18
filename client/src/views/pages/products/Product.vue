@@ -15,7 +15,7 @@
       <div class="mt-2">{{ product.formattedPrice }}</div>
       <div class="my-4">
         <button
-          class="shadow-lg rounded transition duration-200 ease-in-out bg-orange-dark p-2 hover:bg-orange-darker text-white"
+          class="shadow-lg rounded transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
           @click="addToCart(product._id)"
         >
           Add to Cart
@@ -78,8 +78,8 @@ export default {
       }
     },
     getItemQuantity(id) {
-      const item = this.$store.state.cart.cart.items.find((item) => {
-        return item.id == id;
+      const item = this.$store.state.cart.items.find((item) => {
+        return item._id == id;
       });
       return item ? item.quantity : 0;
     },

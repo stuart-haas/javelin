@@ -18,7 +18,7 @@
         >
           <Icon icon="toolbox" class="text-xl" />
           <div
-            v-if="cartItems.length"
+            v-if="items.length"
             class="absolute top-full mt-0.5 w-2 h-2 bg-green-500 rounded-full transform left-1/2 -translate-x-1/2"
           ></div>
         </router-link>
@@ -49,8 +49,8 @@
 <script>
 export default {
   computed: {
-    cartItems() {
-      return this.$store.state.cart.cart.items;
+    items() {
+      return this.$store.state.cart.items;
     },
     user() {
       return this.$store.state.user.user;

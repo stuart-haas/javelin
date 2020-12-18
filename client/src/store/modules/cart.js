@@ -1,14 +1,16 @@
 const state = () => {
   return {
-    cart: {
-      items: [],
-      total: 0,
-      formattedTotal: '',
-    },
+    items: [],
+    total: 0,
+    formattedTotal: '',
   };
 };
 
-const getters = {};
+const getters = {
+  items(state) {
+    return state.items;
+  },
+};
 
 const mutations = {
   setState(state, { name, value }) {
@@ -21,29 +23,41 @@ const actions = {
     dispatch('get');
   },
   async get({ commit, dispatch }) {
-    const cart = await dispatch('get', { api: 'cart' }, { root: true });
-    if (cart) {
-      commit('setState', { name: 'cart', value: cart });
+    const { items, total, formattedTotal } = await dispatch(
+      'get',
+      { api: 'cart' },
+      { root: true }
+    );
+    if (items) {
+      commit('setState', { name: 'items', value: items });
+      commit('setState', { name: 'total', value: total });
+      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
   },
   async add({ commit, dispatch }, { formData }) {
-    const { success, cart } = await dispatch(
+    const { success, data } = await dispatch(
       'post',
       { api: 'cart', formData },
       { root: true }
     );
     if (success) {
-      commit('setState', { name: 'cart', value: cart });
+      const { items, total, formattedTotal } = data;
+      commit('setState', { name: 'items', value: items });
+      commit('setState', { name: 'total', value: total });
+      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
   },
   async remove({ commit, dispatch }, { formData }) {
-    const { success, cart } = await dispatch(
+    const { success, data } = await dispatch(
       'put',
       { api: 'cart', formData },
       { root: true }
     );
     if (success) {
-      commit('setState', { name: 'cart', value: cart });
+      const { items, total, formattedTotal } = data;
+      commit('setState', { name: 'items', value: items });
+      commit('setState', { name: 'total', value: total });
+      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
   },
 };

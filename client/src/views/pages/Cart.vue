@@ -3,8 +3,8 @@
     <div class="pt-4 pb-8">
       <h1 class="text-4xl">Cart</h1>
     </div>
-    <div v-if="cartItems.length">
-      <div v-for="product in products" :key="product._id" class="py-2">
+    <div v-if="items.length">
+      <div v-for="product in items" :key="product._id" class="py-2">
         <div class="flex item-center justify-between">
           <span class="flex items-center justify-between">
             <router-link :to="`/products/${product._id}`" class="underline">{{
@@ -18,7 +18,7 @@
             </div>
           </span>
           <button
-            class="shadow-lg rounded p-2 bg-orange-dark text-white hover:bg-orange-darker transition duration-200 ease-in-out"
+            class="shadow-lg rounded p-2 bg-green-500 text-white hover:bg-green-600 transition duration-200 ease-in-out"
             @click="removeFromCart({ id: product._id })"
           >
             Remove from Cart
@@ -26,7 +26,7 @@
         </div>
       </div>
     </div>
-    <div v-if="!cartItems.length">
+    <div v-if="!items.length">
       Your cart is empty.
       <router-link class="underline" to="/products">Shop now.</router-link>
     </div>
@@ -35,26 +35,12 @@
 
 <script>
 export default {
-  data() {
-    return {
-      products: [],
-    };
-  },
   computed: {
-    cartItems() {
-      return this.$store.state.cart.cart.items;
+    items() {
+      return this.$store.state.cart.items;
     },
-  },
-  mounted() {
-    this.fetch();
   },
   methods: {
-    async fetch() {
-      const products = await this.$store.dispatch('get', {
-        api: 'cart/merge',
-      });
-      this.products = products;
-    },
     async removeFromCart(formData) {
       await this.$store.dispatch('cart/remove', { formData });
     },

@@ -21,6 +21,19 @@ module.exports = {
       return String(item.id) === String(nItem.id);
     });
   },
+  merge: async (cart) => {
+    const ids = cart.items.map((item) => {
+      return item.id;
+    });
+    const products = await Product.find().where('_id').in(ids);
+    const productsJSON = JSON.parse(JSON.stringify(products));
+
+    const items = fns.merge(productsJSON, cart.items);
+
+    const { total, formattedTotal } = cart;
+
+    return { items, total, formattedTotal };
+  },
   add: (cart, item) => {
     cart.items.push(item);
     calculateTotal(cart);
@@ -50,10 +63,11 @@ module.exports = {
       callback({ items, total, formattedTotal });
     }
   },
-  save: (req, res, cart) => {
+  save: async (req, res, cart) => {
     if (req.session) {
       req.session.cart = cart;
-      res.json({ success: true, message: 'Product added to cart', cart });
+      const data = await module.exports.merge(cart);
+      res.json({ success: true, message: 'Product added to cart', data });
     }
   },
   session: (req) => {

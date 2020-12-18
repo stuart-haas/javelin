@@ -1,3 +1,5 @@
+const Product = require('../models/product.model');
+
 module.exports = {
   slugify: (string) => {
     return string
@@ -17,5 +19,11 @@ module.exports = {
       minimumFractionDigits: 2,
     });
     return formatter.format(value);
+  },
+  merge: (a1, a2) => {
+    return a1.map((t1) => ({
+      ...t1,
+      ...a2.find((t2) => String(t2.id) === String(t1._id)),
+    }));
   },
 };
