@@ -16,7 +16,7 @@
           >{{ product.name }}</router-link
         >
       </div>
-      <div class="flex items-center col-span-3">
+      <div class="flex items-center col-span-2">
         <input
           type="number"
           min="1"
@@ -35,11 +35,16 @@
           Update
         </button>
       </div>
-      <div class="col-span-2">
+      <div class="col-span-2 text-center">
+        <p class="font-bold text-sm">Price</p>
+        {{ product.formattedPrice }}
+      </div>
+      <div class="col-span-1 text-center">
+        <p class="font-bold text-sm">Total</p>
         {{ product.formattedTotal }}
       </div>
       <div
-        class="col-span-3 text-left"
+        class="col-span-4 text-center"
         :class="[error ? 'text-red-500' : 'text-green-500']"
       >
         {{ message }}
