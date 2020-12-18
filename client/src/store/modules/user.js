@@ -28,7 +28,12 @@ const actions = {
     if (user) {
       commit('setState', { name: 'user', value: user });
       if (router.history.current.name === 'login') {
-        router.push('/');
+        const { from } = router.history.current.query;
+        if (from) {
+          router.push(from);
+        } else {
+          router.push('/');
+        }
       }
     }
   },

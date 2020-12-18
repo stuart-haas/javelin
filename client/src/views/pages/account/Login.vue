@@ -9,52 +9,50 @@
       </div>
       <form
         @submit.prevent="submit"
-        class="shadow-lg py-8 rounded border bg-white bg-opacity-75"
+        class="shadow-lg py-4 rounded border bg-white bg-opacity-75"
       >
-        <div class="px-4 py-5 space-y-6 sm:p-6">
-          <div class="grid grid-cols-6 gap-6">
-            <div class="col-span-6">
-              <label
-                for="username"
-                class="block text-sm font-medium text-gray-900"
-                >Username</label
-              >
-              <input
-                type="text"
-                name="username"
-                id="username"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                :value="formData['username']"
-                @input="input"
-              />
-            </div>
-            <div class="col-span-6">
-              <label
-                for="password"
-                class="block text-sm font-medium text-gray-900"
-                >Password</label
-              >
-              <input
-                type="password"
-                name="password"
-                id="password"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                :value="formData['password']"
-                @input="input"
-              />
-            </div>
+        <div class="space-y-6 p-6">
+          <fieldset>
+            <label
+              for="username"
+              class="block text-sm font-medium text-gray-700"
+              >Username</label
+            >
+            <input
+              type="text"
+              name="username"
+              id="username"
+              class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+              v-model="formData['username']"
+              @input="input"
+            />
+          </fieldset>
+          <fieldset>
+            <label
+              for="password"
+              class="block text-sm font-medium text-gray-700"
+              >Password</label
+            >
+            <input
+              type="password"
+              name="password"
+              id="password"
+              class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+              v-model="formData['password']"
+              @input="input"
+            />
+          </fieldset>
+          <div class="text-center">
+            <button
+              type="submit"
+              class="block w-full transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
+            >
+              Login
+            </button>
+            <router-link to="/register" class="block mt-6 underline"
+              >Register</router-link
+            >
           </div>
-        </div>
-        <div class="text-center px-6 mt-3">
-          <button
-            type="submit"
-            class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-green-500 hover:bg-green-600"
-          >
-            Login
-          </button>
-          <router-link to="/register" class="block pt-8 underline"
-            >Register</router-link
-          >
         </div>
       </form>
     </div>

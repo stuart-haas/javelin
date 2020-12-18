@@ -3,8 +3,7 @@ const service = require('../services/cart.service');
 module.exports = {
   get: async (req, res) => {
     const cart = service.session(req);
-    const data = await service.merge(cart);
-    res.json(data);
+    res.json(cart);
   },
   add: (req, res) => {
     const cart = service.session(req);

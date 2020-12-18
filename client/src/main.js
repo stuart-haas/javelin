@@ -5,7 +5,7 @@ import App from './App.vue';
 import { library } from '@fortawesome/fontawesome-svg-core';
 import {
   faShoppingCart,
-  faHeart,
+  faStar,
   faToolbox,
   faPlus,
   faMinus,
@@ -16,7 +16,7 @@ import './plugins/api';
 import './plugins/directives';
 import './assets/css/index.css';
 
-library.add(faShoppingCart, faHeart, faToolbox, faPlus, faMinus, faTimes);
+library.add(faShoppingCart, faStar, faToolbox, faPlus, faMinus, faTimes);
 
 Vue.component('Icon', FontAwesomeIcon);
 

@@ -13,24 +13,49 @@
         {{ product.description }}
       </div>
       <div class="mt-2">{{ product.formattedPrice }}</div>
-      <div class="my-4">
+      <div class="mt-2">{{ product.inventory }} in stock</div>
+      <div class="border-t border-gray-300 my-6"></div>
+      <div class="mt-2">
+        {{
+          getQuantityInCart(product._id) > 0
+            ? `You have ${getQuantityInCart(product._id)} in your cart.`
+            : "You don't have any in your cart."
+        }}
+      </div>
+      <div class="flex items-center">
+        <div class="my-4 flex items-center">
+          <input
+            type="number"
+            min="1"
+            :max="product.inventory"
+            v-model="quantity"
+            @input="input"
+            :disabled="!checkAvailability(product._id)"
+            class="border rounded-l p-2 w-24 text-center"
+          />
+          <button
+            :disabled="!checkAvailability(product._id)"
+            class="border-transparent border shadow-lg rounded-r transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
+            @click="addToCart(product._id)"
+          >
+            Add to Cart
+          </button>
+        </div>
         <button
-          class="shadow-lg rounded transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
-          @click="addToCart(product._id)"
+          v-if="user"
+          class="ml-6 border-transparent border p-2 shadow-lg rounded transition duration-200 ease-in-out"
+          :class="[
+            this.checkFavorite(product._id)
+              ? 'bg-red-500 text-white'
+              : 'bg-gray-200 text-black hover:bg-gray-300',
+          ]"
+          @click="toggleFavorite(product._id)"
         >
-          Add to Cart
+          Favorite
+          <Icon icon="star" />
         </button>
       </div>
-      <span
-        v-if="user"
-        class="inline-block mt-2 border-b border-black cursor-pointer"
-        @click="toggleFavorite(product._id)"
-        >{{
-          this.getUserFavorite(product._id)
-            ? 'Remove from Favorites'
-            : 'Add to Favorites'
-        }}</span
-      >
+      <div v-if="message">{{ message }}</div>
     </div>
   </div>
 </template>
@@ -43,6 +68,8 @@ export default {
     return {
       product: {},
       image: image,
+      quantity: 1,
+      message: '',
     };
   },
   computed: {
@@ -63,12 +90,13 @@ export default {
       this.product = product;
     },
     async addToCart(id) {
-      const quantity = this.getItemQuantity(id) + 1;
+      console.log(this.checkAvailability(id));
+      const quantity = this.getQuantityInCart(id) + this.quantity;
       const formData = { id, quantity };
       await this.$store.dispatch('cart/add', { formData });
     },
     async toggleFavorite(favorite) {
-      const isFavorite = this.getUserFavorite(favorite);
+      const isFavorite = this.checkFavorite(favorite);
       const param = this.$store.state.user.user._id;
       const formData = { favorite };
       if (!isFavorite) {
@@ -77,18 +105,47 @@ export default {
         await this.$store.dispatch('user/removeFavorite', { param, formData });
       }
     },
-    getItemQuantity(id) {
+    input(e) {
+      const { value } = e.target;
+      if (!value) return;
+      let val = parseInt(value);
+      if (!isNaN(val)) {
+        if (Math.sign(val) === -1) {
+          val = 1;
+        }
+        if (val >= this.product.inventory) {
+          val = this.product.inventory;
+          this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
+        } else {
+          this.message = '';
+        }
+      }
+      this.quantity = val;
+    },
+    getQuantityInCart(id) {
       const item = this.$store.state.cart.items.find((item) => {
-        return item._id == id;
+        return item.id == id;
       });
       return item ? item.quantity : 0;
     },
-    getUserFavorite(id) {
-      const item = this.$store.state.user.user.favorites.find((item) => {
-        return item == id;
+    checkAvailability(id) {
+      const quantity = this.getQuantityInCart(id);
+      return quantity >= this.product.inventory ? false : true;
+    },
+    checkFavorite(id) {
+      const item = this.$store.state.user.favorites.find((item) => {
+        return item._id == id;
       });
       return item ? true : false;
     },
   },
 };
 </script>
+
+<style scoped>
+input:disabled,
+button:disabled {
+  opacity: 0.75;
+  cursor: not-allowed;
+}
+</style>

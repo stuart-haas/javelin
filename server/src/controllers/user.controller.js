@@ -47,7 +47,7 @@ module.exports = {
   },
   find: async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id).populate('favorites');
+    const user = await User.findById(id).populate('favorites', '_id name');
     res.json(user);
   },
   update: async (req, res) => {
@@ -75,7 +75,7 @@ module.exports = {
         },
       },
       { new: true }
-    );
+    ).populate('favorites', '_id name');
     res.json({ success: true, message: 'Favorite added', user });
   },
   removeFavorite: async (req, res) => {
@@ -89,7 +89,7 @@ module.exports = {
         },
       },
       { new: true }
-    );
+    ).populate('favorites', '_id name');
     res.json({ success: true, message: 'Favorite removed', user });
   },
 };

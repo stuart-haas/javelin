@@ -4,13 +4,22 @@
       <div class="col-span-4 border-r pt-8">
         <h1 class="text-4xl">Your Account</h1>
         <div class="mt-6 space-y-6">
-          <router-link class="block underline" to="/account/orders"
+          <router-link
+            to="/account/orders"
+            active-class="border-r-4 border-gray-700"
+            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Orders</router-link
           >
-          <router-link class="block underline" to="/account/favorites"
+          <router-link
+            to="/account/favorites"
+            active-class="border-r-4 border-gray-700"
+            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Favorites</router-link
           >
-          <router-link class="block underline" to="/account/settings"
+          <router-link
+            to="/account/settings"
+            active-class="border-r-4 border-gray-700"
+            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Settings</router-link
           >
           <span

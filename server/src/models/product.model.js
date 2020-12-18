@@ -46,9 +46,4 @@ Product.pre('save', function () {
   return this;
 });
 
-Product.methods.merge = function () {
-  var obj = this.toObject();
-  return obj;
-};
-
 module.exports = model('Product', Product, 'product');

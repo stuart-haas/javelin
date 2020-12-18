@@ -4,10 +4,10 @@
       <h1 class="text-4xl">Cart</h1>
     </div>
     <div v-if="items.length">
-      <div v-for="product in items" :key="product._id" class="py-2">
+      <div v-for="product in items" :key="product.id" class="py-2">
         <div class="flex item-center justify-between">
           <span class="flex items-center justify-between">
-            <router-link :to="`/products/${product._id}`" class="underline">{{
+            <router-link :to="`/products/${product.id}`" class="underline">{{
               product.name
             }}</router-link>
             <div class="ml-2 relative h-6 w-6 bg-green-500 rounded-full">
@@ -19,7 +19,7 @@
           </span>
           <button
             class="shadow-lg rounded p-2 bg-green-500 text-white hover:bg-green-600 transition duration-200 ease-in-out"
-            @click="removeFromCart({ id: product._id })"
+            @click="removeFromCart({ id: product.id })"
           >
             Remove from Cart
           </button>

@@ -8,6 +8,7 @@ module.exports = {
       const product = await Product.findById(req.body.id);
       const item = {
         id: product._id,
+        name: product.name,
         price: product.price,
         quantity: parseInt(req.body.quantity),
       };
@@ -20,19 +21,6 @@ module.exports = {
     return cart.items.find((item) => {
       return String(item.id) === String(nItem.id);
     });
-  },
-  merge: async (cart) => {
-    const ids = cart.items.map((item) => {
-      return item.id;
-    });
-    const products = await Product.find().where('_id').in(ids);
-    const productsJSON = JSON.parse(JSON.stringify(products));
-
-    const items = fns.merge(productsJSON, cart.items);
-
-    const { total, formattedTotal } = cart;
-
-    return { items, total, formattedTotal };
   },
   add: (cart, item) => {
     cart.items.push(item);
@@ -66,8 +54,7 @@ module.exports = {
   save: async (req, res, cart) => {
     if (req.session) {
       req.session.cart = cart;
-      const data = await module.exports.merge(cart);
-      res.json({ success: true, message: 'Product added to cart', data });
+      res.json({ success: true, message: 'Product added to cart', cart });
     }
   },
   session: (req) => {

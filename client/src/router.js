@@ -8,7 +8,9 @@ import Register from './views/pages/account/Register.vue';
 import Account from './views/pages/account/Index.vue';
 import Orders from './views/pages/account/Orders.vue';
 import Favorites from './views/pages/account/Favorites.vue';
-import Settings from './views/pages/account/Settings.vue';
+import Settings from './views/pages/account/settings/Index.vue';
+import SettingsUser from './views/pages/account/settings/User.vue';
+import SettingsShipping from './views/pages/account/settings/Shipping.vue';
 import Products from './views/pages/products/Index.vue';
 import Product from './views/pages/products/Product.vue';
 import Cart from './views/pages/Cart.vue';
@@ -93,6 +95,23 @@ const router = new Router({
               name: 'account-settings',
               component: Settings,
               meta: { title: 'Settings' },
+              redirect: () => {
+                return 'settings/user';
+              },
+              children: [
+                {
+                  path: 'user',
+                  name: 'account-settings-user',
+                  component: SettingsUser,
+                  meta: { title: 'User Settings' },
+                },
+                {
+                  path: 'shipping',
+                  name: 'account-settings-shipping',
+                  component: SettingsShipping,
+                  meta: { title: 'User Shipping' },
+                },
+              ],
             },
           ],
         },
