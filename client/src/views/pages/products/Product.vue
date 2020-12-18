@@ -27,14 +27,13 @@
           <input
             type="number"
             min="1"
-            :max="product.inventory"
+            :max="getMaxAvailabe(product)"
             v-model="quantity"
             @input="input"
-            :disabled="!checkAvailability(product._id)"
             class="border rounded-l p-2 w-24 text-center"
           />
           <button
-            :disabled="!checkAvailability(product._id)"
+            :disabled="!checkAvailability(product._id) || quantity == 0"
             class="border-transparent border shadow-lg rounded-r transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
             @click="addToCart(product._id)"
           >
@@ -68,7 +67,7 @@ export default {
     return {
       product: {},
       image: image,
-      quantity: 1,
+      quantity: 0,
       message: '',
     };
   },
@@ -90,10 +89,10 @@ export default {
       this.product = product;
     },
     async addToCart(id) {
-      console.log(this.checkAvailability(id));
       const quantity = this.getQuantityInCart(id) + this.quantity;
       const formData = { id, quantity };
       await this.$store.dispatch('cart/add', { formData });
+      this.quantity = 0;
     },
     async toggleFavorite(favorite) {
       const isFavorite = this.checkFavorite(favorite);
@@ -113,8 +112,9 @@ export default {
         if (Math.sign(val) === -1) {
           val = 1;
         }
-        if (val >= this.product.inventory) {
-          val = this.product.inventory;
+        const quantity = this.getQuantityInCart(this.product._id);
+        if (val + quantity > this.product.inventory) {
+          val = this.product.inventory - quantity;
           this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
         } else {
           this.message = '';
@@ -128,9 +128,12 @@ export default {
       });
       return item ? item.quantity : 0;
     },
+    getMaxAvailabe(product) {
+      return product.inventory - this.getQuantityInCart(product._id);
+    },
     checkAvailability(id) {
       const quantity = this.getQuantityInCart(id);
-      return quantity >= this.product.inventory ? false : true;
+      return quantity + this.quantity > this.product.inventory ? false : true;
     },
     checkFavorite(id) {
       const item = this.$store.state.user.favorites.find((item) => {
@@ -141,11 +144,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-input:disabled,
-button:disabled {
-  opacity: 0.75;
-  cursor: not-allowed;
-}
-</style>

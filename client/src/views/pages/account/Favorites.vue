@@ -9,8 +9,9 @@
       >
         <div
           class="w-4 h-4 bg-red-500 rounded-full p-2.5 text-sm text-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-600 transition duration-200"
+          @click="removeFavorite(product._id)"
         >
-          <Icon icon="times" @click="removeFavorite(product._id)" />
+          <Icon icon="times" />
         </div>
         <router-link
           :to="`/products/${product._id}`"
