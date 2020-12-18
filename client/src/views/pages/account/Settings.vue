@@ -130,7 +130,7 @@
             </div>
           </div>
         </div>
-        <div class="text-center px-6 mt-3">
+        <div class="text-center">
           <button
             type="submit"
             class="block w-full transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-green-500 hover:bg-green-600"
