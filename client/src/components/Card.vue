@@ -8,8 +8,8 @@
         ></div>
       </div>
       <div class="relative py-4 text-center">
-        <p class="text text-gray-700">{{ product.name }}</p>
-        <p class="text-sm text-gray-700 mt-1">{{ product.formattedPrice }}</p>
+        <p class="text">{{ product.name }}</p>
+        <p class="text-sm mt-1">{{ product.formattedPrice }}</p>
       </div>
     </div>
   </router-link>

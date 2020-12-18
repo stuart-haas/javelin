@@ -1,37 +1,40 @@
 <template>
   <div class="w-full">
     <h1 class="text-4xl">Favorites</h1>
-    <div class="mt-6">
-      <div v-for="product in products" :key="product._id">
+    <div class="mt-6 space-y-2">
+      <div v-for="product in favorites" :key="product._id">
         <router-link :to="`/products/${product._id}`" class="underline">{{
           product.name
-        }}</router-link>
+        }}</router-link
+        ><Icon
+          icon="times"
+          class="ml-2 cursor-pointer"
+          @click="removeFavorite(product._id)"
+        />
       </div>
-      <div v-if="!products.length">You don't have any favoirtes yet</div>
+      <div v-if="!favorites.length">You don't have any favoirtes yet.</div>
     </div>
   </div>
 </template>
 
 <script>
 export default {
-  data() {
-    return {
-      products: [],
-    };
+  computed: {
+    favorites() {
+      return this.$store.state.user.favorites;
+    },
   },
   mounted() {
     this.fetch();
   },
   methods: {
     async fetch() {
-      const param =
-        this.$store.state.user.user && this.$store.state.user.user._id;
-      if (!param) return;
-      const user = await this.$store.dispatch('get', {
-        api: 'user',
-        param,
-      });
-      this.products = user.favorites;
+      this.$store.dispatch('user/favorites');
+    },
+    async removeFavorite(favorite) {
+      const param = this.$store.state.user.user._id;
+      const formData = { favorite };
+      await this.$store.dispatch('user/removeFavorite', { param, formData });
     },
   },
 };

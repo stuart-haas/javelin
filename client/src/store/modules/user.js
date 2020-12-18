@@ -3,6 +3,7 @@ import router from '../../router';
 const state = () => {
   return {
     user: null,
+    favorites: [],
   };
 };
 
@@ -75,7 +76,9 @@ const actions = {
       { root: true }
     );
     if (success) {
+      const { favorites } = user;
       commit('setState', { name: 'user', value: user });
+      commit('setState', { name: 'favorites', value: favorites });
     }
   },
   async removeFavorite({ commit, dispatch }, { param, formData }) {
@@ -85,8 +88,23 @@ const actions = {
       { root: true }
     );
     if (success) {
+      const { favorites } = user;
       commit('setState', { name: 'user', value: user });
+      commit('setState', { name: 'favorites', value: favorites });
     }
+  },
+  async favorites({ state, commit, dispatch }) {
+    const param = state.user._id;
+    if (!param) return;
+    const { favorites } = await dispatch(
+      'get',
+      {
+        api: 'user',
+        param,
+      },
+      { root: true }
+    );
+    commit('setState', { name: 'favorites', value: favorites });
   },
 };
 

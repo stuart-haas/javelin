@@ -9,13 +9,14 @@ import {
   faToolbox,
   faPlus,
   faMinus,
+  faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/api';
 import './plugins/directives';
 import './assets/css/index.css';
 
-library.add(faShoppingCart, faHeart, faToolbox, faPlus, faMinus);
+library.add(faShoppingCart, faHeart, faToolbox, faPlus, faMinus, faTimes);
 
 Vue.component('Icon', FontAwesomeIcon);
 

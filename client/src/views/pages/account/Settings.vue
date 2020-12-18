@@ -32,7 +32,39 @@
                 :value="formData['email']"
                 @input="input"
               />
-              <h3 class="my-6 font-bold text-xl">Address</h3>
+              <h3 class="my-6 font-bold text-xl">Shipping Address</h3>
+              <div class="grid grid-cols-2 gap-6">
+                <div class="mb-6">
+                  <label
+                    for="firstName"
+                    class="block text-sm font-medium text-gray-900"
+                    >First Name</label
+                  >
+                  <input
+                    type="text"
+                    name="firstName"
+                    id="firstName"
+                    class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+                    :value="formData['firstName']"
+                    @input="input"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="lastName"
+                    class="block text-sm font-medium text-gray-900"
+                    >Last Name</label
+                  >
+                  <input
+                    type="text"
+                    name="lastName"
+                    id="lastName"
+                    class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+                    :value="formData['lastName']"
+                    @input="input"
+                  />
+                </div>
+              </div>
               <div class="mb-6">
                 <label
                   for="street"
@@ -48,50 +80,52 @@
                   @input="input"
                 />
               </div>
-              <div class="mb-6">
-                <label
-                  for="city"
-                  class="block text-sm font-medium text-gray-900"
-                  >City</label
-                >
-                <input
-                  type="text"
-                  name="city"
-                  id="city"
-                  class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                  :value="formData['city']"
-                  @input="input"
-                />
-              </div>
-              <div class="mb-6">
-                <label
-                  for="state"
-                  class="block text-sm font-medium text-gray-900"
-                  >State</label
-                >
-                <input
-                  type="text"
-                  name="state"
-                  id="state"
-                  class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                  :value="formData['state']"
-                  @input="input"
-                />
-              </div>
-              <div class="mb-6">
-                <label
-                  for="zipCode"
-                  class="block text-sm font-medium text-gray-900"
-                  >Zip Code</label
-                >
-                <input
-                  type="text"
-                  name="zipCode"
-                  id="zipCode"
-                  class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                  :value="formData['zipCode']"
-                  @input="input"
-                />
+              <div class="grid grid-cols-3 gap-6">
+                <div class="mb-6">
+                  <label
+                    for="city"
+                    class="block text-sm font-medium text-gray-900"
+                    >City</label
+                  >
+                  <input
+                    type="text"
+                    name="city"
+                    id="city"
+                    class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+                    :value="formData['city']"
+                    @input="input"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="state"
+                    class="block text-sm font-medium text-gray-900"
+                    >State</label
+                  >
+                  <input
+                    type="text"
+                    name="state"
+                    id="state"
+                    class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+                    :value="formData['state']"
+                    @input="input"
+                  />
+                </div>
+                <div class="mb-6">
+                  <label
+                    for="zipCode"
+                    class="block text-sm font-medium text-gray-900"
+                    >Zip Code</label
+                  >
+                  <input
+                    type="text"
+                    name="zipCode"
+                    id="zipCode"
+                    class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+                    :value="formData['zipCode']"
+                    @input="input"
+                  />
+                </div>
               </div>
             </div>
           </div>

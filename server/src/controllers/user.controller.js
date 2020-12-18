@@ -2,11 +2,6 @@ const User = require('../models/user.model');
 const passport = require('passport');
 
 module.exports = {
-  find: async (req, res) => {
-    const { id } = req.params;
-    const user = await User.findById(id).populate('favorites', 'name slug');
-    res.json(user);
-  },
   session: async (req, res) => {
     const { user } = req;
     if (!user) {
@@ -49,6 +44,11 @@ module.exports = {
     } else {
       return res.json({ error: true, message: 'You are not logged in' });
     }
+  },
+  find: async (req, res) => {
+    const { id } = req.params;
+    const user = await User.findById(id).populate('favorites');
+    res.json(user);
   },
   update: async (req, res) => {
     const { id } = req.params;
