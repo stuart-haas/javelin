@@ -23,8 +23,8 @@
               </p>
             </div>
           </div>
-          <div class="flex items-center justify-between">
-            <span class="text-gray-700">Total:</span>
+          <div class="flex items-center justify-between text-xl">
+            <span class="font-medium">Total:</span>
             <span>{{ formattedTotal }}</span>
           </div>
         </div>
@@ -39,8 +39,8 @@
               >Login to Your Account</router-link
             >
           </div>
-          <h2 class="text-2xl mt-8">Shipping</h2>
-          <form @submit.prevent="submit" class="mt-8">
+          <form @submit.prevent="submit" class="mt-8 w-10/12">
+            <h2 class="text-2xl my-3">Shipping</h2>
             <div class="space-y-6">
               <div class="grid grid-cols-2 gap-6">
                 <fieldset>
@@ -177,6 +177,7 @@ export default {
   },
   methods: {
     async fetch() {
+      await this.$store.dispatch('user/initialize');
       const user = this.$store.state.user.user;
       this.formData = user || {};
     },

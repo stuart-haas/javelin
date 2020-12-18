@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" class="w-8/12 m-auto">
+  <form @submit.prevent="submit" class="w-8/12">
     <div class="space-y-6">
       <fieldset>
         <label for="street" class="block text-sm font-medium text-gray-700"

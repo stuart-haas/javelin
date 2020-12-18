@@ -24,7 +24,6 @@ const actions = {
       },
       { root: true }
     );
-
     if (user) {
       commit('setState', { name: 'user', value: user });
       if (router.history.current.name === 'login') {

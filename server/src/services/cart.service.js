@@ -6,11 +6,10 @@ module.exports = {
   item: async (req, callback) => {
     try {
       const product = await Product.findById(req.body.id);
-      const { price } = product;
+      const { price, formattedPrice } = product;
       const quantity = parseInt(req.body.quantity);
       const total = quantity * price;
       const formattedTotal = fns.formatCurrency(total);
-      const formattedPrice = fns.formatCurrency(price);
       const item = {
         id: product._id,
         name: product.name,

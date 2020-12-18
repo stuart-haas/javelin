@@ -1,5 +1,5 @@
 <template>
-  <form @submit.prevent="submit" class="w-8/12 m-auto">
+  <form @submit.prevent="submit" class="w-10/12">
     <div class="space-y-6">
       <div class="grid grid-cols-2 gap-6">
         <fieldset>
@@ -108,7 +108,7 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch() {
+    fetch() {
       const user = this.$store.state.user.user;
       this.formData = user || {};
     },
