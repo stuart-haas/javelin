@@ -42,6 +42,7 @@ const actions = {
       commit('setState', { name: 'total', value: total });
       commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
+    return success;
   },
   async remove({ commit, dispatch }, { formData }) {
     const { success, cart } = await dispatch(

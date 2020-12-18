@@ -26,18 +26,25 @@
           class="border rounded-l p-2 w-24 text-center"
         />
         <button
-          :disabled="!checkAvailability(product._id)"
+          :disabled="
+            !checkAvailability(product.id) || checkQuantityChange(product)
+          "
           class="border-transparent border shadow-lg rounded-r transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
           @click="addToCart(product.id)"
         >
           Update
         </button>
       </div>
-      <div class="col-span-3">
+      <div class="col-span-2">
         {{ product.formattedTotal }}
       </div>
+      <div
+        class="col-span-3 text-left"
+        :class="[error ? 'text-red-500' : 'text-green-500']"
+      >
+        {{ message }}
+      </div>
     </div>
-    <div v-if="message">{{ message }}</div>
   </div>
 </template>
 
@@ -50,6 +57,7 @@ export default {
     return {
       quantity: 0,
       message: '',
+      error: false,
     };
   },
   mounted() {
@@ -59,7 +67,11 @@ export default {
     async addToCart(id) {
       const { quantity } = this;
       const formData = { id, quantity };
-      await this.$store.dispatch('cart/add', { formData });
+      const success = await this.$store.dispatch('cart/add', { formData });
+      if (success) {
+        this.message = 'Quantity updated';
+        this.error = false;
+      }
       if (quantity == 0) {
         this.removeFromCart(formData);
       }
@@ -75,12 +87,13 @@ export default {
         if (Math.sign(val) === -1) {
           val = 1;
         }
-        const quantity = this.getQuantityInCart(this.product._id);
-        if (val + quantity > this.product.inventory) {
-          val = this.product.inventory - quantity;
+        if (val > this.product.inventory) {
+          val = this.product.inventory;
           this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
+          this.error = true;
         } else {
           this.message = '';
+          this.error = false;
         }
       }
       this.quantity = val;
@@ -92,11 +105,14 @@ export default {
       return item ? item.quantity : 0;
     },
     getMaxAvailabe(product) {
-      return product.inventory - this.getQuantityInCart(product._id);
+      return product.inventory - this.getQuantityInCart(product.id);
     },
     checkAvailability(id) {
       const quantity = this.getQuantityInCart(id);
-      return quantity + this.quantity > this.product.inventory ? false : true;
+      return quantity > this.product.inventory ? false : true;
+    },
+    checkQuantityChange(product) {
+      return this.quantity == product.quantity;
     },
   },
 };
