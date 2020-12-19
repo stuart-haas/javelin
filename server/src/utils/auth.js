@@ -28,11 +28,22 @@ module.exports = {
     res.status(401).send({ error: true, message: 'You are not authorized' });
   },
   isAdmin: async (req, res, next) => {
-    const user = await User.findOne({ username: req.body.username });
-    if (user.role !== 'admin') {
-      return res
-        .status(401)
-        .json({ error: true, message: 'You are not authorized ' });
+    const isAuthenticated = req.isAuthenticated();
+    const { username } = req.body;
+    const user = await User.findOne({ username });
+
+    if (!user) {
+      if (req.user.role !== 'admin' || !isAuthenticated) {
+        return res
+          .status(401)
+          .json({ error: true, message: 'You are not authorized ' });
+      }
+    } else {
+      if (user.role !== 'admin') {
+        return res
+          .status(401)
+          .json({ error: true, message: 'You are not authorized ' });
+      }
     }
     next();
   },

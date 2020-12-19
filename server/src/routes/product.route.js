@@ -8,7 +8,7 @@ router.post('/', auth.isAuthenticated, controller.create);
 router
   .route('/:id')
   .get(controller.find)
-  .put(auth.isAuthenticated, controller.update)
-  .delete(auth.isAuthenticated, controller.delete);
+  .put(auth.isAdmin, controller.update)
+  .delete(auth.isAdmin, auth.isAuthenticated, controller.delete);
 
 module.exports = router;

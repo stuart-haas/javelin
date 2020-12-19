@@ -2,14 +2,6 @@ const User = require('../models/user.model');
 const passport = require('passport');
 
 module.exports = {
-  findAll: async (req, res) => {
-    const users = await User.find();
-    res.json(users);
-  },
-  deleteAll: async (req, res) => {
-    const users = await User.deleteMany();
-    res.json(users);
-  },
   session: async (req, res) => {
     const { user } = req;
     if (!user) {
