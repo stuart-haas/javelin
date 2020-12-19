@@ -21,6 +21,11 @@ async function setup() {
     const responses = await prompt([
       {
         type: 'input',
+        name: 'username',
+        message: 'Username:',
+      },
+      {
+        type: 'input',
         name: 'email',
         message: 'Email:',
       },
@@ -33,6 +38,7 @@ async function setup() {
 
     const user = await User.register(
       new User({
+        username: responses.username,
         email: responses.email,
         role: 'admin',
       }),
