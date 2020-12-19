@@ -40,8 +40,9 @@ const router = new Router({
           name: 'login',
           component: Login,
           meta: { title: 'Login' },
-          beforeEnter: (to, from, next) => {
+          beforeEnter: async (to, from, next) => {
             const user = store.state.user.user;
+            console.log(user);
             if (user) {
               return next({ name: 'index' });
             }
@@ -135,6 +136,19 @@ const router = new Router({
       name: 'cp-login',
       component: CPLogin,
       meta: { title: 'Login' },
+      beforeEnter: async (to, from, next) => {
+        const user = store.state.user.user;
+        if (user) {
+          if (user.role !== 'admin') {
+            next({ name: 'index' });
+          } else {
+            next({ name: 'cp' });
+          }
+        } else {
+          next();
+        }
+        next();
+      },
     },
   ],
 });
@@ -144,6 +158,9 @@ router.beforeEach(async (to, from, next) => {
     ? `${to.meta.title} - Full-Stack Docker`
     : 'Full-Stack Docker';
 
+  if (!store.state.user.user) {
+    await store.dispatch('user/initialize');
+  }
   const user = store.state.user.user;
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
