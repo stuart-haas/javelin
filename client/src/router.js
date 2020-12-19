@@ -41,7 +41,7 @@ const router = new Router({
           name: 'login',
           component: Login,
           meta: { title: 'Login' },
-          beforeEnter: async (to, from, next) => {
+          beforeEnter: (to, from, next) => {
             const user = store.state.user.user;
             console.log(user);
             if (user) {
@@ -144,7 +144,7 @@ const router = new Router({
       name: 'cp-login',
       component: CPLogin,
       meta: { title: 'Login' },
-      beforeEnter: async (to, from, next) => {
+      beforeEnter: (to, from, next) => {
         const user = store.state.user.user;
         if (user) {
           if (user.role !== 'admin') {
