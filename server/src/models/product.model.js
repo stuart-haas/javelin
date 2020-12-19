@@ -39,10 +39,7 @@ const Product = new Schema(fields, {
 
 Product.pre('save', function () {
   this.slug = fns.slugify(this.name);
-
-  if (!this.formattedPrice) {
-    this.formattedPrice = fns.formatCurrency(this.price);
-  }
+  this.formattedPrice = fns.formatCurrency(this.price);
   return this;
 });
 
