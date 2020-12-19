@@ -63,6 +63,7 @@ passport.deserializeUser(User.deserializeUser());
 
 passport.use(new LocalStrategy(User.authenticate()));
 
+app.use('/uploads', express.static(__dirname + './../uploads'));
 app.use('/api', require('./routes/api.route'));
 
 app.listen(PORT, () => {

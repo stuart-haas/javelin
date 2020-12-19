@@ -14,6 +14,7 @@ const fields = {
     unique: true,
   },
   description: String,
+  image: String,
   price: {
     type: Number,
     required: true,

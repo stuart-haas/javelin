@@ -1,53 +1,24 @@
 <template>
   <div class="space-y-3 pt-6 pb-4 border-t border-gray-300">
-    <div class="grid grid-cols-12 gap-8 items-center">
-      <div class="col-span-1">
-        <div
-          class="w-4 h-4 bg-red-500 rounded-full p-2.5 text-sm text-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-600 transition duration-200"
-          @click="removeFromCart({ id: product.id })"
-        >
-          <Icon icon="times" />
+    <div class="flex justify-between items-center">
+      <div class="flex items-center justify-between">
+        <div class="uppercase">{{ product.name }}</div>
+      </div>
+      <div class="flex items-center justify-between">
+        <div class="flex items-center">
+          <Counter :min="0" :max="product.inventory" @change="counterChange" />
         </div>
-      </div>
-      <div class="col-span-2">
-        <router-link
-          :to="`/products/${product.id}`"
-          class="text-blue-500 hover:underline"
-          >{{ product.name }}</router-link
-        >
-      </div>
-      <div class="flex items-center col-span-2">
-        <input
-          type="number"
-          min="1"
-          :max="product.inventory"
-          v-model="quantity"
-          @input="input"
-          class="border rounded-l p-2 w-24 text-center"
-        />
-        <button
-          :disabled="
-            !checkAvailability(product.id) || checkQuantityChange(product)
-          "
-          class="border-transparent border shadow-lg rounded-r transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
-          @click="addToCart(product.id)"
-        >
-          Update
-        </button>
-      </div>
-      <div class="col-span-2 text-center">
-        <p class="font-bold text-sm">Price</p>
-        {{ product.formattedPrice }}
-      </div>
-      <div class="col-span-1 text-center">
-        <p class="font-bold text-sm">Total</p>
-        {{ product.formattedTotal }}
-      </div>
-      <div
-        class="col-span-4 text-center"
-        :class="[error ? 'text-red-500' : 'text-green-500']"
-      >
-        {{ message }}
+        <div class="text-center">
+          {{ product.formattedTotal }}
+        </div>
+        <div>
+          <div
+            class="w-4 h-4 bg-gray-500 rounded-full p-2.5 text-sm text-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-200"
+            @click="removeFromCart({ id: product.id })"
+          >
+            <Icon icon="times" />
+          </div>
+        </div>
       </div>
     </div>
   </div>
@@ -116,6 +87,7 @@ export default {
     checkQuantityChange(product) {
       return this.quantity == product.quantity;
     },
+    counterChange(count) {},
   },
 };
 </script>
