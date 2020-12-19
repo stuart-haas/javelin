@@ -10,13 +10,6 @@ module.exports = {
     const users = await User.deleteMany();
     res.json(users);
   },
-  session: async (req, res) => {
-    const { user } = req;
-    if (!user) {
-      return res.json({ error: true, message: 'Session expired' });
-    }
-    res.json({ user });
-  },
   register: (req, res) => {
     User.register(
       new User({ username: req.body.username, email: req.body.email }),

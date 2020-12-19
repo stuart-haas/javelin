@@ -7,7 +7,11 @@ const state = () => {
   };
 };
 
-const getters = {};
+const getters = {
+  user() {
+    return JSON.parse(localStorage.getItem('user'));
+  },
+};
 
 const mutations = {
   setState(state, { name, value }) {
@@ -16,14 +20,8 @@ const mutations = {
 };
 
 const actions = {
-  async initialize({ dispatch, commit }) {
-    const { user } = await dispatch(
-      'get',
-      {
-        api: 'user/session',
-      },
-      { root: true }
-    );
+  async initialize({ commit }) {
+    const user = JSON.parse(localStorage.getItem('user'));
     if (user) {
       commit('setState', { name: 'user', value: user });
       if (router.history.current.name === 'login') {
@@ -44,6 +42,7 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'user', value: user });
+      localStorage.setItem('user', JSON.stringify(user));
       return success;
     }
   },
@@ -62,6 +61,7 @@ const actions = {
         { name: 'formattedTotal', value: '' },
         { root: true }
       );
+      localStorage.removeItem('user');
       router.push('/login');
     }
   },

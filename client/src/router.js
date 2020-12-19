@@ -15,6 +15,7 @@ import Products from './views/pages/products/Index.vue';
 import Product from './views/pages/products/Product.vue';
 import Cart from './views/pages/cart/Index.vue';
 import Checkout from './views/pages/cart/Checkout.vue';
+import CP from './views/layouts/CP.vue';
 
 Vue.use(Router);
 
@@ -122,6 +123,12 @@ const router = new Router({
         },
       ],
     },
+    {
+      path: '/cp',
+      name: 'cp',
+      component: CP,
+      meta: { title: 'Control Panel', requiresRole: 'admin' },
+    },
   ],
 });
 
@@ -130,10 +137,18 @@ router.beforeEach(async (to, from, next) => {
     ? `${to.meta.title} - Full-Stack Docker`
     : 'Full-Stack Docker';
 
-  const user = store.state.user.user;
+  const user = store.getters['user/user'];
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
       next({ name: 'login', query: { from: to.fullPath } });
+    } else {
+      next();
+    }
+  } else if (
+    to.matched.some((records) => records.meta.requiresRole === 'admin')
+  ) {
+    if (user.role !== 'admin') {
+      next({ name: 'index' });
     } else {
       next();
     }
