@@ -16,6 +16,7 @@ import Product from './views/pages/products/Product.vue';
 import Cart from './views/pages/cart/Index.vue';
 import Checkout from './views/pages/cart/Checkout.vue';
 import CP from './views/layouts/CP.vue';
+import CPLogin from './views/pages/cp/Login.vue';
 
 Vue.use(Router);
 
@@ -40,7 +41,7 @@ const router = new Router({
           component: Login,
           meta: { title: 'Login' },
           beforeEnter: (to, from, next) => {
-            const user = store.state.user.user;
+            const user = store.getters['user/user'];
             if (user) {
               return next({ name: 'index' });
             }
@@ -127,7 +128,24 @@ const router = new Router({
       path: '/cp',
       name: 'cp',
       component: CP,
-      meta: { title: 'Control Panel', requiresRole: 'admin' },
+      meta: { title: 'Control Panel', requiresAdmin: true },
+    },
+    {
+      path: '/cp/login',
+      name: 'cp-login',
+      component: CPLogin,
+      meta: { title: 'Login' },
+      beforeEnter: (to, from, next) => {
+        const user = store.getters['user/user'];
+        if (user) {
+          if (user.role !== 'admin') {
+            next({ name: 'index' });
+          } else {
+            next({ name: 'cp' });
+          }
+        }
+        next();
+      },
     },
   ],
 });
@@ -140,17 +158,19 @@ router.beforeEach(async (to, from, next) => {
   const user = store.getters['user/user'];
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
-      next({ name: 'login', query: { from: to.fullPath } });
+      next({ name: 'login' });
     } else {
       next();
     }
-  } else if (
-    to.matched.some((records) => records.meta.requiresRole === 'admin')
-  ) {
-    if (user.role !== 'admin') {
-      next({ name: 'index' });
+  } else if (to.matched.some((records) => records.meta.requiresAdmin)) {
+    if (user) {
+      if (user.role !== 'admin') {
+        next({ name: 'index' });
+      } else {
+        next();
+      }
     } else {
-      next();
+      next({ name: 'cp-login' });
     }
   } else {
     next();

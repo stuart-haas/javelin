@@ -1,4 +1,5 @@
 const { validationResult } = require('express-validator');
+const User = require('../models/user.model');
 
 module.exports = {
   validate: (req, res, next) => {
@@ -25,5 +26,14 @@ module.exports = {
     }
 
     res.status(401).send({ error: true, message: 'You are not authorized' });
+  },
+  isAdmin: async (req, res, next) => {
+    const user = await User.findOne({ username: req.body.username });
+    if (user.role !== 'admin') {
+      return res
+        .status(401)
+        .json({ error: true, message: 'You are not authorized ' });
+    }
+    next();
   },
 };

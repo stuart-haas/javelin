@@ -1,12 +1,9 @@
 <template>
   <div
-    class="flex justify-center bg-no-repeat bg-top bg-cover h-screen"
+    class="flex items-center justify-center bg-no-repeat bg-top bg-cover h-screen"
     :style="{ 'background-image': `url(${image})` }"
   >
-    <div class="pt-10 w-10/12 md:w-8/12 lg:w-4/12">
-      <div class="py-4">
-        <h1 class="text-4xl">Login</h1>
-      </div>
+    <div class="w-10/12 md:w-8/12 lg:w-4/12">
       <form
         @submit.prevent="submit"
         class="shadow-lg py-4 rounded border bg-white bg-opacity-75"
@@ -49,9 +46,6 @@
             >
               Login
             </button>
-            <router-link to="/register" class="block mt-6 underline"
-              >Register</router-link
-            >
           </div>
         </div>
       </form>
@@ -77,17 +71,12 @@ export default {
     async submit() {
       const { formData } = this;
       const success = await this.$store.dispatch('user/login', {
-        api: 'user/login',
+        api: 'user/cp/login',
         formData,
       });
 
       if (success) {
-        const query = this.$route.query.from;
-        if (query) {
-          this.$router.replace(query);
-        } else {
-          this.$router.replace('/products');
-        }
+        this.$router.push('/cp/dashboard');
       }
     },
   },

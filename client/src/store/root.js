@@ -13,9 +13,9 @@ const mutations = {
 };
 
 const actions = {
-  initialize({ dispatch }) {
+  initialize({ commit, dispatch }) {
     dispatch('cart/initialize');
-    dispatch('user/initialize');
+    commit('user/initialize');
   },
   get(ctx, { api, param }) {
     const route = param ? `${api}/${param}` : api;

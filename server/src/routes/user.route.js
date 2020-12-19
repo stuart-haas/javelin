@@ -6,6 +6,17 @@ const auth = require('../utils/auth');
 
 router.route('/').post(controller.findAll).delete(controller.deleteAll);
 
+router.get('/session', controller.session);
+
+router.post(
+  '/cp/login',
+  middleware.loginRules,
+  auth.validate,
+  auth.isAdmin,
+  passport.authenticate('local'),
+  controller.login
+);
+
 router.post(
   '/register',
   middleware.registrationRules,
