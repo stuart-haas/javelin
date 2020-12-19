@@ -1,7 +1,7 @@
 <template>
   <div class="mt-4 w-10/12 m-auto">
     <div class="pt-4">
-      <h1 class="text-4xl">Cart</h1>
+      <h1 class="h1">Cart</h1>
     </div>
     <div
       v-if="items.length"
@@ -15,12 +15,10 @@
         <router-link class="underline" to="/products">Shop now.</router-link>
       </div>
       <div v-else class="text-right">
-        <p class="text-lg my-4">
-          <span class="font-medium">Total:</span> {{ formattedTotal }}
-        </p>
+        <p class="text-lg my-4">{{ formattedTotal }}</p>
         <router-link
           to="/cart/checkout"
-          class="inline-block transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
+          class="inline-block transition duration-200 p-4 text-white bg-blue-500 hover:bg-blue-600"
         >
           Checkout
         </router-link>

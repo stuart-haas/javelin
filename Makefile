@@ -4,6 +4,9 @@ dev:
 start:
 	docker-compose up -d
 
+setup:
+	 docker-compose exec server node ./scripts/setup.js
+
 login-client:
 	docker exec -it fullstack_client sh
 

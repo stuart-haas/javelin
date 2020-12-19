@@ -29,18 +29,21 @@
           </div>
         </div>
       </div>
-      <div class="col-span-8 pt-8">
+      <div class="col-span-8 mt-2">
         <div class="w-full">
-          <h1 class="text-4xl">Account</h1>
-          <div v-if="!user" class="text-center">
+          <div v-if="!user" class="text-center w-10/12">
             <router-link
               to="/login?from=cart/checkout"
               class="text-blue-500 hover:underline my-6 block"
               >Login to Your Account</router-link
             >
           </div>
+          <div v-else class="mt-8 w-10/12">
+            <h2 class="text-2xl my-3">Contact Information</h2>
+            {{ user.email }}
+          </div>
           <form @submit.prevent="submit" class="mt-8 w-10/12">
-            <h2 class="text-2xl my-3">Shipping</h2>
+            <h2 class="text-2xl my-3">Shipping Address</h2>
             <div class="space-y-6">
               <div class="grid grid-cols-2 gap-6">
                 <fieldset>

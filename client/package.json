@@ -17,6 +17,12 @@
     "autoprefixer": "^9",
     "axios": "^0.21.0",
     "core-js": "^3.6.5",
+    "fontsource-cabin": "^3.1.6",
+    "fontsource-merriweather": "^3.1.5",
+    "fontsource-merriweather-sans": "^3.1.6",
+    "fontsource-nunito": "^3.1.5",
+    "fontsource-open-sans": "^3.1.5",
+    "fontsource-oswald": "^3.1.6",
     "tailwindcss": "^2.0.1-compat",
     "vue": "^2.6.11",
     "vue-click-outside": "^1.1.0",
@@ -33,6 +39,8 @@
     "eslint-plugin-prettier": "^3.3.0",
     "eslint-plugin-vue": "^7.3.0",
     "prettier": "^2.2.1",
+    "stylelint": "^13.8.0",
+    "stylelint-config-idiomatic-order": "^8.1.0",
     "vue-template-compiler": "^2.6.11"
   }
 }

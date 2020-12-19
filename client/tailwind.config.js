@@ -1,5 +1,9 @@
 module.exports = {
   theme: {
+    fontFamily: {
+      serif: ['Merriweather', 'sans-serif'],
+      sans: ['Nunito', 'sans'],
+    },
     extend: {
       colors: {
         orange: {

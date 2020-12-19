@@ -16,6 +16,7 @@ module.exports = {
       }),
     body('email', 'Email required')
       .exists()
+      .isEmail()
       .trim()
       .escape()
       .custom((value) => {

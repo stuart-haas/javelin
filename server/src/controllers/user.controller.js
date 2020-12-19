@@ -2,6 +2,14 @@ const User = require('../models/user.model');
 const passport = require('passport');
 
 module.exports = {
+  findAll: async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  },
+  deleteAll: async (req, res) => {
+    const users = await User.deleteMany();
+    res.json(users);
+  },
   session: async (req, res) => {
     const { user } = req;
     if (!user) {
@@ -54,7 +62,9 @@ module.exports = {
     const { id } = req.params;
     const user = await User.findById(id);
     Object.keys(req.body).forEach((key) => {
-      user[key] = req.body[key];
+      if (key !== 'role') {
+        user[key] = req.body[key];
+      }
     });
     await user.save();
     res.json({ success: true, message: 'Account updated', user });

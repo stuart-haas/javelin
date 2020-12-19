@@ -4,6 +4,8 @@ const controller = require('../controllers/user.controller');
 const middleware = require('../middlewares/user.middleware');
 const auth = require('../utils/auth');
 
+router.route('/').post(controller.findAll).delete(controller.deleteAll);
+
 router.get('/session', controller.session);
 
 router.post(

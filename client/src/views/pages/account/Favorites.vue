@@ -1,6 +1,6 @@
 <template>
   <div class="w-full">
-    <h1 class="text-4xl">Favorites</h1>
+    <h2 class="h2">Favorites</h2>
     <div class="mt-6 space-y-3">
       <div
         v-for="product in favorites"

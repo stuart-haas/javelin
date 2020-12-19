@@ -14,6 +14,8 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/api';
 import './plugins/directives';
+import 'fontsource-merriweather';
+import 'fontsource-nunito';
 import './assets/css/index.css';
 
 library.add(faShoppingCart, faStar, faToolbox, faPlus, faMinus, faTimes);

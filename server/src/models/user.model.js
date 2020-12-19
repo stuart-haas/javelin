@@ -12,6 +12,11 @@ const fields = {
     type: String,
     unique: true,
   },
+  role: {
+    type: String,
+    enum: ['customer', 'admin'],
+    default: 'customer',
+  },
   avatar: String,
   firstName: String,
   lastName: String,
