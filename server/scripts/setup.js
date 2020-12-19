@@ -18,7 +18,7 @@ async function setup() {
       chalk.green(`Database is connected to ${process.env.DATABASE_URL}`)
     );
 
-    const responses = await prompt([
+    const response = await prompt([
       {
         type: 'input',
         name: 'username',
@@ -38,15 +38,15 @@ async function setup() {
 
     const user = await User.register(
       new User({
-        username: responses.username,
-        email: responses.email,
+        username: response.username,
+        email: response.email,
         role: 'admin',
       }),
-      responses.password
+      response.password
     );
 
     const { username } = user;
-    const { password } = responses;
+    const { password } = response;
 
     console.log(chalk.green('User created'));
     console.log(username, password);
