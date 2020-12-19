@@ -14,7 +14,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/api';
 import './plugins/directives';
-import 'fontsource-merriweather';
+import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';
 import './assets/css/index.css';
 

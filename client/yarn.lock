@@ -4165,35 +4165,15 @@ follow-redirects@^1.0.0, follow-redirects@^1.10.0:
   resolved "https://registry.yarnpkg.com/follow-redirects/-/follow-redirects-1.13.1.tgz#5f69b813376cee4fd0474a3aba835df04ab763b7"
   integrity sha512-SSG5xmZh1mkPGyKzjZP8zLjltIfpW32Y5QpdNJyjcfGxK3qo3NDDkZOZSFiGn1A6SclQxY9GzEwAHQ3dmYRWpg==
 
-fontsource-cabin@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/fontsource-cabin/-/fontsource-cabin-3.1.6.tgz#777b636e9c8522c18e143a110d3554e1b89b5356"
-  integrity sha512-G1MS8SUJlYF8kwlcCL0+KJk54+k5OCP9YTEy2tCi1c7UZrHYqrXNVj29yta4aOmxCDA/jaB0NvcXr27g4vrL+A==
-
-fontsource-merriweather-sans@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/fontsource-merriweather-sans/-/fontsource-merriweather-sans-3.1.6.tgz#d09cc4467cc6f48a5ed574c220cc39ecca5ce569"
-  integrity sha512-3iEf3dUx/WP7fHu/HN22/IQOML4UPTRa/I2q9rqmUSFiZ0j4BcpmATaiXHbry/EOTdglCVjFz8aHon3cPcQPqg==
-
-fontsource-merriweather@^3.1.5:
+fontsource-libre-baskerville@^3.1.5:
   version "3.1.5"
-  resolved "https://registry.yarnpkg.com/fontsource-merriweather/-/fontsource-merriweather-3.1.5.tgz#41489b21ebbf334b5de9800c62147c8701dd3d95"
-  integrity sha512-fpdKa7MYR5UfbJWZLOJtAj5Pl8qyESPirBO5NptfqZCBv0uDkL5v8gAaO1CGiSvsAGtTiW6kJSmpbGbA4vkDIQ==
+  resolved "https://registry.yarnpkg.com/fontsource-libre-baskerville/-/fontsource-libre-baskerville-3.1.5.tgz#3821e39bc2e74ea7046673285d8ef2b4b021d939"
+  integrity sha512-eQ4uEGrGStiQuGzeawKFfvOi039wLthZi1FVZ0pzWnCuRMaW98S+0bdHz+r8zY7FsBmboN+BZ0pe1gHunS+2OA==
 
 fontsource-nunito@^3.1.5:
   version "3.1.5"
   resolved "https://registry.yarnpkg.com/fontsource-nunito/-/fontsource-nunito-3.1.5.tgz#fd1cd90a4e7d291f1e1969848339e15470888788"
   integrity sha512-/Z8KLstZsKA5ySEJfaaEdhgUN2cnqE/RSLksqdjRR3vxIMKn2E6LFh1by+WfNa2nGhCCqX7GfiLwyOwJ8Wx/ug==
-
-fontsource-open-sans@^3.1.5:
-  version "3.1.5"
-  resolved "https://registry.yarnpkg.com/fontsource-open-sans/-/fontsource-open-sans-3.1.5.tgz#93d0040633d37215658d72565bd2a12d9a8fa854"
-  integrity sha512-tculQB3D6GHLPcbY1+WduZJM3bitV7GptWuKBAU7emfagJ/D5jtMCMd4i4JOGEzk0n416fdo5vLC0zYHxBYxzg==
-
-fontsource-oswald@^3.1.6:
-  version "3.1.6"
-  resolved "https://registry.yarnpkg.com/fontsource-oswald/-/fontsource-oswald-3.1.6.tgz#d353302447f608aaa5b76199413466c78d85a70b"
-  integrity sha512-YGemcfgSOwYMJgM0VQE0i0kBDDm4iHsbWtqD/dmVnKA71HPjZcexHA+V2H3wAITBQBoqAsl1Jm+akjFI5cV1AQ==
 
 for-in@^1.0.2:
   version "1.0.2"

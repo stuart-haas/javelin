@@ -1,7 +1,7 @@
 module.exports = {
   theme: {
     fontFamily: {
-      serif: ['Merriweather', 'sans-serif'],
+      serif: ['Libre Baskerville', 'sans-serif'],
       sans: ['Nunito', 'sans'],
     },
     extend: {
