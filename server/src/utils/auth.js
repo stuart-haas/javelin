@@ -32,14 +32,18 @@ module.exports = {
     const { username } = req.body;
     const user = await User.findOne({ username });
 
-    if (
-      (user && user.role !== 'admin') ||
-      req.user.role !== 'admin' ||
-      !isAuthenticated
-    ) {
-      return res
-        .status(401)
-        .json({ error: true, message: 'You are not authorized ' });
+    if (!user) {
+      if (req.user.role !== 'admin' || !isAuthenticated) {
+        return res
+          .status(401)
+          .json({ error: true, message: 'You are not authorized ' });
+      }
+    } else {
+      if (user.role !== 'admin') {
+        return res
+          .status(401)
+          .json({ error: true, message: 'You are not authorized ' });
+      }
     }
     next();
   },

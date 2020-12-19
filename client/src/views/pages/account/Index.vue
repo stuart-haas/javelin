@@ -2,7 +2,7 @@
   <div class="w-10/12 m-auto">
     <div class="grid grid-cols-12 gap-6 h-screen">
       <div class="col-span-4 border-r pt-8">
-        <h1 class="text-4xl">Your Account</h1>
+        <h1 class="h1">Your Account</h1>
         <div class="mt-6 space-y-6">
           <router-link
             to="/account/orders"
@@ -39,8 +39,11 @@
 <script>
 export default {
   methods: {
-    logout() {
-      this.$store.dispatch('user/logout');
+    async logout() {
+      const success = await this.$store.dispatch('user/logout');
+      if (success) {
+        this.$router.push('/');
+      }
     },
   },
 };

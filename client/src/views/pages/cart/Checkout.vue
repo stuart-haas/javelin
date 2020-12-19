@@ -2,7 +2,7 @@
   <div class="w-10/12 m-auto">
     <div class="grid grid-cols-12 gap-6 h-screen">
       <div class="col-span-4 border-r pt-8">
-        <h1 class="text-4xl">Checkout</h1>
+        <h1 class="h1">Checkout</h1>
         <div class="mt-6 space-y-6 pr-6">
           <div v-for="product in items" :key="product.id">
             <p class="font-medium">
@@ -39,11 +39,11 @@
             >
           </div>
           <div v-else class="mt-8 w-10/12">
-            <h2 class="text-2xl my-3">Contact Information</h2>
+            <h2 class="h2 my-3">Contact Information</h2>
             {{ user.email }}
           </div>
           <form @submit.prevent="submit" class="mt-8 w-10/12">
-            <h2 class="text-2xl my-3">Shipping Address</h2>
+            <h2 class="h2 my-3">Shipping Address</h2>
             <div class="space-y-6">
               <div class="grid grid-cols-2 gap-6">
                 <fieldset>

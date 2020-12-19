@@ -5,7 +5,7 @@
   >
     <div class="pt-10 w-10/12 md:w-8/12 lg:w-4/12">
       <div class="py-4">
-        <h1 class="text-4xl">Register</h1>
+        <h1 class="h1">Register</h1>
       </div>
       <form
         @submit.prevent="submit"

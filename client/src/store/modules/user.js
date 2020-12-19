@@ -62,8 +62,8 @@ const actions = {
         { name: 'formattedTotal', value: '' },
         { root: true }
       );
-      router.push('/');
     }
+    return success;
   },
   async register({ dispatch }, { formData }) {
     const { success } = await dispatch(

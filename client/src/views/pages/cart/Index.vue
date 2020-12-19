@@ -18,7 +18,7 @@
         <p class="text-lg my-4">{{ formattedTotal }}</p>
         <router-link
           to="/cart/checkout"
-          class="inline-block transition duration-200 p-4 text-white bg-blue-500 hover:bg-blue-600"
+          class="inline-block transition duration-200 p-3 text-white bg-blue-500 hover:bg-blue-600"
         >
           Checkout
         </router-link>

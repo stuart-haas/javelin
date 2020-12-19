@@ -17,6 +17,7 @@ import Cart from './views/pages/cart/Index.vue';
 import Checkout from './views/pages/cart/Checkout.vue';
 import CP from './views/layouts/CP.vue';
 import CPLogin from './views/pages/cp/Login.vue';
+import Dashboard from './views/pages/cp/Index.vue';
 
 Vue.use(Router);
 
@@ -127,9 +128,16 @@ const router = new Router({
     },
     {
       path: '/cp',
-      name: 'cp',
       component: CP,
-      meta: { title: 'Control Panel', requiresAdmin: true },
+      meta: { requiresAdmin: true },
+      children: [
+        {
+          path: '',
+          name: 'cp',
+          component: Dashboard,
+          meta: { title: 'Dashboard' },
+        },
+      ],
     },
     {
       path: '/cp/login',
