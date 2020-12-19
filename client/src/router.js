@@ -41,7 +41,7 @@ const router = new Router({
           component: Login,
           meta: { title: 'Login' },
           beforeEnter: (to, from, next) => {
-            const user = store.getters['user/user'];
+            const user = store.state.user.user;
             if (user) {
               return next({ name: 'index' });
             }
@@ -135,17 +135,6 @@ const router = new Router({
       name: 'cp-login',
       component: CPLogin,
       meta: { title: 'Login' },
-      beforeEnter: (to, from, next) => {
-        const user = store.getters['user/user'];
-        if (user) {
-          if (user.role !== 'admin') {
-            next({ name: 'index' });
-          } else {
-            next({ name: 'cp' });
-          }
-        }
-        next();
-      },
     },
   ],
 });
@@ -155,10 +144,10 @@ router.beforeEach(async (to, from, next) => {
     ? `${to.meta.title} - Full-Stack Docker`
     : 'Full-Stack Docker';
 
-  const user = store.getters['user/user'];
+  const user = store.state.user.user;
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
-      next({ name: 'login' });
+      next({ name: 'login', query: { from: to.fullPath } });
     } else {
       next();
     }
@@ -170,7 +159,7 @@ router.beforeEach(async (to, from, next) => {
         next();
       }
     } else {
-      next({ name: 'cp-login' });
+      next({ name: 'cp-login', query: { from: to.fullPath } });
     }
   } else {
     next();

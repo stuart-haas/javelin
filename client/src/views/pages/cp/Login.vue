@@ -76,7 +76,12 @@ export default {
       });
 
       if (success) {
-        this.$router.push('/cp/dashboard');
+        const query = this.$route.query.from;
+        if (query) {
+          this.$router.replace(query);
+        } else {
+          this.$router.replace('/cp');
+        }
       }
     },
   },

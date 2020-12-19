@@ -7,30 +7,35 @@ const state = () => {
   };
 };
 
-const getters = {
-  user() {
-    return JSON.parse(localStorage.getItem('user'));
-  },
-};
+const getters = {};
 
 const mutations = {
   setState(state, { name, value }) {
     state[name] = value;
   },
-  setStore(state, { name, value }) {
-    localStorage.setItem(name, JSON.stringify(value));
-  },
-  removeStore(state, { name }) {
-    localStorage.removeItem(name);
-  },
-  initialize(state) {
-    if (localStorage.getItem('user')) {
-      state.user = JSON.parse(localStorage.getItem('user'));
-    }
-  },
 };
 
 const actions = {
+  async initialize({ dispatch, commit }) {
+    const { user } = await dispatch(
+      'get',
+      {
+        api: 'user/session',
+      },
+      { root: true }
+    );
+    if (user) {
+      commit('setState', { name: 'user', value: user });
+      if (router.history.current.name === 'login') {
+        const { from } = router.history.current.query;
+        if (from) {
+          router.push(from);
+        } else {
+          router.push('/');
+        }
+      }
+    }
+  },
   async login({ commit, dispatch }, { api, formData }) {
     const { success, user } = await dispatch(
       'post',
@@ -39,7 +44,6 @@ const actions = {
     );
     if (success) {
       commit('setState', { name: 'user', value: user });
-      commit('setStore', { name: 'user', value: user });
       return success;
     }
   },
@@ -51,7 +55,6 @@ const actions = {
     );
     if (success || error) {
       commit('setState', { name: 'user', value: null });
-      commit('removeStore', { name: 'user' });
       commit('cart/setState', { name: 'items', value: [] }, { root: true });
       commit('cart/setState', { name: 'total', value: 0 }, { root: true });
       commit(
