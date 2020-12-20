@@ -85,12 +85,19 @@
               {{ category.name }}
             </option>
           </select>
-          <input
-            v-if="isAdding"
-            v-model="category"
-            class="block border border-gray-500 mt-2 p-1 text-sm"
-            @input="inputCategory"
-          />
+          <div v-if="isAdding" class="flex items-center">
+            <input
+              v-model="category"
+              class="block border border-gray-500 mt-2 p-1 text-sm"
+              @input="inputCategory"
+            />
+            <div
+              class="mt-1.5 ml-2 w-2 h-2 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
+              @click="isAdding = false"
+            >
+              <Icon icon="times" />
+            </div>
+          </div>
           <span
             v-if="!isAdding"
             class="inline-block border border-gray-300 p-1 mt-2 text-sm bg-transparent hover:bg-gray-100 transition duration-300 cursor-pointer"
