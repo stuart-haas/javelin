@@ -27,6 +27,6 @@ module.exports = {
   delete: async (req, res) => {
     const { id } = req.params;
     const product = await Product.findByIdAndDelete(id);
-    res.json(product);
+    res.json({ success: true, message: 'Product deleted', product });
   },
 };

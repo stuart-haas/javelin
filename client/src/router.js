@@ -20,6 +20,8 @@ import CPLogin from './views/pages/cp/Login.vue';
 import CPIndex from './views/pages/cp/Index.vue';
 import CPProducts from './views/pages/cp/products/Index.vue';
 import CPProductsForm from './views/pages/cp/products/Form.vue';
+import CPCategories from './views/pages/cp/categories/Index.vue';
+import CPCategoriesForm from './views/pages/cp/categories/Form.vue';
 import CPUsers from './views/pages/cp/users/Index.vue';
 
 Vue.use(Router);
@@ -156,6 +158,24 @@ const router = new Router({
               name: 'cp-products-id',
               component: CPProductsForm,
               meta: { title: 'Edit Product' },
+            },
+            {
+              path: 'categories',
+              name: 'cp-categories',
+              component: CPCategories,
+              meta: { title: 'Categories' },
+            },
+            {
+              path: 'categories/new',
+              name: 'cp-categories-new',
+              component: CPCategoriesForm,
+              meta: { title: 'New Category' },
+            },
+            {
+              path: 'categories/:id',
+              name: 'cp-categories-id',
+              component: CPCategoriesForm,
+              meta: { title: 'Edit Category' },
             },
             {
               path: 'users',

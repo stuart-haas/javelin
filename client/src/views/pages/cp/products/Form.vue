@@ -1,6 +1,17 @@
 <template>
   <div class="w-10/12">
-    <Upload :current="formData.image" @update="update" />
+    <div class="flex justify-between items-start">
+      <Upload :current="formData.image" @update="updateImage" />
+      <Button
+        v-if="$route.params.id"
+        class="mt-3"
+        theme="red"
+        :variant="{ base: '500', dark: '600' }"
+        @click="deleteThis"
+      >
+        Delete
+      </Button>
+    </div>
     <form @submit.prevent="submit">
       <div class="space-y-6">
         <fieldset>
@@ -74,6 +85,30 @@
               {{ category.name }}
             </option>
           </select>
+          <input
+            v-if="isAdding"
+            v-model="category"
+            class="block border border-gray-500 mt-2 p-1 text-sm"
+            @input="inputCategory"
+          />
+          <span
+            v-if="!isAdding"
+            class="inline-block border border-gray-300 p-1 mt-2 text-sm bg-transparent hover:bg-gray-100 transition duration-300 cursor-pointer"
+            @click="isAdding = true"
+          >
+            <Icon icon="plus" />
+            <span class="ml-2">Add New</span>
+          </span>
+          <span
+            v-if="category"
+            class="inline-block py-1 px-2 mt-2 text-sm bg-blue-500 hover:bg-blue-600 text-white transition duration-300 cursor-pointer"
+            @click="saveCategory"
+          >
+            <span>Save</span>
+          </span>
+          <div v-if="categoryMessage" class="text-green-500 text-sm mt-1">
+            {{ categoryMessage }}
+          </div>
         </fieldset>
         <fieldset>
           <label
@@ -94,11 +129,11 @@
             Save
           </Button>
         </div>
-        <div v-if="message" class="text-center text-green-500">
-          {{ message }}
-        </div>
       </div>
     </form>
+    <div v-if="message" class="text-center text-green-500 mt-6">
+      {{ message }}
+    </div>
   </div>
 </template>
 
@@ -108,14 +143,18 @@ export default {
     return {
       formData: {},
       categories: [],
+      isAdding: false,
+      category: '',
+      categoryMessage: '',
       message: '',
     };
   },
   mounted() {
-    this.fetch();
+    this.fetchProduct();
+    this.fetchCategories();
   },
   methods: {
-    async fetch() {
+    async fetchProduct() {
       const param = this.$route.params.id;
       if (param) {
         const product = await this.$store.dispatch('get', {
@@ -124,7 +163,8 @@ export default {
         });
         this.formData = product || {};
       }
-
+    },
+    async fetchCategories() {
       const categories = await this.$store.dispatch('get', {
         api: 'category',
       });
@@ -153,12 +193,40 @@ export default {
         }
       }
     },
+    async deleteThis() {
+      if (!window.confirm('Are you sure?')) return;
+      const param = this.$route.params.id;
+      const { product } = await this.$store.dispatch('delete', {
+        api: 'product',
+        param,
+      });
+      if (product) {
+        this.$router.push('/cp/products');
+      }
+    },
     input(e) {
       const { name, value } = e.target;
       this.formData[name] = value;
     },
-    update(path) {
+    updateImage(path) {
       this.formData['image'] = path;
+    },
+    inputCategory(e) {
+      const { value } = e.target;
+      this.category = value;
+    },
+    async saveCategory() {
+      const formData = { name: this.category };
+      const { category } = await this.$store.dispatch('post', {
+        api: 'category',
+        formData,
+      });
+      if (category) {
+        this.fetchCategories();
+        this.isAdding = false;
+        this.category = '';
+        this.categoryMessage = 'Category created';
+      }
     },
   },
 };

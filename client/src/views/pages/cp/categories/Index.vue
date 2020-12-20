@@ -2,28 +2,22 @@
   <div class="mt-1">
     <div class="flex items-center justify-between">
       <h2 class="h2">Products</h2>
-      <Button theme="secondary" tag="router-link" to="/cp/products/new"
-        >New Product</Button
+      <Button theme="secondary" tag="router-link" to="/cp/categories/new"
+        >New Category</Button
       >
     </div>
     <table class="w-full table-auto text-left mt-6">
       <tr class="font-bold border-b border-gray-300">
         <th>Name</th>
-        <th>Category</th>
-        <th>Price</th>
-        <th>Inventory</th>
       </tr>
-      <tr v-for="product in products" :key="product._id">
+      <tr v-for="category in categories" :key="category._id">
         <td>
           <router-link
-            :to="`/cp/products/${product._id}`"
+            :to="`/cp/categories/${category._id}`"
             class="text-blue-500"
-            >{{ product.name }}</router-link
+            >{{ category.name }}</router-link
           >
         </td>
-        <td>{{ product.category && product.category.name }}</td>
-        <td>{{ product.formattedPrice }}</td>
-        <td>{{ product.inventory }}</td>
       </tr>
     </table>
   </div>
@@ -33,7 +27,7 @@
 export default {
   data() {
     return {
-      products: [],
+      categories: [],
     };
   },
   mounted() {
@@ -41,9 +35,9 @@ export default {
   },
   methods: {
     async fetch() {
-      const products = await this.$store.dispatch('get', { api: 'product' });
-      if (products) {
-        this.products = products;
+      const categories = await this.$store.dispatch('get', { api: 'category' });
+      if (categories) {
+        this.categories = categories;
       }
     },
   },

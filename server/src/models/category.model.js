@@ -17,7 +17,7 @@ const Category = new Schema(fields, {
   },
 });
 
-Category.pre('save', function() {
+Category.pre('save', function () {
   this.slug = fns.slugify(this.name);
   return this;
 });

@@ -17,6 +17,12 @@
             >Products</router-link
           >
           <router-link
+            to="/cp/categories"
+            active-class="border-r-4 border-gray-700 text-blue-500"
+            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
+            >Categories</router-link
+          >
+          <router-link
             to="/cp/users"
             active-class="border-r-4 border-gray-700 text-blue-500"
             class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"

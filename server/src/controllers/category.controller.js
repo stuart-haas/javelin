@@ -11,9 +11,9 @@ module.exports = {
     res.json(category);
   },
   create: async (req, res) => {
-    const product = new Category(req.body);
-    await product.save();
-    res.json(product);
+    const category = new Category(req.body);
+    await category.save();
+    res.json({ success: true, message: 'Category created', category });
   },
   update: async (req, res) => {
     const { id } = req.params;
@@ -22,11 +22,11 @@ module.exports = {
       category[key] = req.body[key];
     });
     await category.save();
-    res.json(category);
+    res.json({ success: true, message: 'Category updated', category });
   },
   delete: async (req, res) => {
     const { id } = req.params;
-    const product = await Category.findByIdAndDelete(id);
-    res.json(product);
+    const category = await Category.findByIdAndDelete(id);
+    res.json({ success: true, message: 'Category deleted', category });
   },
 };

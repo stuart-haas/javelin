@@ -28,6 +28,10 @@ const actions = {
     const route = param ? `${api}/${param}` : api;
     return this._vm.$api.put(route, formData).then(returnData);
   },
+  delete(ctx, { api, param }) {
+    const route = param ? `${api}/${param}` : api;
+    return this._vm.$api.delete(route).then(returnData);
+  },
 };
 
 export default { state, getters, mutations, actions };

@@ -21,7 +21,7 @@
         <Button type="submit" theme="secondary">Upload</Button>
       </div>
     </form>
-    <div v-else class="relative w-1/4">
+    <div v-else class="relative w-1/3">
       <div class="block text-sm font-medium text-gray-700">Image</div>
       <a
         :href="current || path"
