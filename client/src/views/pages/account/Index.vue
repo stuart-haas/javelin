@@ -22,11 +22,14 @@
             class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Settings</router-link
           >
-          <span
-            class="cursor-pointer inline-block transition py-2 px-4 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-red-500 hover:bg-red-600"
+          <Button
+            type="submit"
+            theme="red"
+            :variant="{ base: '500', hover: '600' }"
             @click="logout"
-            >Logout</span
           >
+            Logout
+          </Button>
         </div>
       </div>
       <div class="col-span-8 pt-8">

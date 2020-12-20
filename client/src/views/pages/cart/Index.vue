@@ -16,12 +16,9 @@
       </div>
       <div v-else class="text-right">
         <p class="text-lg my-4">{{ formattedTotal }}</p>
-        <router-link
-          to="/cart/checkout"
-          class="inline-block transition duration-200 p-3 text-white bg-blue-500 hover:bg-blue-600"
-        >
+        <Button tag="router-link" theme="secondary" to="/cart/checkout">
           Checkout
-        </router-link>
+        </Button>
       </div>
     </div>
   </div>

@@ -12,6 +12,7 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import './plugins/button';
 import './plugins/counter';
 import './plugins/api';
 import 'fontsource-libre-baskerville';

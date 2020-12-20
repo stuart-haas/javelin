@@ -6,7 +6,12 @@
       </div>
       <div class="flex items-center justify-between">
         <div class="flex items-center">
-          <Counter :min="0" :max="product.inventory" @change="counterChange" />
+          <Counter
+            :min="1"
+            :max="product.inventory"
+            :current="product.quantity"
+            @change="addToCart"
+          />
         </div>
         <div class="text-center">
           {{ product.formattedTotal }}
@@ -29,65 +34,15 @@ export default {
   props: {
     product: Object,
   },
-  data() {
-    return {
-      quantity: 0,
-      message: '',
-      error: false,
-    };
-  },
-  mounted() {
-    this.quantity = this.getQuantityInCart(this.product.id);
-  },
   methods: {
-    async addToCart(id) {
-      const { quantity } = this;
+    async addToCart(quantity) {
+      const { id } = this.product;
       const formData = { id, quantity };
-      const success = await this.$store.dispatch('cart/add', { formData });
-      if (success) {
-        this.message = 'Cart updated';
-        this.error = false;
-      }
-      if (quantity == 0) {
-        this.removeFromCart(formData);
-      }
+      await this.$store.dispatch('cart/add', { formData });
     },
     async removeFromCart(formData) {
       await this.$store.dispatch('cart/remove', { formData });
     },
-    input(e) {
-      const { value } = e.target;
-      if (!value) return;
-      let val = parseInt(value);
-      if (!isNaN(val)) {
-        if (Math.sign(val) === -1) {
-          val = 1;
-        }
-        if (val > this.product.inventory) {
-          val = this.product.inventory;
-          this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
-          this.error = true;
-        } else {
-          this.message = '';
-          this.error = false;
-        }
-      }
-      this.quantity = val;
-    },
-    getQuantityInCart(id) {
-      const item = this.$store.state.cart.items.find((item) => {
-        return item.id == id;
-      });
-      return item ? item.quantity : 0;
-    },
-    checkAvailability(id) {
-      const quantity = this.getQuantityInCart(id);
-      return quantity > this.product.inventory ? false : true;
-    },
-    checkQuantityChange(product) {
-      return this.quantity == product.quantity;
-    },
-    counterChange(count) {},
   },
 };
 </script>

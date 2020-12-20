@@ -2,76 +2,65 @@
   <div class="product">
     <div
       class="bg-no-repeat bg-center h-48 bg-cover"
-      :style="{ 'background-image': `url(${image})` }"
+      :style="{ 'background-image': `url(${hero})` }"
     >
       <div class="w-10/12 m-auto flex flex-col justify-center h-full">
         <h1 class="h2 text-white">{{ product.name }}</h1>
       </div>
     </div>
     <div class="w-10/12 m-auto">
-      <div class="py-8">
+      <div class="my-8">
         {{ product.description }}
       </div>
-      <div class="mt-2">{{ product.formattedPrice }}</div>
-      <div class="mt-2">{{ product.inventory }} in stock</div>
-      <div class="border-t border-gray-300 my-6"></div>
-      <div class="mt-2">
+      <div class="space-y-2 border-b border-gray-300 pb-4">
+        <div>{{ product.formattedPrice }}</div>
+        <div>{{ product.inventory }} in stock</div>
+      </div>
+      <div class="mt-4">
         {{
           getQuantityInCart(product._id) > 0
             ? `You have ${getQuantityInCart(product._id)} in your cart.`
             : "You don't have any in your cart."
         }}
       </div>
-      <div class="flex items-center">
-        <div class="my-4 flex items-center">
-          <input
-            type="number"
-            min="1"
-            :max="getMaxAvailabe(product)"
-            v-model="quantity"
-            @input="input"
-            class="border rounded-l p-2 w-24 text-center"
-          />
-          <button
-            :disabled="!checkAvailability(product._id) || quantity == 0"
-            class="border-transparent border shadow-lg rounded-r transition duration-200 ease-in-out bg-green-500 p-2 hover:bg-green-600 text-white"
-            @click="addToCart(product._id)"
-          >
-            Add to Cart
-          </button>
-        </div>
-        <button
+      <div class="mt-4 flex items-center">
+        <Counter
+          :min="0"
+          :max="getMaxAvailabe(product)"
+          :current="quantity"
+          @change="updateQuantity"
+        />
+        <Button
+          class="ml-4 mr-8"
+          :disabled="!checkAvailability(product._id) || quantity == 0"
+          @click="addToCart(product._id)"
+        >
+          Add to Cart
+        </Button>
+        <Button
           v-if="user"
-          class="ml-6 border-transparent border p-2 shadow-lg rounded transition duration-200 ease-in-out"
-          :class="[
-            this.checkFavorite(product._id)
-              ? 'bg-red-500 text-white'
-              : 'bg-gray-200 text-black hover:bg-gray-300',
-          ]"
+          :theme="favorite ? 'red' : 'gray'"
+          :variant="{ base: favorite ? '500' : '400' }"
+          class="w-10 h-10 rounded-full"
           @click="toggleFavorite(product._id)"
         >
-          Favorite
           <Icon icon="star" />
-        </button>
-      </div>
-      <div v-if="message" :class="[error ? 'text-red-500' : 'text-green-500']">
-        {{ message }}
+        </Button>
       </div>
     </div>
   </div>
 </template>
 
 <script>
-import image from '../../../assets/images/tools.jpg';
+import hero from '../../../assets/images/tools.jpg';
 
 export default {
   data() {
     return {
+      hero: hero,
       product: {},
-      image: image,
       quantity: 0,
-      message: '',
-      error: false,
+      favorite: false,
     };
   },
   computed: {
@@ -90,19 +79,17 @@ export default {
         param,
       });
       this.product = product;
+      this.favorite = this.checkFavorite(this.product._id);
     },
     async addToCart(id) {
       const quantity = this.getQuantityInCart(id) + this.quantity;
       const formData = { id, quantity };
-      const success = await this.$store.dispatch('cart/add', { formData });
       this.quantity = 0;
-      if (success) {
-        this.message = 'Cart updated';
-        this.error = false;
-      }
+      await this.$store.dispatch('cart/add', { formData });
     },
     async toggleFavorite(favorite) {
       const isFavorite = this.checkFavorite(favorite);
+      this.favorite = !this.favorite;
       const param = this.$store.state.user.user._id;
       const formData = { favorite };
       if (!isFavorite) {
@@ -111,25 +98,8 @@ export default {
         await this.$store.dispatch('user/removeFavorite', { param, formData });
       }
     },
-    input(e) {
-      const { value } = e.target;
-      if (!value) return;
-      let val = parseInt(value);
-      if (!isNaN(val)) {
-        if (Math.sign(val) === -1) {
-          val = 1;
-        }
-        const quantity = this.getQuantityInCart(this.product._id);
-        if (val + quantity > this.product.inventory) {
-          val = this.product.inventory - quantity;
-          this.message = `Sorry, we only have ${this.product.inventory} in stock.`;
-          this.error = true;
-        } else {
-          this.message = '';
-          this.error = false;
-        }
-      }
-      this.quantity = val;
+    updateQuantity(value) {
+      this.quantity = value;
     },
     getQuantityInCart(id) {
       const item = this.$store.state.cart.items.find((item) => {

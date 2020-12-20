@@ -1,3 +1,5 @@
+const { colors } = require('tailwindcss/defaultTheme');
+
 module.exports = {
   theme: {
     fontFamily: {
@@ -6,9 +8,14 @@ module.exports = {
     },
     extend: {
       colors: {
-        orange: {
-          dark: '#9C4221',
-          darker: '#7B341E',
+        primary: {
+          base: '#ED8936',
+          dark: '#DD6B20',
+        },
+        secondary: {
+          base: colors.blue['500'],
+          dark: colors.blue['600'],
+          darker: colors.blue['700'],
         },
       },
     },

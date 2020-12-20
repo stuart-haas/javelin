@@ -43,12 +43,14 @@
             />
           </fieldset>
           <div class="text-center">
-            <button
+            <Button
               type="submit"
-              class="block w-full transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
+              theme="green"
+              :variant="{ base: '500', hover: '600' }"
+              class="block w-full"
             >
               Login
-            </button>
+            </Button>
             <router-link to="/register" class="block mt-6 underline"
               >Register</router-link
             >

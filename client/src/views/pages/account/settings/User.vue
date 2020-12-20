@@ -28,12 +28,9 @@
         />
       </fieldset>
       <div class="text-center">
-        <button
-          type="submit"
-          class="block w-full transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
-        >
+        <Button type="submit" theme="secondary" class="block w-full">
           Save
-        </button>
+        </Button>
       </div>
       <div v-if="message" class="text-center">{{ message }}</div>
     </div>

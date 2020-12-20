@@ -140,12 +140,7 @@
                 </fieldset>
               </div>
               <div class="text-right">
-                <button
-                  type="submit"
-                  class="inline-block transition py-2 px-4 border-transparent border shadow-lg rounded text-white bg-green-500 hover:bg-green-600"
-                >
-                  Continue
-                </button>
+                <Button type="submit" theme="secondary"> Continue </Button>
               </div>
               <div v-if="message" class="text-center">{{ message }}</div>
             </div>
