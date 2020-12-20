@@ -1,7 +1,7 @@
 <template>
   <div class="mt-1">
     <div class="flex items-center justify-between">
-      <h2 class="h2">Products</h2>
+      <h2 class="h2">Categories</h2>
       <Button theme="secondary" tag="router-link" to="/cp/categories/new"
         >New Category</Button
       >
