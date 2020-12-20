@@ -20,12 +20,9 @@
           <div class="text-center mr-20 w-20">
             {{ product.formattedTotal }}
           </div>
-          <div
-            class="w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
-            @click="removeFromCart({ id: product.id })"
-          >
+          <CloseButton @click="removeFromCart({ id: product.id })">
             <Icon icon="times" />
-          </div>
+          </CloseButton>
         </div>
       </div>
     </div>

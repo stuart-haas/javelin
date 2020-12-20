@@ -12,9 +12,9 @@ import {
   faTimes,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
+import './plugins/buttons';
+import './plugins/fields';
 import './plugins/forms';
-import './plugins/button';
-import './plugins/counter';
 import './plugins/api';
 import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';

@@ -5,6 +5,7 @@
       <tr class="font-bold border-b border-gray-300">
         <th>Username</th>
         <th>Email</th>
+        <th>Role</th>
       </tr>
       <tr v-for="user in users" :key="user._id">
         <td>
@@ -13,6 +14,7 @@
           }}</router-link>
         </td>
         <td>{{ user.email }}</td>
+        <td>{{ user.role }}</td>
       </tr>
     </table>
   </div>

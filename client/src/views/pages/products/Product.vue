@@ -14,7 +14,7 @@
       </div>
       <div class="col-span-8">
         <div
-          class="uppercase mt-10 mb-4 text-xl font-bold tracking-wider text-gray-700 border-b border-gray-300"
+          class="mt-10 mb-4 text-xl font-bold tracking-wider border-b border-gray-300"
         >
           {{ product.name }}
         </div>

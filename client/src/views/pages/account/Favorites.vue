@@ -12,12 +12,7 @@
           class="text-blue-500 mr-3"
           >{{ product.name }}</router-link
         >
-        <div
-          class="w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
-          @click="removeFavorite(product._id)"
-        >
-          <Icon icon="times" />
-        </div>
+        <CloseButton @click="removeFavorite(product._id)" />
       </div>
       <div v-if="!favorites.length">You don't have any favorites.</div>
     </div>

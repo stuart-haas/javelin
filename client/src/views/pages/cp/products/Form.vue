@@ -1,7 +1,14 @@
 <template>
   <div class="w-10/12">
     <div class="flex justify-between items-start">
-      <Upload :current="formData.image" @update="updateImage" />
+      <Upload
+        :current="formData.image"
+        @update="
+          (path) => {
+            formData['image'] = path;
+          }
+        "
+      />
       <Button
         v-if="$route.params.id"
         class="mt-3"
@@ -89,14 +96,19 @@
             <input
               v-model="category"
               class="block border border-gray-500 mt-2 p-1 text-sm"
-              @input="inputCategory"
+              @input="
+                (e) => {
+                  category = e.target.value;
+                }
+              "
             />
-            <div
-              class="mt-1.5 ml-2 w-2 h-2 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
-              @click="isAdding = false"
-            >
-              <Icon icon="times" />
-            </div>
+            <CloseButton
+              class="mt-2 ml-2"
+              @click="
+                isAdding = false;
+                category = '';
+              "
+            />
           </div>
           <span
             v-if="!isAdding"
@@ -214,13 +226,6 @@ export default {
     input(e) {
       const { name, value } = e.target;
       this.formData[name] = value;
-    },
-    updateImage(path) {
-      this.formData['image'] = path;
-    },
-    inputCategory(e) {
-      const { value } = e.target;
-      this.category = value;
     },
     async saveCategory() {
       const formData = { name: this.category };

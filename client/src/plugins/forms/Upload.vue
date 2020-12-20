@@ -29,12 +29,7 @@
         class="cursor-pointer border block p-4 border-gray-300 mt-3"
         ><img :src="current || path" class="h-auto w-full" />
       </a>
-      <div
-        class="absolute top-0 right-0 w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
-        @click="remove"
-      >
-        <Icon icon="times" />
-      </div>
+      <CloseButton class="absolute top-0 right-0" @click="remove" />
     </div>
     <div
       v-if="message"
