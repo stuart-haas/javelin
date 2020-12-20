@@ -88,7 +88,7 @@
           Save
         </Button>
       </div>
-      <div v-if="message" class="text-center">{{ message }}</div>
+      <div v-if="message" class="text-center text-green-500">{{ message }}</div>
     </div>
   </form>
 </template>

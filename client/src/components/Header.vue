@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative flex flex-wrap items-center justify-between py-2 bg-white border border-gray-300 border-b-1"
+    class="relative flex flex-wrap items-center justify-between py-4 bg-white border border-gray-300 border-b-1"
   >
     <div class="w-10/12 m-auto flex justify-between">
       <div class="relative flex justify-between">

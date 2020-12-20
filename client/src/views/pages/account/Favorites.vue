@@ -7,17 +7,17 @@
         :key="product._id"
         class="flex items-center"
       >
+        <router-link
+          :to="`/products/${product._id}`"
+          class="text-blue-500 mr-3"
+          >{{ product.name }}</router-link
+        >
         <div
-          class="w-4 h-4 bg-red-500 rounded-full p-2.5 text-sm text-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-600 transition duration-300"
+          class="w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
           @click="removeFavorite(product._id)"
         >
           <Icon icon="times" />
         </div>
-        <router-link
-          :to="`/products/${product._id}`"
-          class="text-blue-500 hover:underline ml-3"
-          >{{ product.name }}</router-link
-        >
       </div>
       <div v-if="!favorites.length">You don't have any favorites.</div>
     </div>

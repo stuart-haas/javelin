@@ -45,6 +45,10 @@ module.exports = {
       return res.json({ error: true, message: 'You are not logged in' });
     }
   },
+  findAll: async (req, res) => {
+    const users = await User.find();
+    res.json(users);
+  },
   find: async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id).populate('favorites', '_id name');

@@ -12,13 +12,17 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage }).single('file');
 
 module.exports = {
-  upload: async (req, res) => {
+  upload: (req, res) => {
     upload(req, res, function (err) {
       if (err) {
-        console.log(err);
+        return res.json({ error: true, message: 'Somethint went wrong' });
       } else {
         const { file } = req;
-        res.status(200).json({ success: true, message: 'File uploaded', file });
+        res.json({
+          success: true,
+          message: `File uploaded to ${file.path}`,
+          file,
+        });
       }
     });
   },

@@ -2,7 +2,7 @@ const Product = require('../models/product.model');
 
 module.exports = {
   findAll: async (req, res) => {
-    const products = await Product.find();
+    const products = await Product.find().populate('category');
     res.json(products);
   },
   find: async (req, res) => {
@@ -13,7 +13,7 @@ module.exports = {
   create: async (req, res) => {
     const product = new Product(req.body);
     await product.save();
-    res.json(product);
+    res.json({ success: true, message: 'Product created', product });
   },
   update: async (req, res) => {
     const { id } = req.params;
@@ -22,7 +22,7 @@ module.exports = {
       product[key] = req.body[key];
     });
     await product.save();
-    res.json(product);
+    res.json({ success: true, message: 'Product updated', product });
   },
   delete: async (req, res) => {
     const { id } = req.params;

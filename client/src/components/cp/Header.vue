@@ -1,11 +1,10 @@
 <template>
   <div
-    class="relative flex flex-wrap items-center justify-end py-2 bg-white border border-gray-300 border-b-1"
+    class="relative flex flex-wrap items-center justify-end py-4 bg-white border border-gray-300 border-b-1"
   >
-    <div class="w-10/12 m-auto flex justify-between items-center">
-      <p>Control Panel v1.0</p>
+    <div class="w-10/12 m-auto flex justify-end items-center">
       <div class="flex items-center justify-between">
-        <router-link v-if="user" to="/cp/profile" class="relative z-10">
+        <router-link v-if="user" to="/cp/profile" class="relative z-10 mr-10">
           <div class="flex items-center space-between px-4 cursor-pointer">
             <div class="w-8 h-8">
               <img
@@ -16,11 +15,14 @@
             <div class="ml-4 text-sm">My Profile</div>
           </div>
         </router-link>
-        <span
-          class="cursor-pointer inline-block transition p-1 ml-6 border-transparent border shadow-lg text-sm font-medium rounded text-white bg-red-500 hover:bg-red-600"
+        <Button
+          type="submit"
+          theme="red"
+          :variant="{ base: '500', hover: '600' }"
           @click="logout"
-          >Logout</span
         >
+          Logout
+        </Button>
       </div>
     </div>
   </div>

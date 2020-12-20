@@ -17,7 +17,10 @@ import Cart from './views/pages/cart/Index.vue';
 import Checkout from './views/pages/cart/Checkout.vue';
 import CP from './views/layouts/CP.vue';
 import CPLogin from './views/pages/cp/Login.vue';
-import Dashboard from './views/pages/cp/Index.vue';
+import CPIndex from './views/pages/cp/Index.vue';
+import CPProducts from './views/pages/cp/products/Index.vue';
+import CPProductsForm from './views/pages/cp/products/Form.vue';
+import CPUsers from './views/pages/cp/users/Index.vue';
 
 Vue.use(Router);
 
@@ -134,8 +137,28 @@ const router = new Router({
         {
           path: '',
           name: 'cp',
-          component: Dashboard,
+          component: CPIndex,
           meta: { title: 'Dashboard' },
+          children: [
+            {
+              path: 'products',
+              name: 'cp-products',
+              component: CPProducts,
+              meta: { title: 'Products' },
+            },
+            {
+              path: 'products/:id',
+              name: 'cp-products-id',
+              component: CPProductsForm,
+              meta: { title: 'Product' },
+            },
+            {
+              path: 'users',
+              name: 'cp-users',
+              component: CPUsers,
+              meta: { title: 'Users' },
+            },
+          ],
         },
       ],
     },

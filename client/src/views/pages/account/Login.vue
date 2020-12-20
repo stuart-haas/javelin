@@ -51,7 +51,7 @@
             >
               Login
             </Button>
-            <router-link to="/register" class="block mt-6 underline"
+            <router-link to="/register" class="block mt-6 text-blue-500"
               >Register</router-link
             >
           </div>

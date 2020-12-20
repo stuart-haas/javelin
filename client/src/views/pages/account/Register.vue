@@ -79,7 +79,7 @@
             >
               Register
             </Button>
-            <router-link to="/login" class="block mt-6 underline"
+            <router-link to="/login" class="block mt-6 text-blue-500"
               >Login</router-link
             >
           </div>
