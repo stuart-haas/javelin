@@ -2,7 +2,8 @@
   <div
     class="relative flex flex-wrap items-center justify-end py-4 bg-white border border-gray-300 border-b-1"
   >
-    <div class="w-10/12 m-auto flex justify-end items-center">
+    <div class="w-10/12 m-auto flex justify-between items-center">
+      <router-link to="/" class="text-blue-500">View Site</router-link>
       <div class="flex items-center justify-between">
         <router-link v-if="user" to="/cp/profile" class="relative z-10 mr-10">
           <div class="flex items-center space-between px-4 cursor-pointer">
