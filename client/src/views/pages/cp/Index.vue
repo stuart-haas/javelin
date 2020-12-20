@@ -7,25 +7,25 @@
           <router-link
             to="/cp/orders"
             active-class="border-r-4 border-gray-700"
-            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
+            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Orders</router-link
           >
           <router-link
             to="/cp/products"
             active-class="border-r-4 border-gray-700"
-            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
+            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Products</router-link
           >
           <router-link
             to="/cp/users"
             active-class="border-r-4 border-gray-700"
-            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
+            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Users</router-link
           >
           <router-link
             to="/cp/settings"
             active-class="border-r-4 border-gray-700"
-            class="block transition duration-200 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
+            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
             >Settings</router-link
           >
         </div>

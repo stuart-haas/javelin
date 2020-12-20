@@ -1,10 +1,11 @@
 <template>
   <div
+    v-bind="$attrs"
     class="relative flex items-center justify-between border rounded border-gray-300"
   >
     <button
       :disabled="value === min"
-      class="p-2 text-center cursor-pointer bg-transparent hover:bg-gray-100 rounded-l transition duration-200"
+      class="p-2 text-center cursor-pointer bg-transparent hover:bg-gray-100 rounded-l transition duration-300"
       @click="decrease"
     >
       <Icon icon="minus" class="text-sm text-gray-500" />
@@ -17,7 +18,7 @@
     />
     <button
       :disabled="value === max"
-      class="p-2 text-center cursor-pointer bg-transparent hover:bg-gray-100 rounded-r transition duration-200"
+      class="p-2 text-center cursor-pointer bg-transparent hover:bg-gray-100 rounded-r transition duration-300"
       @click="increase"
     >
       <Icon icon="plus" class="text-sm text-gray-500" />

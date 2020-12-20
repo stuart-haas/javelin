@@ -2,23 +2,22 @@
   <div class="space-y-3 pt-6 pb-4 border-t border-gray-300">
     <div class="flex justify-between items-center">
       <div class="flex items-center justify-between">
-        <div class="uppercase">{{ product.name }}</div>
+        <div>{{ product.name }}</div>
       </div>
       <div class="flex items-center justify-between">
-        <div class="flex items-center">
-          <Counter
-            :min="1"
-            :max="product.inventory"
-            :current="product.quantity"
-            @change="addToCart"
-          />
-        </div>
-        <div class="text-center">
-          {{ product.formattedTotal }}
-        </div>
-        <div>
+        <Counter
+          class="mr-20"
+          :min="1"
+          :max="product.inventory"
+          :current="product.quantity"
+          @change="addToCart"
+        />
+        <div class="flex justify-items-center justify-between">
+          <div class="text-center mr-20 w-20">
+            {{ product.formattedTotal }}
+          </div>
           <div
-            class="w-4 h-4 bg-gray-500 rounded-full p-2.5 text-sm text-white shadow-lg flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-200"
+            class="w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
             @click="removeFromCart({ id: product.id })"
           >
             <Icon icon="times" />
