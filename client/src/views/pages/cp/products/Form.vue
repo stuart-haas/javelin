@@ -17,6 +17,19 @@
           />
         </fieldset>
         <fieldset>
+          <label for="name" class="block text-sm font-medium text-gray-700"
+            >SKU</label
+          >
+          <input
+            type="text"
+            name="sku"
+            id="sku"
+            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
+            v-model="formData['sku']"
+            @input="input"
+          />
+        </fieldset>
+        <fieldset>
           <label for="price" class="block text-sm font-medium text-gray-700"
             >Price</label
           >
@@ -104,32 +117,44 @@ export default {
   methods: {
     async fetch() {
       const param = this.$route.params.id;
-      const product = await this.$store.dispatch('get', {
-        api: 'product',
-        param,
-      });
-      this.formData = product || {};
+      if (param) {
+        const product = await this.$store.dispatch('get', {
+          api: 'product',
+          param,
+        });
+        this.formData = product || {};
+      }
 
       const categories = await this.$store.dispatch('get', {
         api: 'category',
       });
       this.categories = categories;
+      this.formData['category'] = this.categories[0]._id;
     },
     async submit() {
       const { formData } = this;
       const param = this.$route.params.id;
-      const { product } = await this.$store.dispatch('put', {
-        api: 'product',
-        formData,
-        param,
-      });
-      if (product) {
-        this.message = 'Product updated';
+      if (param) {
+        const { product } = await this.$store.dispatch('put', {
+          api: 'product',
+          formData,
+          param,
+        });
+        if (product) {
+          this.message = 'Product updated';
+        }
+      } else {
+        const { product } = await this.$store.dispatch('post', {
+          api: 'product',
+          formData,
+        });
+        if (product) {
+          this.message = 'Product created';
+        }
       }
     },
     input(e) {
       const { name, value } = e.target;
-      console.log(name, value);
       this.formData[name] = value;
     },
     update(path) {

@@ -46,7 +46,6 @@ const router = new Router({
           meta: { title: 'Login' },
           beforeEnter: (to, from, next) => {
             const user = store.state.user.user;
-            console.log(user);
             if (user) {
               return next({ name: 'index' });
             }
@@ -147,10 +146,16 @@ const router = new Router({
               meta: { title: 'Products' },
             },
             {
+              path: 'products/new',
+              name: 'cp-products-new',
+              component: CPProductsForm,
+              meta: { title: 'New Product' },
+            },
+            {
               path: 'products/:id',
               name: 'cp-products-id',
               component: CPProductsForm,
-              meta: { title: 'Product' },
+              meta: { title: 'Edit Product' },
             },
             {
               path: 'users',

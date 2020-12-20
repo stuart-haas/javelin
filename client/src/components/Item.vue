@@ -1,7 +1,11 @@
 <template>
-  <div class="space-y-3 pt-6 pb-4 border-t border-gray-300">
+  <div class="space-y-3 border-t border-gray-300">
     <div class="flex justify-between items-center">
       <div class="flex items-center justify-between">
+        <div
+          class="w-32 h-32 bg-no-repeat bg-center bg-contain mr-6"
+          :style="{ 'background-image': `url(${product.image})` }"
+        ></div>
         <div>{{ product.name }}</div>
       </div>
       <div class="flex items-center justify-between">

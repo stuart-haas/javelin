@@ -1,6 +1,11 @@
 <template>
   <div class="mt-1">
-    <h2 class="h2">Products</h2>
+    <div class="flex items-center justify-between">
+      <h2 class="h2">Products</h2>
+      <Button theme="secondary" tag="router-link" to="/cp/products/new"
+        >New Product</Button
+      >
+    </div>
     <table class="w-full table-auto text-left mt-6">
       <tr class="font-bold border-b border-gray-300">
         <th>Name</th>
@@ -48,6 +53,6 @@ export default {
 <style scoped>
 th,
 td {
-  @apply p-2;
+  @apply p-3;
 }
 </style>

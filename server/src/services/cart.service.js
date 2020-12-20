@@ -6,7 +6,7 @@ module.exports = {
   item: async (req, callback) => {
     try {
       const product = await Product.findById(req.body.id);
-      const { price, formattedPrice } = product;
+      const { price, formattedPrice, image } = product;
       const quantity = parseInt(req.body.quantity);
       const total = quantity * price;
       const formattedTotal = fns.formatCurrency(total);
@@ -19,6 +19,7 @@ module.exports = {
         quantity,
         total,
         formattedTotal,
+        image,
       };
       callback(item);
     } catch (error) {

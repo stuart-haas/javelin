@@ -1,7 +1,7 @@
 <template>
   <div class="mb-6">
     <form
-      v-if="!current"
+      v-if="!current && !path"
       @submit.prevent="submit"
       enctype="multipart/form-data"
     >
@@ -21,20 +21,20 @@
         <Button type="submit" theme="secondary">Upload</Button>
       </div>
     </form>
-    <div v-else class="w-1/2">
+    <div v-else class="relative w-1/4">
       <div class="block text-sm font-medium text-gray-700">Image</div>
       <a
-        :href="current"
+        :href="current || path"
         target="_blank"
-        class="relative cursor-pointer border block p-4 border-gray-300"
-        ><img :src="current" class="h-auto w-full" />
-        <div
-          class="absolute -top-3 -right-3 w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
-          @click="remove"
-        >
-          <Icon icon="times" />
-        </div>
+        class="cursor-pointer border block p-4 border-gray-300 mt-3"
+        ><img :src="current || path" class="h-auto w-full" />
       </a>
+      <div
+        class="absolute top-0 right-0 w-4 h-4 bg-gray-400 rounded-full p-3 text-center text-white flex items-center justify-center cursor-pointer hover:bg-red-500 transition duration-300 ease-in-out"
+        @click="remove"
+      >
+        <Icon icon="times" />
+      </div>
     </div>
     <div
       v-if="message"
@@ -54,6 +54,7 @@ export default {
   data() {
     return {
       file: {},
+      path: '',
       message: {
         success: true,
         text: '',
@@ -64,13 +65,14 @@ export default {
     async submit() {
       const formData = new FormData();
       formData.append('file', this.file);
-      console.log(this.file);
       try {
         const { message, file } = await this.$store.dispatch('post', {
           api: 'upload',
           formData,
         });
-        this.$emit('update', `http://localhost:5000/${file.path}`);
+        const path = `http://localhost:5000/${file.path}`;
+        this.$emit('update', path);
+        this.path = path;
         this.message = { success: true, text: message };
       } catch (error) {
         const { message } = error.response.data;
@@ -80,6 +82,7 @@ export default {
     remove() {
       this.$emit('update', null);
       this.file = {};
+      this.path = '';
       this.message = {};
     },
     change(e) {
