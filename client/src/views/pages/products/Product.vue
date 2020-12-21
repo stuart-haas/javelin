@@ -4,7 +4,7 @@
       <Hero
         v-if="product.category"
         :image="product.category.image"
-        :title="product.name"
+        :title="product.category.name"
       />
     </template>
     <template v-slot:content>

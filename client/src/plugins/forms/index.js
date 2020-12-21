@@ -3,14 +3,21 @@ import Form from './Form.vue';
 import Upload from './Upload.vue';
 import Field from './Field.vue';
 import Counter from './Counter.vue';
+import resolvePath from 'object-resolve-path';
 
 const FormMixin = {
   methods: {
-    mapFieldData(data, fields) {
+    mapFieldData(data, fields, keys = {}) {
       const fieldsCopy = [...fields].map((field) => Object.assign({}, field));
       const fieldData = fieldsCopy.map((item) => {
-        let value = data[item.name];
-        return Object.assign(item, { value });
+        if (keys[item.name]) {
+          const value = resolvePath(data, keys[item.name]);
+          Object.assign(item, { value: value });
+        } else {
+          const value = data[item.name];
+          Object.assign(item, { value });
+        }
+        return item;
       });
       return fieldData;
     },

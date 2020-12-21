@@ -72,15 +72,12 @@ export default {
           value: '_id',
         }
       );
-      return this.mapFieldData(this.product, formFields);
+      return this.mapFieldData(this.product, formFields, {
+        category: 'category._id',
+      });
     },
     image() {
       return { name: 'image', label: 'Image', value: this.product.image };
-    },
-    otherData() {
-      const dataCopy = { ...this.appendData };
-      console.log(dataCopy);
-      return dataCopy;
     },
   },
   mounted() {
