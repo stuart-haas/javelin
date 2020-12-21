@@ -1,5 +1,5 @@
 <template>
-  <Content title="Edit Product">
+  <Content :title="id ? 'Edit Product' : 'New Product'">
     <template v-slot:header>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
