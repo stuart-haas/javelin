@@ -17,20 +17,24 @@ export default {
         {
           label: 'Username',
           name: 'username',
+          required: true,
         },
         {
           label: 'Email',
           name: 'email',
+          required: true,
         },
         {
           label: 'Password',
           name: 'password',
           type: 'password',
+          required: true,
         },
         {
           label: 'Confirm Password',
           name: 'passwordConfirm',
           type: 'password',
+          required: true,
         },
         {
           tag: 'select',

@@ -24,6 +24,7 @@ export default {
         {
           label: 'Name',
           name: 'name',
+          required: true,
         },
       ],
     };

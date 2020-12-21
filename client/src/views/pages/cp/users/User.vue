@@ -36,10 +36,12 @@ export default {
         {
           label: 'Username',
           name: 'username',
+          required: true,
         },
         {
           label: 'Email',
           name: 'email',
+          required: true,
         },
         {
           tag: 'select',

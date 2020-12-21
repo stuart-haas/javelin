@@ -27,11 +27,13 @@ export default {
         {
           label: 'Username',
           name: 'username',
+          required: true,
         },
         {
           label: 'Password',
           name: 'password',
           type: 'password',
+          required: true,
         },
       ],
     };
