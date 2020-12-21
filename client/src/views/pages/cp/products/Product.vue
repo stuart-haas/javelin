@@ -28,18 +28,22 @@ export default {
         {
           label: 'Name',
           name: 'name',
+          required: true,
         },
         {
           label: 'SKU',
           name: 'sku',
+          required: true,
         },
         {
           label: 'Price',
           name: 'price',
+          required: true,
         },
         {
           label: 'Inventory',
           name: 'inventory',
+          required: true,
         },
         {
           tag: 'textarea',

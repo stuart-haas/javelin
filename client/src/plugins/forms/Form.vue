@@ -9,11 +9,14 @@
     />
     <Button type="submit" theme="secondary">{{ submitLabel }}</Button>
     <transition name="fade">
-      <div
-        v-if="message.value"
-        :class="`mt-3 text-center text-${message.type}`"
-      >
-        {{ message.value }}
+      <div v-if="messages.length" class="mt-3 text-center">
+        <div
+          v-for="(message, index) in messages"
+          :key="index"
+          :class="`text-${message.type}`"
+        >
+          {{ message.value }}
+        </div>
       </div>
     </transition>
   </form>
@@ -43,10 +46,7 @@ export default {
   },
   data() {
     return {
-      message: {
-        type: '',
-        value: '',
-      },
+      messages: [],
       formData: {},
     };
   },
@@ -70,6 +70,7 @@ export default {
   },
   methods: {
     async submit() {
+      this.messages = [];
       const { dispatch, api, formData, param } = this;
       try {
         const response = await this.$store.dispatch(dispatch, {
@@ -78,11 +79,20 @@ export default {
           param,
         });
         const { message } = response;
-        this.message = { type: 'success', value: message };
+        this.messages = [{ type: 'success', value: message }];
         this.$emit('success', response);
-      } catch (err) {
-        const { error, message } = err.response.data;
-        this.message = { type: 'error', value: message };
+      } catch (error) {
+        let { message, errors } = error.response.data;
+        if (errors) {
+          const messages = errors.map((error) => {
+            error.type = 'error';
+            error.value = error.msg;
+            return error;
+          });
+          this.messages = messages;
+        } else {
+          this.messages = [{ type: 'error', value: message }];
+        }
         this.$emit('error', { error, message, formData });
       }
     },

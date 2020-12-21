@@ -5,7 +5,11 @@ module.exports = {
   validate: (req, res, next) => {
     const errors = validationResult(req);
     if (!errors.isEmpty()) {
-      return res.status(422).json(errors.array());
+      return res.status(422).json({
+        error: true,
+        message: 'Something went wrong',
+        errors: errors.array(),
+      });
     } else {
       return next();
     }

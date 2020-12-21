@@ -7,6 +7,7 @@
       v-if="tag === 'input'"
       :type="type"
       :id="id"
+      v-bind="attrs"
       v-model="value"
       @input="input"
       class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
@@ -14,13 +15,15 @@
     <textarea
       v-if="tag === 'textarea'"
       :id="id"
-      class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent resize-none"
+      v-bind="attrs"
       v-model="value"
       @input="input"
+      class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent resize-none"
     />
     <select
       v-if="tag === 'select'"
       :id="id"
+      v-bind="attrs"
       v-model="value"
       @change="input"
       class="mt-1 border-b border-gray-500 w-full cursor-pointer"
@@ -41,6 +44,7 @@ export default {
   props: {
     field: Object,
     index: Number,
+    required: Boolean,
   },
   data() {
     return {
@@ -60,6 +64,11 @@ export default {
         this.field.id ||
         `${this.tag}${this.field.name}${this.type}`
       );
+    },
+    attrs() {
+      const { ...attrs } = this.field;
+
+      return attrs;
     },
   },
   watch: {
