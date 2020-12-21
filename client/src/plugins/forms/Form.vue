@@ -1,5 +1,10 @@
 <template>
-  <form v-bind="$attrs" v-on="$listeners" @submit.prevent="submit">
+  <form
+    class="relative"
+    v-bind="$attrs"
+    v-on="$listeners"
+    @submit.prevent="submit"
+  >
     <Field
       v-for="(field, index) in fields"
       :key="field.label"
@@ -10,7 +15,10 @@
     <Button type="submit" theme="secondary">{{ submitLabel }}</Button>
     <slot></slot>
     <transition name="fade">
-      <div v-if="messages.length" class="mt-3 text-center">
+      <div
+        v-if="messages.length"
+        class="mt-3 absolute top-full w-full bg-white left-0 rounded shadow-lg px-4 py-2"
+      >
         <div
           v-for="(message, index) in messages"
           :key="index"

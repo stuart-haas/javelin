@@ -21,10 +21,10 @@
     </template>
     <Form
       :fields="fields"
-      :dispatch="id ? 'put' : 'post'"
-      api="user"
+      dispatch="put"
+      api="user/cp"
       :param="id"
-      :submitLabel="id ? 'Update' : 'Create'"
+      submitLabel="Update"
     />
   </Content>
 </template>
