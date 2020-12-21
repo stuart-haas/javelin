@@ -8,12 +8,16 @@
     <tr v-for="(row, i) in filteredData" :key="i">
       <td v-for="(item, j) in row" :key="j">
         <component
-          :is="item.tag || 'span'"
+          v-if="item.tag"
+          :is="item.tag"
           v-bind="item.attrs"
           v-on="item.listeners"
         >
           {{ item.value }}
         </component>
+        <span v-else>
+          {{ item.value }}
+        </span>
       </td>
     </tr>
   </table>

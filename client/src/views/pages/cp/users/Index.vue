@@ -46,11 +46,7 @@ export default {
   },
   computed: {
     data() {
-      let data = this.mapTableData(this.users, this.fields);
-      data = data.map((item) => {
-        return item;
-      });
-      return data;
+      return this.mapTableData(this.users, this.fields);
     },
   },
   mounted() {
