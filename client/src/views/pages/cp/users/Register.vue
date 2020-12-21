@@ -36,11 +36,11 @@ export default {
           tag: 'select',
           label: 'Role',
           name: 'role',
-          value: 'customer',
+          value: 'member',
           items: [
             {
-              value: 'customer',
-              label: 'Customer',
+              value: 'member',
+              label: 'Member',
             },
             {
               value: 'admin',

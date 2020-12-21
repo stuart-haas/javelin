@@ -48,8 +48,8 @@ export default {
           name: 'role',
           items: [
             {
-              value: 'customer',
-              label: 'Customer',
+              value: 'member',
+              label: 'Member',
             },
             {
               value: 'admin',

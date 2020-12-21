@@ -14,8 +14,8 @@ const fields = {
   },
   role: {
     type: String,
-    enum: ['customer', 'admin'],
-    default: 'customer',
+    enum: ['member', 'admin'],
+    default: 'member',
   },
   isAdmin: {
     type: Boolean,
