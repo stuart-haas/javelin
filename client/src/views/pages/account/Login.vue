@@ -9,8 +9,14 @@
       api="user/login"
       submitLabel="Login"
       @success="success"
-      class="shadow-lg px-4 py-8 rounded bg-white bg-opacity-75"
-    />
+      class="shadow-lg px-4 py-8 rounded bg-gray-200 bg-opacity-75"
+    >
+      <router-link
+        to="/register"
+        class="block mt-3 text-center duration-300 transition hover:text-blue-700"
+        >Register</router-link
+      >
+    </Form>
   </Splash>
 </template>
 

@@ -8,6 +8,7 @@
       @update="update"
     />
     <Button type="submit" theme="secondary">{{ submitLabel }}</Button>
+    <slot></slot>
     <transition name="fade">
       <div v-if="messages.length" class="mt-3 text-center">
         <div

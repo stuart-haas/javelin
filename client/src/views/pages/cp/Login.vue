@@ -6,7 +6,7 @@
       api="user/cp/login"
       submitLabel="Login"
       @success="success"
-      class="shadow-lg px-4 py-8 rounded bg-white bg-opacity-75"
+      class="shadow-lg px-4 py-8 rounded bg-gray-200 bg-opacity-75"
     />
   </Splash>
 </template>
