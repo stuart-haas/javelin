@@ -3,42 +3,7 @@
     <div class="grid grid-cols-12 gap-6 h-screen">
       <div class="col-span-3 border-r pt-8">
         <div class="mt-2 space-y-6">
-          <router-link
-            to="/cp/dashboard"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Dashboard</router-link
-          >
-          <router-link
-            to="/cp/orders"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Orders</router-link
-          >
-          <router-link
-            to="/cp/products"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Products</router-link
-          >
-          <router-link
-            to="/cp/categories"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Categories</router-link
-          >
-          <router-link
-            to="/cp/users"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Users</router-link
-          >
-          <router-link
-            to="/cp/settings"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Settings</router-link
-          >
+          <Menu :items="items" />
         </div>
       </div>
       <div class="col-span-8 pt-8">
@@ -47,3 +12,32 @@
     </div>
   </div>
 </template>
+
+<script>
+export default {
+  data() {
+    return {
+      items: [
+        {
+          label: 'Products',
+          attrs: {
+            to: '/cp/products',
+          },
+        },
+        {
+          label: 'Categories',
+          attrs: {
+            to: '/cp/categories',
+          },
+        },
+        {
+          label: 'Users',
+          attrs: {
+            to: '/cp/users',
+          },
+        },
+      ],
+    };
+  },
+};
+</script>

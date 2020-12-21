@@ -2,35 +2,7 @@
   <div class="w-10/12 m-auto">
     <div class="grid grid-cols-12 gap-6 h-screen">
       <div class="col-span-3 border-r pt-8">
-        <h1 class="h1">Your Account</h1>
-        <div class="mt-6 space-y-6">
-          <router-link
-            to="/account/orders"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Orders</router-link
-          >
-          <router-link
-            to="/account/favorites"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Favorites</router-link
-          >
-          <router-link
-            to="/account/settings"
-            active-class="border-r-4 border-gray-700 text-blue-500"
-            class="block transition duration-300 px-2 py-1 border-r-4 border-transparent hover:text-blue-500"
-            >Settings</router-link
-          >
-          <Button
-            type="submit"
-            theme="red"
-            :variant="{ base: '500', hover: '600' }"
-            @click="logout"
-          >
-            Logout
-          </Button>
-        </div>
+        <Menu :items="items" />
       </div>
       <div class="col-span-8 pt-8">
         <router-view />
@@ -41,6 +13,38 @@
 
 <script>
 export default {
+  data() {
+    return {
+      items: [
+        {
+          label: 'Favorites',
+          attrs: {
+            to: '/account/favorites',
+          },
+        },
+        {
+          label: 'Settings',
+          attrs: {
+            to: '/account/settings',
+          },
+        },
+        {
+          tag: 'Button',
+          label: 'Logout',
+          attrs: {
+            theme: 'red',
+            variant: {
+              base: '500',
+              dark: '600',
+            },
+          },
+          listeners: {
+            click: this.logout,
+          },
+        },
+      ],
+    };
+  },
   methods: {
     async logout() {
       const success = await this.$store.dispatch('user/logout');

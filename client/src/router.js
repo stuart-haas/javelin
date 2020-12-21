@@ -91,7 +91,7 @@ const router = new Router({
           component: Account,
           meta: { title: 'Account', requiresAuth: true },
           redirect: () => {
-            return '/account/orders';
+            return '/account/favorites';
           },
           children: [
             {
