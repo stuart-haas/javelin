@@ -26,6 +26,7 @@ export default {
   data() {
     return {
       product: {},
+      categories: [],
       formFields: [
         {
           label: 'Name',
@@ -48,6 +49,12 @@ export default {
           label: 'Description',
           name: 'description',
         },
+        {
+          tag: 'select',
+          label: 'Category',
+          name: 'category',
+          items: [],
+        },
       ],
     };
   },
@@ -56,7 +63,15 @@ export default {
       return this.$route.params.id;
     },
     fields() {
-      return this.mapFieldData(this.product, this.formFields);
+      const formFields = this.mapFieldItemsData(
+        this.categories,
+        this.formFields,
+        {
+          label: 'name',
+          value: '_id',
+        }
+      );
+      return this.mapFieldData(this.product, formFields);
     },
   },
   mounted() {
@@ -72,6 +87,10 @@ export default {
         });
         this.product = product;
       }
+      const categories = await this.$store.dispatch('get', {
+        api: 'category',
+      });
+      this.categories = categories;
     },
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
