@@ -11,22 +11,34 @@ module.exports = {
     res.json(category);
   },
   create: async (req, res) => {
-    const category = new Category(req.body);
-    await category.save();
-    res.json({ success: true, message: 'Category created', category });
+    try {
+      const category = new Category(req.body);
+      await category.save();
+      res.json({ success: true, message: 'Category created', category });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   update: async (req, res) => {
     const { id } = req.params;
-    const category = await Category.findById(id);
-    Object.keys(req.body).forEach((key) => {
-      category[key] = req.body[key];
-    });
-    await category.save();
-    res.json({ success: true, message: 'Category updated', category });
+    try {
+      const category = await Category.findById(id);
+      Object.keys(req.body).forEach((key) => {
+        category[key] = req.body[key];
+      });
+      await category.save();
+      res.json({ success: true, message: 'Category updated', category });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   delete: async (req, res) => {
     const { id } = req.params;
-    const category = await Category.findByIdAndDelete(id);
-    res.json({ success: true, message: 'Category deleted', category });
+    try {
+      const category = await Category.findByIdAndDelete(id);
+      res.json({ success: true, message: 'Category deleted', category });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
 };

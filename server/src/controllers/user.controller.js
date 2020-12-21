@@ -4,23 +4,31 @@ module.exports = {
   admin: {
     register: async (req, res) => {
       const { username, email, role, password } = req.body;
-      const user = await User.register(
-        new User({ username, email, role }),
-        password
-      );
-      res.json({ success: true, message: 'Registration successful', user });
+      try {
+        const user = await User.register(
+          new User({ username, email, role }),
+          password
+        );
+        res.json({ success: true, message: 'Registration successful', user });
+      } catch (error) {
+        res.status(422).json({ error: true, message: 'Something went wrong' });
+      }
     },
     impersonate: async (req, res, next) => {
       if (!req.user.isAdmin) return next();
-      const authUser = await User.findById(req.body.id);
-      req.login(authUser, () => {
-        const user = authUser.toJSON();
-        return res.json({
-          success: true,
-          message: 'Login successful',
-          user,
+      try {
+        const authUser = await User.findById(req.body.id);
+        req.login(authUser, () => {
+          const user = authUser.toJSON();
+          return res.json({
+            success: true,
+            message: 'Login successful',
+            user,
+          });
         });
-      });
+      } catch (error) {
+        res.status(422).json({ error: true, message: 'Something went wrong' });
+      }
     },
   },
   session: async (req, res) => {
@@ -32,8 +40,12 @@ module.exports = {
   },
   register: async (req, res) => {
     const { username, email, password } = req.body;
-    const user = await User.register(new User({ username, email }), password);
-    res.json({ success: true, message: 'Registration successful', user });
+    try {
+      const user = await User.register(new User({ username, email }), password);
+      res.json({ success: true, message: 'Registration successful', user });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   login: (req, res) => {
     const user = req.user.toJSON();
@@ -82,35 +94,51 @@ module.exports = {
   },
   delete: async (req, res) => {
     const { id } = req.params;
-    const user = await User.findByIdAndDelete(id);
-    res.json({ success: true, message: 'Your account has been deleted', user });
+    try {
+      const user = await User.findByIdAndDelete(id);
+      res.json({
+        success: true,
+        message: 'Your account has been deleted',
+        user,
+      });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   addFavorite: async (req, res) => {
     const { id } = req.params;
     const { favorite } = req.body;
-    const user = await User.findByIdAndUpdate(
-      id,
-      {
-        $addToSet: {
-          favorites: favorite,
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          $addToSet: {
+            favorites: favorite,
+          },
         },
-      },
-      { new: true }
-    ).populate('favorites', '_id name');
-    res.json({ success: true, message: 'Favorite added', user });
+        { new: true }
+      ).populate('favorites', '_id name');
+      res.json({ success: true, message: 'Favorite added', user });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   removeFavorite: async (req, res) => {
     const { id } = req.params;
     const { favorite } = req.body;
-    const user = await User.findByIdAndUpdate(
-      id,
-      {
-        $pull: {
-          favorites: favorite,
+    try {
+      const user = await User.findByIdAndUpdate(
+        id,
+        {
+          $pull: {
+            favorites: favorite,
+          },
         },
-      },
-      { new: true }
-    ).populate('favorites', '_id name');
-    res.json({ success: true, message: 'Favorite removed', user });
+        { new: true }
+      ).populate('favorites', '_id name');
+      res.json({ success: true, message: 'Favorite removed', user });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
 };
