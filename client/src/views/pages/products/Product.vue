@@ -1,73 +1,74 @@
 <template>
-  <div class="product">
-    <div
-      class="bg-no-repeat bg-center h-48 bg-cover"
-      :style="{ 'background-image': `url(${hero})` }"
-    >
-      <div class="w-10/12 m-auto flex flex-col justify-center h-full">
-        <h1 class="h2 text-white">{{ product.name }}</h1>
-      </div>
-    </div>
-    <div class="w-10/12 m-auto grid grid-cols-12 gap-20">
-      <div class="col-span-4 mt-8">
-        <img :src="product.image" class="h-auto w-full" />
-      </div>
-      <div class="col-span-8">
-        <div
-          class="mt-10 mb-4 text-xl font-bold tracking-wider border-b border-gray-300"
-        >
-          {{ product.name }}
+  <Page>
+    <template v-slot:hero>
+      <Hero :image="image" :title="product.name" />
+    </template>
+    <template v-slot:content>
+      <div class="grid grid-cols-12 gap-20">
+        <div class="col-span-4 mt-8">
+          <img :src="product.image" class="h-auto w-full" />
         </div>
-        <div class="my-8">
-          {{ product.description }}
-        </div>
-        <div class="space-y-2 border-b border-gray-300 pb-4">
-          <div>{{ product.formattedPrice }}</div>
-          <div>{{ product.inventory }} in stock</div>
-        </div>
-        <div class="mt-4">
-          {{
-            getQuantityInCart(product._id) > 0
-              ? `You have ${getQuantityInCart(product._id)} in your cart.`
-              : "You don't have any in your cart."
-          }}
-        </div>
-        <div class="mt-4 flex items-center">
-          <Counter
-            :min="0"
-            :max="getMaxAvailabe(product)"
-            :current="quantity"
-            @change="updateQuantity"
-          />
-          <Button
-            class="ml-4 mr-8"
-            :disabled="!checkAvailability(product._id) || quantity === 0"
-            @click="addToCart(product._id)"
+        <div class="col-span-8">
+          <div
+            class="mt-10 mb-4 text-xl font-bold tracking-wider border-b border-gray-300"
           >
-            Add to Cart
-          </Button>
-          <Button
-            v-if="user"
-            :theme="favorite ? 'red' : 'gray'"
-            :variant="{ base: favorite ? '500' : '400' }"
-            class="w-10 h-10 rounded-full"
-            @click="toggleFavorite(product._id)"
-          >
-            <Icon icon="star" />
-          </Button>
+            {{ product.name }}
+          </div>
+          <div class="my-8">
+            {{ product.description }}
+          </div>
+          <div class="space-y-2 border-b border-gray-300 pb-4">
+            <div>{{ product.formattedPrice }}</div>
+            <div>{{ product.inventory }} in stock</div>
+          </div>
+          <div class="mt-4">
+            {{
+              getQuantityInCart(product._id) > 0
+                ? `You have ${getQuantityInCart(product._id)} in your cart.`
+                : "You don't have any in your cart."
+            }}
+          </div>
+          <div class="mt-4 flex items-center">
+            <Counter
+              :min="0"
+              :max="getMaxAvailabe(product)"
+              :current="quantity"
+              @change="updateQuantity"
+            />
+            <Button
+              class="ml-4 mr-8"
+              :disabled="!checkAvailability(product._id) || quantity === 0"
+              @click="addToCart(product._id)"
+            >
+              Add to Cart
+            </Button>
+            <Button
+              v-if="user"
+              :theme="favorite ? 'red' : 'gray'"
+              :variant="{ base: favorite ? '500' : '400' }"
+              class="w-10 h-10 rounded-full"
+              @click="toggleFavorite(product._id)"
+            >
+              <Icon icon="star" />
+            </Button>
+          </div>
         </div>
       </div>
-    </div>
-  </div>
+    </template>
+  </Page>
 </template>
 
 <script>
-import hero from '../../../assets/images/tools.jpg';
+import image from '../../../assets/images/tools.jpg';
+import Hero from '../../../components/Hero.vue';
 
 export default {
+  components: {
+    Hero,
+  },
   data() {
     return {
-      hero: hero,
+      image: image,
       product: {},
       quantity: 0,
       favorite: false,

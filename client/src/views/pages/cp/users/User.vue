@@ -1,6 +1,6 @@
 <template>
-  <div class="w-10/12">
-    <div class="mt-3 text-right">
+  <div class="w-full">
+    <div class="text-right">
       <Button
         v-if="id && user._id !== userId"
         theme="secondary"

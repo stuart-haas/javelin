@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12">
+  <div class="w-full">
     <div class="text-right">
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete

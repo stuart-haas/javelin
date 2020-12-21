@@ -1,5 +1,5 @@
 <template>
-  <div class="w-10/12">
+  <div class="w-full">
     <Form
       :fields="fields"
       api="user/cp/register"

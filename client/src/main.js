@@ -16,6 +16,7 @@ import './plugins/buttons';
 import './plugins/forms';
 import './plugins/tables';
 import './plugins/menus';
+import './plugins/layouts';
 import './plugins/api';
 import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';

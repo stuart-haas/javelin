@@ -1,14 +1,12 @@
 <template>
-  <div class="w-10/12 m-auto">
-    <div class="grid grid-cols-12 gap-6 h-screen">
-      <div class="col-span-3 border-r pt-8">
-        <Menu :items="items" />
-      </div>
-      <div class="col-span-8 pt-8">
-        <router-view />
-      </div>
-    </div>
-  </div>
+  <Page>
+    <template v-slot:sidebar>
+      <Menu :items="items" />
+    </template>
+    <template v-slot:content>
+      <router-view />
+    </template>
+  </Page>
 </template>
 
 <script>
