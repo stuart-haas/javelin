@@ -24,6 +24,8 @@ import CPProduct from './views/pages/cp/products/Product.vue';
 import CPCategories from './views/pages/cp/categories/Index.vue';
 import CPCategory from './views/pages/cp/categories/Category.vue';
 import CPUsers from './views/pages/cp/users/Index.vue';
+import CPRegisterUser from './views/pages/cp/users/Register.vue';
+import CPUser from './views/pages/cp/users/User.vue';
 
 Vue.use(Router);
 
@@ -189,6 +191,18 @@ const router = new Router({
               name: 'cp-users',
               component: CPUsers,
               meta: { title: 'Users' },
+            },
+            {
+              path: 'users/register',
+              name: 'cp-users-register',
+              component: CPRegisterUser,
+              meta: { title: 'Register User' },
+            },
+            {
+              path: 'users/:id',
+              name: 'cp-users-id',
+              component: CPUser,
+              meta: { title: 'Edit User' },
             },
           ],
         },

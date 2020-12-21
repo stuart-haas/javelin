@@ -6,8 +6,6 @@ const auth = require('../utils/auth');
 
 router.route('/').get(auth.isAdmin, controller.findAll);
 
-router.get('/session', controller.session);
-
 router.post(
   '/cp/login',
   middleware.loginRules,
@@ -16,6 +14,12 @@ router.post(
   passport.authenticate('local'),
   controller.login
 );
+
+router
+  .route('/cp/:id')
+  .get(auth.isAdmin, controller.find)
+  .put(auth.isAdmin, controller.update)
+  .delete(auth.isAdmin, controller.delete);
 
 router.post(
   '/register',
@@ -31,6 +35,8 @@ router.post(
   controller.login
 );
 router.post('/logout', controller.logout);
+
+router.get('/session', controller.session);
 
 router.post('/favorite/:id', auth.isMe, controller.addFavorite);
 router.put('/favorite/:id', auth.isMe, controller.removeFavorite);

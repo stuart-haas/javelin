@@ -17,6 +17,7 @@ import './plugins/forms';
 import './plugins/api';
 import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';
+import 'fontsource-nunito/700.css';
 import './assets/css/index.css';
 
 library.add(faShoppingCart, faStar, faToolbox, faPlus, faMinus, faTimes);

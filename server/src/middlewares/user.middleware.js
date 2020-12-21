@@ -15,8 +15,8 @@ module.exports = {
         });
       }),
     body('email', 'Email required')
-      .exists()
       .isEmail()
+      .exists()
       .trim()
       .escape()
       .custom((value) => {
