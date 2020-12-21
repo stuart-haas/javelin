@@ -2,9 +2,7 @@
   <div class="w-10/12 m-auto">
     <div class="grid grid-cols-12 gap-6 h-screen">
       <div class="col-span-3 border-r pt-8">
-        <div class="mt-2 space-y-6">
-          <Menu :items="items" />
-        </div>
+        <Menu :items="items" />
       </div>
       <div class="col-span-8 pt-8">
         <router-view />
