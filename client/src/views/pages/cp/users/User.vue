@@ -1,22 +1,24 @@
 <template>
-  <div class="w-full">
-    <div class="text-right">
-      <Button
-        v-if="id && user._id !== userId"
-        theme="secondary"
-        class="mr-3"
-        @click="impersonate"
-      >
-        Impersonate
-      </Button>
-      <Button
-        v-if="id && user._id !== userId"
-        theme="danger"
-        @click="deleteThis"
-      >
-        Delete
-      </Button>
-    </div>
+  <Content title="Edit User">
+    <template v-slot:header>
+      <div>
+        <Button
+          v-if="id && user._id !== userId"
+          theme="secondary"
+          class="mr-3"
+          @click="impersonate"
+        >
+          Impersonate
+        </Button>
+        <Button
+          v-if="id && user._id !== userId"
+          theme="danger"
+          @click="deleteThis"
+        >
+          Delete
+        </Button>
+      </div>
+    </template>
     <Form
       :fields="fields"
       :dispatch="id ? 'put' : 'post'"
@@ -24,7 +26,7 @@
       :param="id"
       :submitLabel="id ? 'Update' : 'Create'"
     />
-  </div>
+  </Content>
 </template>
 
 <script>

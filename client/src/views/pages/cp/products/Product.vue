@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full">
-    <div class="text-right">
+  <Content title="Edit Product">
+    <template v-slot:header>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
       </Button>
-    </div>
+    </template>
     <Upload :field="image" @change="change" />
     <Form
       :fields="fields"
@@ -14,7 +14,7 @@
       :param="id"
       :submitLabel="id ? 'Update' : 'Create'"
     />
-  </div>
+  </Content>
 </template>
 
 <script>

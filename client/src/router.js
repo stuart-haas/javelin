@@ -9,7 +9,7 @@ import Account from './views/pages/account/Index.vue';
 import Orders from './views/pages/account/Orders.vue';
 import Favorites from './views/pages/account/Favorites.vue';
 import Settings from './views/pages/account/settings/Index.vue';
-import UserSettings from './views/pages/account/settings/User.vue';
+import UserContact from './views/pages/account/settings/Contact.vue';
 import UserShipping from './views/pages/account/settings/Shipping.vue';
 import Products from './views/pages/products/Index.vue';
 import Product from './views/pages/products/Product.vue';
@@ -118,7 +118,7 @@ const router = new Router({
                 {
                   path: 'user',
                   name: 'account-settings-user',
-                  component: UserSettings,
+                  component: UserContact,
                   meta: { title: 'User Settings' },
                 },
                 {

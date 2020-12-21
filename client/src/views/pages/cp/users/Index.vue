@@ -1,13 +1,12 @@
 <template>
-  <div class="mt-1">
-    <div class="flex items-center justify-between">
-      <h2 class="h2">Users</h2>
+  <Content title="User">
+    <template v-slot:header>
       <Button theme="secondary" tag="router-link" to="/cp/users/register"
         >Register User</Button
       >
-    </div>
+    </template>
     <Table :data="data" :fields="fields" />
-  </div>
+  </Content>
 </template>
 
 <script>

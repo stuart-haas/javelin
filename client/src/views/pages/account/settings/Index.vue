@@ -1,13 +1,10 @@
 <template>
-  <div class="w-full">
-    <h2 class="h2">Settings</h2>
-    <div class="mt-6">
-      <Menu :items="items" direction="horizontal" />
-      <div class="mt-10">
-        <router-view />
-      </div>
+  <Content title="Settings">
+    <Menu :items="items" direction="horizontal" />
+    <div class="mt-12 w-8/12">
+      <router-view />
     </div>
-  </div>
+  </Content>
 </template>
 
 <script>

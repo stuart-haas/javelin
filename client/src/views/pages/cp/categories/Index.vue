@@ -1,13 +1,12 @@
 <template>
-  <div class="mt-1">
-    <div class="flex items-center justify-between">
-      <h2 class="h2">Categories</h2>
+  <Content title="Categories">
+    <template v-slot:header>
       <Button theme="secondary" tag="router-link" to="/cp/categories/new"
         >New Category</Button
       >
-    </div>
+    </template>
     <Table :data="data" :fields="fields" />
-  </div>
+  </Content>
 </template>
 
 <script>

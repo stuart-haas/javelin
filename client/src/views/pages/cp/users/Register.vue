@@ -1,12 +1,12 @@
 <template>
-  <div class="w-full">
+  <Content title="Register User">
     <Form
       :fields="fields"
       api="user/cp/register"
       submitLabel="Register"
       @success="success"
     />
-  </div>
+  </Content>
 </template>
 
 <script>

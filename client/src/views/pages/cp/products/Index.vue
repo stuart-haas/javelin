@@ -1,13 +1,12 @@
 <template>
-  <div class="mt-1">
-    <div class="flex items-center justify-between">
-      <h2 class="h2">Products</h2>
+  <Content title="Products">
+    <template v-slot:header>
       <Button theme="secondary" tag="router-link" to="/cp/products/new"
         >New Product</Button
       >
-    </div>
+    </template>
     <Table :data="data" :fields="fields" />
-  </div>
+  </Content>
 </template>
 
 <script>

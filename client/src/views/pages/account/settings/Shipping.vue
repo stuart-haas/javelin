@@ -6,7 +6,6 @@
     :param="id"
     submitLabel="Update"
     @success="success"
-    class="w-8/12"
   />
 </template>
 
