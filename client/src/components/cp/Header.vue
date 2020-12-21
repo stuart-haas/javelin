@@ -5,8 +5,8 @@
     <div class="w-10/12 m-auto flex justify-between items-center">
       <router-link to="/" class="text-blue-500">Go to homepage</router-link>
       <div class="flex items-center justify-between">
-        <router-link v-if="user" to="/cp/profile" class="relative z-10 mr-10">
-          <div class="flex items-center space-between px-4 cursor-pointer">
+        <div class="mr-10">
+          <div class="flex items-center space-between px-4">
             <div class="w-8 h-8">
               <img
                 :src="user && user.avatar"
@@ -15,7 +15,7 @@
             </div>
             <div class="ml-4 text-sm">{{ user.username }}</div>
           </div>
-        </router-link>
+        </div>
         <Button type="submit" theme="danger" @click="logout"> Logout </Button>
       </div>
     </div>

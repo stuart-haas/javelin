@@ -29,7 +29,7 @@
             class="text-sm leading-relaxed inline-block mr-4 py-2 whitespace-no-wrap text-black ml-4"
             >Login</router-link
           >
-          <router-link v-if="user" to="/account" class="relative z-10">
+          <router-link v-if="user" to="/account" class="relative">
             <div class="flex items-center space-between px-4 cursor-pointer">
               <div class="w-8 h-8">
                 <img
