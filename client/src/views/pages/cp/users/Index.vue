@@ -24,6 +24,15 @@ export default {
           },
         },
         {
+          label: 'Avatar',
+          key: 'avatar',
+          tag: 'img',
+          attrs: {
+            src: 'avatar',
+            class: 'w-8 h-8 rounded-full',
+          },
+        },
+        {
           label: 'Username',
           key: 'username',
           tag: 'router-link',

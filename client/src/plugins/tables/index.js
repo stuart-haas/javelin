@@ -7,6 +7,9 @@ const resolveColumnAttributes = (attributes, item) => {
   if (attrs.to) {
     attrs.to = attrs.to.replace(':param', item[attrs.param]);
   }
+  if (attrs.src) {
+    attrs.src = item[attrs.src];
+  }
   return attrs;
 };
 
@@ -24,7 +27,8 @@ const TableMixin = {
       const rows = [];
       data.map((item) => {
         let row = fields.map((field) => {
-          const attrs = resolveColumnAttributes(field.attrs, item);
+          const attributes = field.attrs;
+          const attrs = resolveColumnAttributes(attributes, item);
           return {
             label: field.key,
             value: resolvePath(item, field.key),
