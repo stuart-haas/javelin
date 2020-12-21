@@ -14,6 +14,7 @@ import {
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/buttons';
 import './plugins/forms';
+import './plugins/table';
 import './plugins/api';
 import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';

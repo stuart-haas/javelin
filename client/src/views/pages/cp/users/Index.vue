@@ -6,26 +6,7 @@
         >Register User</Button
       >
     </div>
-    <table class="w-full table-auto text-left mt-6">
-      <tr class="font-bold border-b border-gray-300">
-        <th>Username</th>
-        <th>Email</th>
-        <th>Role</th>
-      </tr>
-      <tr
-        v-for="user in users"
-        :key="user._id"
-        :class="user._id === userId ? 'font-bold' : ''"
-      >
-        <td>
-          <router-link :to="`/cp/users/${user._id}`" class="text-blue-500">{{
-            user.username
-          }}</router-link>
-        </td>
-        <td>{{ user.email }}</td>
-        <td>{{ user.role }}</td>
-      </tr>
-    </table>
+    <Table :data="data" :fields="fields" />
   </div>
 </template>
 
@@ -34,11 +15,42 @@ export default {
   data() {
     return {
       users: [],
+      fields: [
+        {
+          label: 'Id',
+          key: '_id',
+          attrs: {
+            hidden: true,
+          },
+        },
+        {
+          label: 'Username',
+          key: 'username',
+          tag: 'router-link',
+          attrs: {
+            class: 'text-blue-500',
+            to: '/cp/users/:param',
+            param: '_id',
+          },
+        },
+        {
+          label: 'Email',
+          key: 'email',
+        },
+        {
+          label: 'Role',
+          key: 'role',
+        },
+      ],
     };
   },
   computed: {
-    userId() {
-      return this.$store.state.user.user._id;
+    data() {
+      let data = this.mapTableData(this.users, this.fields);
+      data = data.map((item) => {
+        return item;
+      });
+      return data;
     },
   },
   mounted() {
@@ -54,10 +66,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-th,
-td {
-  @apply p-2;
-}
-</style>
