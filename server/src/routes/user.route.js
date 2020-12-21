@@ -7,10 +7,23 @@ const auth = require('../utils/auth');
 router.route('/').get(auth.isAdmin, controller.findAll);
 
 router.post(
+  '/cp/register',
+  middleware.registrationRules,
+  auth.validate,
+  auth.isAdmin,
+  controller.admin.register
+);
+router.post(
   '/cp/login',
   middleware.loginRules,
   auth.validate,
   auth.isAdmin,
+  passport.authenticate('local'),
+  controller.login
+);
+router.post(
+  '/cp/impersonate',
+  controller.admin.impersonate,
   passport.authenticate('local'),
   controller.login
 );

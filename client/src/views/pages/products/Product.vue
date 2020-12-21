@@ -41,7 +41,7 @@
           />
           <Button
             class="ml-4 mr-8"
-            :disabled="!checkAvailability(product._id) || quantity == 0"
+            :disabled="!checkAvailability(product._id) || quantity === 0"
             @click="addToCart(product._id)"
           >
             Add to Cart
@@ -113,7 +113,7 @@ export default {
     },
     getQuantityInCart(id) {
       const item = this.$store.state.cart.items.find((item) => {
-        return item.id == id;
+        return item.id === id;
       });
       return item ? item.quantity : 0;
     },
@@ -126,7 +126,7 @@ export default {
     },
     checkFavorite(id) {
       const item = this.$store.state.user.favorites.find((item) => {
-        return item._id == id;
+        return item._id === id;
       });
       return item ? true : false;
     },

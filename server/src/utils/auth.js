@@ -33,13 +33,13 @@ module.exports = {
     const user = await User.findOne({ username });
 
     if (!user) {
-      if (req.user.role !== 'admin' || !isAuthenticated) {
+      if (!req.user.isAdmin || !isAuthenticated) {
         return res
           .status(401)
           .json({ error: true, message: 'You are not authorized ' });
       }
     } else {
-      if (user.role !== 'admin') {
+      if (!user.isAdmin) {
         return res
           .status(401)
           .json({ error: true, message: 'You are not authorized ' });

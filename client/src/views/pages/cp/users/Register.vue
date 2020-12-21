@@ -2,7 +2,7 @@
   <div class="w-10/12">
     <Form
       :fields="fields"
-      api="user/register"
+      api="user/cp/register"
       submitLabel="Register"
       @success="success"
     />
@@ -31,6 +31,22 @@ export default {
           label: 'Confirm Password',
           name: 'passwordConfirm',
           type: 'password',
+        },
+        {
+          tag: 'select',
+          label: 'Role',
+          name: 'role',
+          value: 'customer',
+          items: [
+            {
+              value: 'customer',
+              label: 'Customer',
+            },
+            {
+              value: 'admin',
+              label: 'Admin',
+            },
+          ],
         },
       ],
     };

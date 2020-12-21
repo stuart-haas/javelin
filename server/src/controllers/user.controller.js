@@ -1,7 +1,28 @@
 const User = require('../models/user.model');
-const passport = require('passport');
 
 module.exports = {
+  admin: {
+    register: async (req, res) => {
+      const { username, email, role, password } = req.body;
+      const user = await User.register(
+        new User({ username, email, role }),
+        password
+      );
+      res.json({ success: true, message: 'Registration successful', user });
+    },
+    impersonate: async (req, res, next) => {
+      if (!req.user.isAdmin) return next();
+      const authUser = await User.findById(req.body.id);
+      req.login(authUser, () => {
+        const user = authUser.toJSON();
+        return res.json({
+          success: true,
+          message: 'Login successful',
+          user,
+        });
+      });
+    },
+  },
   session: async (req, res) => {
     const { user } = req;
     if (!user) {
@@ -10,10 +31,8 @@ module.exports = {
     res.json({ user });
   },
   register: async (req, res) => {
-    const user = await User.register(
-      new User({ username: req.body.username, email: req.body.email }),
-      req.body.password
-    );
+    const { username, email, password } = req.body;
+    const user = await User.register(new User({ username, email }), password);
     res.json({ success: true, message: 'Registration successful', user });
   },
   login: (req, res) => {

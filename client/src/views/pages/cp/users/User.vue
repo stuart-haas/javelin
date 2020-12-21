@@ -1,9 +1,16 @@
 <template>
   <div class="w-10/12">
-    <div class="text-right">
+    <div class="mt-3 text-right">
       <Button
-        v-if="id"
-        class="mt-3"
+        v-if="id && user._id !== userId"
+        theme="secondary"
+        class="mr-3"
+        @click="impersonate"
+      >
+        Impersonate
+      </Button>
+      <Button
+        v-if="id && user._id !== userId"
         theme="red"
         :variant="{ base: '500', dark: '600' }"
         @click="deleteThis"
@@ -35,10 +42,28 @@ export default {
           label: 'Email',
           name: 'email',
         },
+        {
+          tag: 'select',
+          label: 'Role',
+          name: 'role',
+          items: [
+            {
+              value: 'customer',
+              label: 'Customer',
+            },
+            {
+              value: 'admin',
+              label: 'Admin',
+            },
+          ],
+        },
       ],
     };
   },
   computed: {
+    userId() {
+      return this.$store.state.user.user._id;
+    },
     id() {
       return this.$route.params.id;
     },
@@ -69,6 +94,17 @@ export default {
       });
       if (user) {
         this.$router.push('/cp/users');
+      }
+    },
+    async impersonate() {
+      const { id } = this.$route.params;
+      const formData = { id };
+      const { user } = await this.$store.dispatch('post', {
+        api: 'user/cp/impersonate',
+        formData,
+      });
+      if (user) {
+        this.$router.go();
       }
     },
   },

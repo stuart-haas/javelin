@@ -4,7 +4,7 @@
       field.label
     }}</label>
     <input
-      v-if="tag == 'input'"
+      v-if="tag === 'input'"
       :type="type"
       :id="id"
       v-model="value"
@@ -12,12 +12,27 @@
       class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
     />
     <textarea
-      v-if="tag == 'textarea'"
+      v-if="tag === 'textarea'"
       :id="id"
       class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent resize-none"
       v-model="value"
       @input="input"
     />
+    <select
+      v-if="tag === 'select'"
+      :id="id"
+      v-model="value"
+      @change="input"
+      class="mt-1 border-b border-gray-500 w-full cursor-pointer"
+    >
+      <option
+        v-for="(item, index) in field.items"
+        :key="index"
+        :value="item.value"
+      >
+        {{ item.label }}
+      </option>
+    </select>
   </fieldset>
 </template>
 
@@ -29,7 +44,7 @@ export default {
   },
   data() {
     return {
-      value: '',
+      value: this.field.value,
     };
   },
   computed: {
@@ -49,7 +64,7 @@ export default {
   },
   watch: {
     'field.value': function (newVal, oldVal) {
-      this.value = newVal;
+      this.value = oldVal || newVal;
     },
   },
   methods: {
@@ -58,6 +73,7 @@ export default {
       this.value = value;
 
       const { field } = this;
+
       this.$emit('update', { field, value });
     },
   },

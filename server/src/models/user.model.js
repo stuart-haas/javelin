@@ -17,6 +17,10 @@ const fields = {
     enum: ['customer', 'admin'],
     default: 'customer',
   },
+  isAdmin: {
+    type: Boolean,
+    default: false,
+  },
   avatar: String,
   firstName: String,
   lastName: String,
@@ -42,6 +46,9 @@ const User = new Schema(fields, {
 User.pre('save', function () {
   if (!this.avatar) {
     this.avatar = this.gravatar();
+  }
+  if (this.role === 'admin') {
+    this.isAdmin = true;
   }
 });
 
