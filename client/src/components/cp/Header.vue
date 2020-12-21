@@ -13,7 +13,7 @@
                 class="rounded-full max-w-full h-auto align-middle"
               />
             </div>
-            <div class="ml-4 text-sm">My Profile</div>
+            <div class="ml-4 text-sm">{{ user.username }}</div>
           </div>
         </router-link>
         <Button

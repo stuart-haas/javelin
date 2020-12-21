@@ -5,7 +5,11 @@
         {{ field.label }}
       </th>
     </tr>
-    <tr v-for="(row, i) in filteredData" :key="i">
+    <tr
+      v-for="(row, i) in filteredData"
+      :key="i"
+      :class="active === i ? 'font-bold' : ''"
+    >
       <td v-for="(item, j) in row" :key="j">
         <component
           v-if="item.tag"
@@ -29,7 +33,17 @@ export default {
     data: Array,
     fields: Array,
   },
+  data() {
+    return {
+      activeIndex: -1,
+    };
+  },
   computed: {
+    active() {
+      return this.data.findIndex((item) => {
+        return item.active;
+      });
+    },
     filteredFields() {
       return this.fields.filter((item) => {
         if (item.attrs) {

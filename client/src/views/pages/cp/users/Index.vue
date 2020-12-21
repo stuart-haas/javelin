@@ -46,7 +46,9 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.users, this.fields);
+      return this.mapTableData(this.users, this.fields, {
+        active: { key: '_id', value: this.$store.state.user.user._id },
+      });
     },
   },
   mounted() {
