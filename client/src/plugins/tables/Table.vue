@@ -8,7 +8,7 @@
     <tr
       v-for="(row, i) in filteredData"
       :key="i"
-      :class="active(i) ? 'font-bold' : ''"
+      :class="active === i ? 'font-bold' : ''"
     >
       <td v-for="(item, j) in row" :key="j">
         <component
@@ -34,6 +34,12 @@ export default {
     fields: Array,
   },
   computed: {
+    active() {
+      const index = this.data.findIndex((item) => {
+        return item.activeIndex;
+      });
+      return index;
+    },
     filteredFields() {
       return this.fields.filter((item) => {
         if (item.attrs) {
@@ -44,21 +50,13 @@ export default {
     },
     filteredData() {
       return this.data.map((item) => {
-        return item.filter((el) => {
-          if (el.attrs) {
-            return !el.attrs.hidden;
+        return item.filter((item) => {
+          if (item.attrs) {
+            return !item.attrs.hidden;
           }
           return true;
         });
       });
-    },
-  },
-  methods: {
-    active(i) {
-      const index = this.data.findIndex((item) => {
-        return item.active || -1;
-      });
-      return index === i;
     },
   },
 };

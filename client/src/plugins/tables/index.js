@@ -10,19 +10,20 @@ const resolveColumnAttributes = (attributes, item) => {
   return attrs;
 };
 
-const resolveRowAttributes = (row, rowAttributes, item) => {
-  if (rowAttributes.active) {
-    row.active = rowAttributes.active.value === item[rowAttributes.active.key];
+const resolveRowAttributes = (attributes, item) => {
+  let attrs = { ...attributes };
+  if (attrs.active) {
+    attrs.activeIndex = attrs.active.value === item[attrs.active.key];
   }
-  return row;
+  return attrs;
 };
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, rowAttributes) {
+    mapTableData(data, fields, attributes = {}) {
       const rows = [];
       data.map((item) => {
-        const row = fields.map((field) => {
+        let row = fields.map((field) => {
           const attrs = resolveColumnAttributes(field.attrs, item);
           return {
             label: field.key,
@@ -32,9 +33,8 @@ const TableMixin = {
             listeners: { ...field.listeners },
           };
         });
-        if (rowAttributes) {
-          resolveRowAttributes(row, rowAttributes, item);
-        }
+        const attrs = resolveRowAttributes(attributes, item);
+        Object.assign(row, attrs);
         rows.push(row);
       });
       return rows;
