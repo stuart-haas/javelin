@@ -23,13 +23,6 @@
       </a>
       <CloseButton class="absolute top-1 right-1" @click="remove" />
     </div>
-    <div
-      v-if="message"
-      class="my-3"
-      :class="[message.success ? 'text-green-500' : 'text-red-500']"
-    >
-      {{ message.text }}
-    </div>
   </div>
 </template>
 
@@ -40,43 +33,32 @@ export default {
   },
   data() {
     return {
-      file: {},
       value: '',
-      message: {
-        success: true,
-        text: '',
-      },
+      file: {},
     };
   },
   watch: {
     'field.value': function (newVal, oldVal) {
       this.value = newVal;
+      this.$emit('change', { field: this.field, value: this.value });
     },
   },
   methods: {
     async submit() {
       const formData = new FormData();
       formData.append('file', this.file);
-      try {
-        const { message, file } = await this.$store.dispatch('post', {
-          api: 'upload',
-          formData,
-        });
-        const value = `http://localhost:5000/${file.path}`;
-        const field = this.field;
-        this.$emit('change', { field, value });
-        this.value = value;
-        this.message = { success: true, text: message };
-      } catch (error) {
-        const { message } = error.response.data;
-        this.message = { success: false, text: message };
-      }
+      const { file } = await this.$store.dispatch('post', {
+        api: 'upload',
+        formData,
+      });
+      const { path } = file;
+      this.value = path;
+      this.$emit('change', { field: this.field, value: this.value });
     },
     remove() {
-      this.$emit('change', null);
       this.file = {};
       this.value = '';
-      this.message = {};
+      this.$emit('change', { field: this.field, value: '' });
     },
     change(e) {
       const file = e.target.files[0];

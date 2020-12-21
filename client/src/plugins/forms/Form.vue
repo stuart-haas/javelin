@@ -23,6 +23,7 @@
 export default {
   props: {
     fields: Array,
+    append: Object,
     dispatch: {
       type: String,
       default: 'post',
@@ -57,6 +58,14 @@ export default {
         return obj;
       }, {});
       this.formData = data;
+    },
+    append: {
+      immediate: true,
+      deep: true,
+      handler(newVal, oldVal) {
+        const dataCopy = { ...newVal };
+        this.formData = { ...this.formData, ...dataCopy };
+      },
     },
   },
   methods: {

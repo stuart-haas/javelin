@@ -11,8 +11,10 @@
         Delete
       </Button>
     </div>
+    <Upload :field="image" @change="change" />
     <Form
       :fields="fields"
+      :append="append"
       :dispatch="id ? 'put' : 'post'"
       api="product"
       :param="id"
@@ -27,6 +29,7 @@ export default {
     return {
       product: {},
       categories: [],
+      append: {},
       formFields: [
         {
           label: 'Name',
@@ -73,6 +76,14 @@ export default {
       );
       return this.mapFieldData(this.product, formFields);
     },
+    image() {
+      return { name: 'image', value: this.product.image };
+    },
+    otherData() {
+      const dataCopy = { ...this.appendData };
+      console.log(dataCopy);
+      return dataCopy;
+    },
   },
   mounted() {
     this.fetch();
@@ -102,6 +113,9 @@ export default {
       if (product) {
         this.$router.push('/cp/product');
       }
+    },
+    change({ field, value }) {
+      this.$set(this.append, field.name, value);
     },
   },
 };

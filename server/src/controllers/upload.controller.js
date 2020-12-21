@@ -18,6 +18,9 @@ module.exports = {
         return res.json({ error: true, message: 'Somethint went wrong' });
       } else {
         const { file } = req;
+        var fullUrl = req.protocol + '://' + req.get('host');
+        const path = `${fullUrl}/${file.path}`;
+        file.path = path;
         res.json({
           success: true,
           message: `File uploaded to ${file.path}`,
