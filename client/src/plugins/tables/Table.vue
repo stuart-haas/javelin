@@ -33,15 +33,10 @@ export default {
     data: Array,
     fields: Array,
   },
-  data() {
-    return {
-      activeIndex: -1,
-    };
-  },
   computed: {
     active() {
       return this.data.findIndex((item) => {
-        return item.active;
+        return item.active || -1;
       });
     },
     filteredFields() {

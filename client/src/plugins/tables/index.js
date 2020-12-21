@@ -2,24 +2,28 @@ import Vue from 'vue';
 import Table from './Table.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveAttributes = (attributes, item, extras) => {
+const resolveColumnAttributes = (attributes, item) => {
   let attrs = { ...attributes };
   if (attrs.to) {
     attrs.to = attrs.to.replace(':param', item[attrs.param]);
   }
-  if (extras.active) {
-    attrs.active = extras.active.value === item[extras.active.key];
-  }
   return attrs;
+};
+
+const resolveRowAttributes = (row, rowAttributes, item) => {
+  if (rowAttributes.active) {
+    row.active = rowAttributes.active.value === item[rowAttributes.active.key];
+  }
+  return row;
 };
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, extras) {
+    mapTableData(data, fields, rowAttributes) {
       const rows = [];
       data.map((item) => {
         const row = fields.map((field) => {
-          const attrs = resolveAttributes(field.attrs, item, extras);
+          const attrs = resolveColumnAttributes(field.attrs, item);
           return {
             label: field.key,
             value: resolvePath(item, field.key),
@@ -28,7 +32,9 @@ const TableMixin = {
             listeners: { ...field.listeners },
           };
         });
-        row.active = extras.active.value === item[extras.active.key];
+        if (rowAttributes) {
+          resolveRowAttributes(row, rowAttributes, item);
+        }
         rows.push(row);
       });
       return rows;
