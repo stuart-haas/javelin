@@ -11,8 +11,7 @@
       </Button>
       <Button
         v-if="id && user._id !== userId"
-        theme="red"
-        :variant="{ base: '500', dark: '600' }"
+        theme="danger"
         @click="deleteThis"
       >
         Delete

@@ -1,10 +1,10 @@
 <template>
   <div class="mb-6">
-    <label class="inline-block text-sm font-medium text-gray-700">{{
+    <label class="mb-1 inline-block text-sm font-medium text-gray-700">{{
       field.label
     }}</label>
     <form v-if="!value" @submit.prevent="submit" enctype="multipart/form-data">
-      <div class="mt-2 space-y-3">
+      <div class="space-y-3">
         <fieldset>
           <input type="file" class="text-sm" @change="change" />
         </fieldset>
@@ -15,7 +15,7 @@
       <a
         :href="value"
         target="_blank"
-        class="cursor-pointer border block p-4 border-gray-300 mt-3"
+        class="cursor-pointer border border-dashed block p-4 border-gray-500"
         ><img :src="value" class="h-auto w-full" />
       </a>
       <CloseButton class="absolute top-1 right-1" @click="remove" />

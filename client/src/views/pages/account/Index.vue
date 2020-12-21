@@ -32,11 +32,7 @@ export default {
           tag: 'Button',
           label: 'Logout',
           attrs: {
-            theme: 'red',
-            variant: {
-              base: '500',
-              dark: '600',
-            },
+            theme: 'danger',
           },
           listeners: {
             click: this.logout,

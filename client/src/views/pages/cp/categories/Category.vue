@@ -1,13 +1,7 @@
 <template>
   <div class="w-10/12">
     <div class="text-right">
-      <Button
-        v-if="id"
-        class="mt-3"
-        theme="red"
-        :variant="{ base: '500', dark: '600' }"
-        @click="deleteThis"
-      >
+      <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
       </Button>
     </div>

@@ -17,6 +17,10 @@ module.exports = {
           dark: colors.blue['600'],
           darker: colors.blue['700'],
         },
+        danger: {
+          base: colors.red['500'],
+          dark: colors.red['600'],
+        },
         success: colors.green['500'],
         error: colors.red['500'],
       },

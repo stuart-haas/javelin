@@ -16,14 +16,7 @@
             <div class="ml-4 text-sm">{{ user.username }}</div>
           </div>
         </router-link>
-        <Button
-          type="submit"
-          theme="red"
-          :variant="{ base: '500', hover: '600' }"
-          @click="logout"
-        >
-          Logout
-        </Button>
+        <Button type="submit" theme="danger" @click="logout"> Logout </Button>
       </div>
     </div>
   </div>
