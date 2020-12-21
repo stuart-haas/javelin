@@ -10,15 +10,25 @@ const resolveColumnAttributes = (attributes, item) => {
   if (attrs.src) {
     attrs.src = item[attrs.src];
   }
+  if (attrs.disable) {
+    attrs.disable = attrs.disable.value === item[attrs.disable.key];
+  }
   return attrs;
 };
 
 const resolveRowAttributes = (attributes, item) => {
   let attrs = { ...attributes };
   if (attrs.active) {
-    attrs.activeIndex = attrs.active.value === item[attrs.active.key];
+    attrs.active = attrs.active.value === item[attrs.active.key];
+  }
+  if (attrs.disable) {
+    attrs.disable = attrs.disable.value === item[attrs.disable.key];
   }
   return attrs;
+};
+
+const resolveValue = (item, field) => {
+  return field.key ? resolvePath(item, field.key) : field.value;
 };
 
 const TableMixin = {
@@ -27,14 +37,17 @@ const TableMixin = {
       const rows = [];
       data.map((item) => {
         let row = fields.map((field) => {
-          const attributes = field.attrs;
-          const attrs = resolveColumnAttributes(attributes, item);
+          let { label = '', tag = '', attrs = {}, listeners = {} } = field;
+          attrs = resolveColumnAttributes(attrs, item);
+          const value = resolveValue(item, field);
+          const { disable = false } = attrs;
           return {
-            label: field.key,
-            value: resolvePath(item, field.key),
-            tag: field.tag,
+            label,
+            tag,
+            value,
+            disable,
             attrs: { ...attrs },
-            listeners: { ...field.listeners },
+            listeners: { ...listeners },
           };
         });
         const attrs = resolveRowAttributes(attributes, item);

@@ -13,7 +13,7 @@
         i % 2 === 0 ? 'bg-gray-100' : '',
       ]"
     >
-      <td v-for="(item, j) in row" :key="j">
+      <td v-for="(item, j) in getRow(row)" :key="j">
         <component
           v-if="item.tag"
           :is="item.tag"
@@ -39,7 +39,13 @@ export default {
   computed: {
     active() {
       const index = this.data.findIndex((item) => {
-        return item.activeIndex;
+        return item.active;
+      });
+      return index;
+    },
+    disable() {
+      const index = this.data.findIndex((item) => {
+        return item.disable;
       });
       return index;
     },
@@ -53,12 +59,20 @@ export default {
     },
     filteredData() {
       return this.data.map((item) => {
+        console.log(this.data);
         return item.filter((item) => {
           if (item.attrs) {
             return !item.attrs.hidden;
           }
           return true;
         });
+      });
+    },
+  },
+  methods: {
+    getRow(row) {
+      return row.filter((item) => {
+        return !item.disable;
       });
     },
   },

@@ -34,12 +34,6 @@ export default {
         {
           label: 'Username',
           key: 'username',
-          tag: 'router-link',
-          attrs: {
-            class: 'text-blue-500',
-            to: '/cp/users/:param',
-            param: '_id',
-          },
         },
         {
           label: 'Email',
@@ -48,6 +42,19 @@ export default {
         {
           label: 'Role',
           key: 'role',
+        },
+        {
+          value: 'Edit',
+          tag: 'router-link',
+          attrs: {
+            class: 'text-blue-500',
+            to: '/cp/users/:param',
+            param: '_id',
+            disable: {
+              key: 'role',
+              value: 'admin',
+            },
+          },
         },
       ],
     };
