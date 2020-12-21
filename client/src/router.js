@@ -143,6 +143,9 @@ const router = new Router({
           name: 'cp',
           component: CPIndex,
           meta: { title: 'Dashboard' },
+          redirect: () => {
+            return '/cp/products';
+          },
           children: [
             {
               path: 'orders',
