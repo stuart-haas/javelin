@@ -15,6 +15,12 @@ export default {
     return {
       items: [
         {
+          label: 'Orders',
+          attrs: {
+            to: '/account/orders',
+          },
+        },
+        {
           label: 'Favorites',
           attrs: {
             to: '/account/favorites',

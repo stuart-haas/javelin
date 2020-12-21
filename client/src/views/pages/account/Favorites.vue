@@ -1,22 +1,19 @@
 <template>
-  <div class="w-full">
-    <h2 class="h2">Favorites</h2>
-    <div class="mt-6 space-y-3">
-      <div
-        v-for="product in favorites"
-        :key="product._id"
-        class="flex items-center"
+  <Content title="Favorites">
+    <div
+      v-for="product in favorites"
+      :key="product._id"
+      class="flex items-center mb-6"
+    >
+      <router-link
+        :to="`/products/${product._id}`"
+        class="text-blue-500 mr-3"
+        >{{ product.name }}</router-link
       >
-        <router-link
-          :to="`/products/${product._id}`"
-          class="text-blue-500 mr-3"
-          >{{ product.name }}</router-link
-        >
-        <CloseButton @click="removeFavorite(product._id)" />
-      </div>
-      <div v-if="!favorites.length">You don't have any favorites.</div>
+      <CloseButton @click="removeFavorite(product._id)" />
     </div>
-  </div>
+    <div v-if="!favorites.length">You don't have any favorites.</div>
+  </Content>
 </template>
 
 <script>

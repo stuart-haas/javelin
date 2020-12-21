@@ -15,6 +15,12 @@ export default {
     return {
       items: [
         {
+          label: 'Orders',
+          attrs: {
+            to: '/cp/orders',
+          },
+        },
+        {
           label: 'Products',
           attrs: {
             to: '/cp/products',
