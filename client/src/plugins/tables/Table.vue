@@ -59,7 +59,6 @@ export default {
     },
     filteredData() {
       return this.data.map((item) => {
-        console.log(this.data);
         return item.filter((item) => {
           if (item.attrs) {
             return !item.attrs.hidden;

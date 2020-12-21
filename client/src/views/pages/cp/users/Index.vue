@@ -52,7 +52,7 @@ export default {
             param: '_id',
             disable: {
               key: 'role',
-              value: 'admin',
+              value: 'superadmin',
             },
           },
         },

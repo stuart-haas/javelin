@@ -14,7 +14,7 @@ const fields = {
   },
   role: {
     type: String,
-    enum: ['member', 'admin'],
+    enum: ['member', 'admin', 'superadmin'],
     default: 'member',
   },
   isAdmin: {
@@ -47,7 +47,7 @@ User.pre('save', function () {
   if (!this.avatar) {
     this.avatar = this.gravatar();
   }
-  if (this.role === 'admin') {
+  if (this.role === 'admin' || this.role === 'superadmin') {
     this.isAdmin = true;
   }
 });

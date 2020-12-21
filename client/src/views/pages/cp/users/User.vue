@@ -58,6 +58,10 @@ export default {
               value: 'admin',
               label: 'Admin',
             },
+            {
+              value: 'superadmin',
+              label: 'Super Admin',
+            },
           ],
         },
       ],

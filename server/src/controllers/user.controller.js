@@ -15,7 +15,6 @@ module.exports = {
       }
     },
     impersonate: async (req, res, next) => {
-      if (!req.user.isAdmin) return next();
       try {
         const authUser = await User.findById(req.body.id);
         req.login(authUser, () => {
@@ -26,6 +25,19 @@ module.exports = {
             user,
           });
         });
+      } catch (error) {
+        res.status(422).json({ error: true, message: 'Something went wrong' });
+      }
+    },
+    update: async (req, res) => {
+      const { id } = req.params;
+      try {
+        const user = await User.findById(id);
+        Object.keys(req.body).forEach((key) => {
+          user[key] = req.body[key];
+        });
+        await user.save();
+        res.json({ success: true, message: 'Account updated', user });
       } catch (error) {
         res.status(422).json({ error: true, message: 'Something went wrong' });
       }

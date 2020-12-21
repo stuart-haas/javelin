@@ -2,8 +2,8 @@ import Vue from 'vue';
 import Table from './Table.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumnAttributes = (attributes, item) => {
-  let attrs = { ...attributes };
+const resolveColumnAttributes = (item, fieldAttrs, colAttrs) => {
+  let attrs = { ...fieldAttrs };
   if (attrs.to) {
     attrs.to = attrs.to.replace(':param', item[attrs.param]);
   }
@@ -16,8 +16,8 @@ const resolveColumnAttributes = (attributes, item) => {
   return attrs;
 };
 
-const resolveRowAttributes = (attributes, item) => {
-  let attrs = { ...attributes };
+const resolveRowAttributes = (item, rowAttrs) => {
+  let attrs = { ...rowAttrs };
   if (attrs.active) {
     attrs.active = attrs.active.value === item[attrs.active.key];
   }
@@ -33,12 +33,12 @@ const resolveValue = (item, field) => {
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, attributes = {}) {
+    mapTableData(data, fields, rowAttrs = {}, colAttrs = {}) {
       const rows = [];
       data.map((item) => {
         let row = fields.map((field) => {
           let { label = '', tag = '', attrs = {}, listeners = {} } = field;
-          attrs = resolveColumnAttributes(attrs, item);
+          attrs = resolveColumnAttributes(item, attrs, colAttrs);
           const value = resolveValue(item, field);
           const { disable = false } = attrs;
           return {
@@ -50,7 +50,7 @@ const TableMixin = {
             listeners: { ...listeners },
           };
         });
-        const attrs = resolveRowAttributes(attributes, item);
+        const attrs = resolveRowAttributes(item, rowAttrs);
         Object.assign(row, attrs);
         rows.push(row);
       });

@@ -17,12 +17,13 @@ router.post(
   '/cp/login',
   middleware.loginRules,
   auth.validate,
-  auth.isAdmin,
+  auth.isAdminByUsername,
   passport.authenticate('local'),
   controller.login
 );
 router.post(
   '/cp/impersonate',
+  auth.isAdmin,
   controller.admin.impersonate,
   passport.authenticate('local'),
   controller.login
@@ -31,7 +32,7 @@ router.post(
 router
   .route('/cp/:id')
   .get(auth.isAdmin, controller.find)
-  .put(auth.isAdmin, controller.update)
+  .put(auth.isAdmin, controller.admin.update)
   .delete(auth.isAdmin, controller.delete);
 
 router.post(

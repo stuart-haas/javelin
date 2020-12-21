@@ -33,21 +33,22 @@ module.exports = {
   },
   isAdmin: async (req, res, next) => {
     const isAuthenticated = req.isAuthenticated();
-    const { username } = req.body;
-    const user = await User.findOne({ username });
 
-    if (!user) {
-      if (!req.user.isAdmin || !isAuthenticated) {
-        return res
-          .status(401)
-          .json({ error: true, message: 'You are not authorized ' });
-      }
-    } else {
-      if (!user.isAdmin) {
-        return res
-          .status(401)
-          .json({ error: true, message: 'You are not authorized ' });
-      }
+    if (!req.user.isAdmin || !isAuthenticated) {
+      return res
+        .status(401)
+        .json({ error: true, message: 'You are not authorized ' });
+    }
+    next();
+  },
+  isAdminByUsername: async (req, res, next) => {
+    const { username } = req.body;
+    let user = await User.findOne({ username });
+
+    if (!user.isAdmin) {
+      return res
+        .status(401)
+        .json({ error: true, message: 'You are not authorized ' });
     }
     next();
   },
