@@ -1,15 +1,12 @@
 <template>
   <div class="mb-6">
+    <label class="inline-block text-sm font-medium text-gray-700">{{
+      field.label
+    }}</label>
     <form v-if="!value" @submit.prevent="submit" enctype="multipart/form-data">
-      <div class="space-y-3">
+      <div class="mt-2 space-y-3">
         <fieldset>
-          <input
-            id="image"
-            name="image"
-            type="file"
-            class="mt-1 text-sm"
-            @change="change"
-          />
+          <input type="file" class="text-sm" @change="change" />
         </fieldset>
         <Button type="submit" theme="secondary">Upload</Button>
       </div>

@@ -77,7 +77,7 @@ export default {
       return this.mapFieldData(this.product, formFields);
     },
     image() {
-      return { name: 'image', value: this.product.image };
+      return { name: 'image', label: 'Image', value: this.product.image };
     },
     otherData() {
       const dataCopy = { ...this.appendData };
