@@ -19,7 +19,7 @@
 </template>
 
 <script>
-import image from '../../../assets/images/mountains.jpg';
+import image from '@/assets/images/mountains.jpg';
 
 export default {
   data() {

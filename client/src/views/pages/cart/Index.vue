@@ -30,7 +30,7 @@
 </template>
 
 <script>
-import Item from '../../../components/Item.vue';
+import Item from '@/components/Item.vue';
 
 export default {
   components: {
