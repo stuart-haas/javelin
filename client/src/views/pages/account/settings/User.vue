@@ -1,49 +1,39 @@
 <template>
-  <form @submit.prevent="submit" class="w-8/12">
-    <div class="space-y-6">
-      <fieldset>
-        <label for="street" class="block text-sm font-medium text-gray-700"
-          >Username</label
-        >
-        <input
-          type="text"
-          name="username"
-          id="username"
-          class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-          v-model="formData['username']"
-          @input="input"
-        />
-      </fieldset>
-      <fieldset>
-        <label for="email" class="block text-sm font-medium text-gray-700"
-          >Email</label
-        >
-        <input
-          type="text"
-          name="email"
-          id="email"
-          class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-          v-model="formData['email']"
-          @input="input"
-        />
-      </fieldset>
-      <div class="text-center">
-        <Button type="submit" theme="secondary" class="block w-full">
-          Save
-        </Button>
-      </div>
-      <div v-if="message" class="text-center text-green-500">{{ message }}</div>
-    </div>
-  </form>
+  <Form
+    :fields="fields"
+    dispatch="put"
+    api="user"
+    :param="id"
+    submitLabel="Update"
+    @success="success"
+    class="w-8/12"
+  />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      formData: {},
-      message: '',
+      user: {},
+      formFields: [
+        {
+          label: 'Username',
+          name: 'username',
+        },
+        {
+          label: 'Email',
+          name: 'email',
+        },
+      ],
     };
+  },
+  computed: {
+    id() {
+      return this.$store.state.user.user._id;
+    },
+    fields() {
+      return this.mapFieldData(this.user, this.formFields);
+    },
   },
   mounted() {
     this.fetch();
@@ -51,25 +41,10 @@ export default {
   methods: {
     async fetch() {
       const user = this.$store.state.user.user;
-      this.formData = user;
+      this.user = user;
     },
-    async submit() {
-      const { formData } = this;
-      const param = this.$store.state.user.user._id;
-      const { user } = await this.$store.dispatch('put', {
-        api: 'user',
-        formData,
-        param,
-      });
-
-      if (user) {
-        this.$store.commit('user/setState', { name: 'user', value: user });
-        this.message = 'User settings saved';
-      }
-    },
-    input(e) {
-      const { name, value } = e.target;
-      this.formData[name] = value;
+    success({ user }) {
+      this.$store.commit('user/setState', { name: 'user', value: user });
     },
   },
 };

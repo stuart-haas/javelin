@@ -1,15 +1,8 @@
 <template>
   <div class="mb-6">
-    <form
-      v-if="!current && !path"
-      @submit.prevent="submit"
-      enctype="multipart/form-data"
-    >
+    <form v-if="!value" @submit.prevent="submit" enctype="multipart/form-data">
       <div class="space-y-3">
         <fieldset>
-          <label for="image" class="block text-sm font-medium text-gray-700"
-            >Image</label
-          >
           <input
             id="image"
             name="image"
@@ -22,14 +15,13 @@
       </div>
     </form>
     <div v-else class="relative w-1/3">
-      <div class="block text-sm font-medium text-gray-700">Image</div>
       <a
-        :href="current || path"
+        :href="value"
         target="_blank"
         class="cursor-pointer border block p-4 border-gray-300 mt-3"
-        ><img :src="current || path" class="h-auto w-full" />
+        ><img :src="value" class="h-auto w-full" />
       </a>
-      <CloseButton class="absolute top-0 right-0" @click="remove" />
+      <CloseButton class="absolute top-1 right-1" @click="remove" />
     </div>
     <div
       v-if="message"
@@ -44,17 +36,22 @@
 <script>
 export default {
   props: {
-    current: String,
+    field: Object,
   },
   data() {
     return {
       file: {},
-      path: '',
+      value: '',
       message: {
         success: true,
         text: '',
       },
     };
+  },
+  watch: {
+    'field.value': function (newVal, oldVal) {
+      this.value = newVal;
+    },
   },
   methods: {
     async submit() {
@@ -65,9 +62,10 @@ export default {
           api: 'upload',
           formData,
         });
-        const path = `http://localhost:5000/${file.path}`;
-        this.$emit('update', path);
-        this.path = path;
+        const value = `http://localhost:5000/${file.path}`;
+        const field = this.field;
+        this.$emit('change', { field, value });
+        this.value = value;
         this.message = { success: true, text: message };
       } catch (error) {
         const { message } = error.response.data;
@@ -75,9 +73,9 @@ export default {
       }
     },
     remove() {
-      this.$emit('update', null);
+      this.$emit('change', null);
       this.file = {};
-      this.path = '';
+      this.value = '';
       this.message = {};
     },
     change(e) {

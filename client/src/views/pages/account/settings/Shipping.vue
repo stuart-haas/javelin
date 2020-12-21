@@ -1,131 +1,68 @@
 <template>
-  <form @submit.prevent="submit" class="w-10/12">
-    <div class="space-y-6">
-      <div class="grid grid-cols-2 gap-6">
-        <fieldset>
-          <label for="firstName" class="block text-sm font-medium text-gray-700"
-            >First Name</label
-          >
-          <input
-            type="text"
-            name="firstName"
-            id="firstName"
-            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            :value="formData['firstName']"
-            @input="input"
-          />
-        </fieldset>
-        <fieldset>
-          <label for="lastName" class="block text-sm font-medium text-gray-700"
-            >Last Name</label
-          >
-          <input
-            type="text"
-            name="lastName"
-            id="lastName"
-            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            v-model="formData['lastName']"
-            @input="input"
-          />
-        </fieldset>
-      </div>
-      <fieldset>
-        <label for="street" class="block text-sm font-medium text-gray-700"
-          >Street</label
-        >
-        <input
-          type="text"
-          name="street"
-          id="street"
-          class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-          v-model="formData['street']"
-          @input="input"
-        />
-      </fieldset>
-      <div class="grid grid-cols-3 gap-6">
-        <fieldset>
-          <label for="city" class="block text-sm font-medium text-gray-700"
-            >City</label
-          >
-          <input
-            type="text"
-            name="city"
-            id="city"
-            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            v-model="formData['city']"
-            @input="input"
-          />
-        </fieldset>
-        <fieldset>
-          <label for="state" class="block text-sm font-medium text-gray-700"
-            >State</label
-          >
-          <input
-            type="text"
-            name="state"
-            id="state"
-            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            v-model="formData['state']"
-            @input="input"
-          />
-        </fieldset>
-        <fieldset>
-          <label for="zipCode" class="block text-sm font-medium text-gray-700"
-            >Zip Code</label
-          >
-          <input
-            type="text"
-            name="zipCode"
-            id="zipCode"
-            class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-            v-model="formData['zipCode']"
-            @input="input"
-          />
-        </fieldset>
-      </div>
-      <div class="text-center">
-        <Button type="submit" theme="secondary" class="block w-full">
-          Save
-        </Button>
-      </div>
-      <div v-if="message" class="text-center text-green-500">{{ message }}</div>
-    </div>
-  </form>
+  <Form
+    :fields="fields"
+    dispatch="put"
+    api="user"
+    :param="id"
+    submitLabel="Update"
+    @success="success"
+    class="w-8/12"
+  />
 </template>
 
 <script>
 export default {
   data() {
     return {
-      formData: {},
-      message: '',
+      user: {},
+      formFields: [
+        {
+          label: 'First Name',
+          name: 'firstName',
+        },
+        {
+          label: 'Last Name',
+          name: 'lastName',
+        },
+        {
+          label: 'Street',
+          name: 'street',
+        },
+        {
+          label: 'City',
+          name: 'city',
+          class: 'w-1/3 pr-4 float-left',
+        },
+        {
+          label: 'State',
+          name: 'state',
+          class: 'w-1/3 pr-4 float-left',
+        },
+        {
+          label: 'Zip Code',
+          name: 'zipCode',
+        },
+      ],
     };
+  },
+  computed: {
+    id() {
+      return this.$store.state.user.user._id;
+    },
+    fields() {
+      return this.mapFieldData(this.user, this.formFields);
+    },
   },
   mounted() {
     this.fetch();
   },
   methods: {
-    fetch() {
+    async fetch() {
       const user = this.$store.state.user.user;
-      this.formData = user || {};
+      this.user = user;
     },
-    async submit() {
-      const { formData } = this;
-      const param = this.$store.state.user.user._id;
-      const { user } = await this.$store.dispatch('put', {
-        api: 'user',
-        formData,
-        param,
-      });
-
-      if (user) {
-        this.$store.commit('user/setState', { name: 'user', value: user });
-        this.message = 'Shipping settings saved';
-      }
-    },
-    input(e) {
-      const { name, value } = e.target;
-      this.formData[name] = value;
+    success({ user }) {
+      this.$store.commit('user/setState', { name: 'user', value: user });
     },
   },
 };

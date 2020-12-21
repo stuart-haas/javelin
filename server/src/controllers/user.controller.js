@@ -9,20 +9,12 @@ module.exports = {
     }
     res.json({ user });
   },
-  register: (req, res) => {
-    User.register(
+  register: async (req, res) => {
+    const user = await User.register(
       new User({ username: req.body.username, email: req.body.email }),
-      req.body.password,
-      (error) => {
-        if (error) {
-          return res.json(error);
-        } else {
-          passport.authenticate('local')(req, res, () => {
-            res.json({ success: true, message: 'Registration successful' });
-          });
-        }
-      }
+      req.body.password
     );
+    res.json({ success: true, message: 'Registration successful', user });
   },
   login: (req, res) => {
     const user = req.user.toJSON();
@@ -56,14 +48,18 @@ module.exports = {
   },
   update: async (req, res) => {
     const { id } = req.params;
-    const user = await User.findById(id);
-    Object.keys(req.body).forEach((key) => {
-      if (key !== 'role') {
-        user[key] = req.body[key];
-      }
-    });
-    await user.save();
-    res.json({ success: true, message: 'Account updated', user });
+    try {
+      const user = await User.findById(id);
+      Object.keys(req.body).forEach((key) => {
+        if (key !== 'role') {
+          user[key] = req.body[key];
+        }
+      });
+      await user.save();
+      res.json({ success: true, message: 'Account updated', user });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   delete: async (req, res) => {
     const { id } = req.params;

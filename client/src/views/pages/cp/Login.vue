@@ -4,53 +4,14 @@
     :style="{ 'background-image': `url(${image})` }"
   >
     <div class="w-10/12 md:w-8/12 lg:w-4/12">
-      <form
-        @submit.prevent="submit"
-        class="shadow-lg py-4 rounded border bg-white bg-opacity-75"
-      >
-        <div class="space-y-6 p-6">
-          <fieldset>
-            <label
-              for="username"
-              class="block text-sm font-medium text-gray-700"
-              >Username</label
-            >
-            <input
-              type="text"
-              name="username"
-              id="username"
-              class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-              v-model="formData['username']"
-              @input="input"
-            />
-          </fieldset>
-          <fieldset>
-            <label
-              for="password"
-              class="block text-sm font-medium text-gray-700"
-              >Password</label
-            >
-            <input
-              type="password"
-              name="password"
-              id="password"
-              class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-              v-model="formData['password']"
-              @input="input"
-            />
-          </fieldset>
-          <div class="text-center">
-            <Button
-              type="submit"
-              theme="green"
-              :variant="{ base: '500', hover: '600' }"
-              class="block w-full"
-            >
-              Login
-            </Button>
-          </div>
-        </div>
-      </form>
+      <Form
+        :fields="fields"
+        dispatch="user/login"
+        api="user/cp/login"
+        submitLabel="Login"
+        @success="success"
+        class="shadow-lg px-4 py-8 rounded bg-white bg-opacity-75"
+      />
     </div>
   </div>
 </template>
@@ -61,29 +22,27 @@ import image from '../../../assets/images/mountains.jpg';
 export default {
   data() {
     return {
-      formData: {},
       image: image,
+      fields: [
+        {
+          label: 'Username',
+          name: 'username',
+        },
+        {
+          label: 'Password',
+          name: 'password',
+          type: 'password',
+        },
+      ],
     };
   },
   methods: {
-    input(e) {
-      const { name, value } = e.target;
-      this.formData[name] = value;
-    },
-    async submit() {
-      const { formData } = this;
-      const success = await this.$store.dispatch('user/login', {
-        api: 'user/cp/login',
-        formData,
-      });
-
-      if (success) {
-        const query = this.$route.query.from;
-        if (query) {
-          this.$router.replace(query);
-        } else {
-          this.$router.replace('/cp');
-        }
+    success() {
+      const query = this.$route.query.from;
+      if (query) {
+        this.$router.replace(query);
+      } else {
+        this.$router.replace('/cp');
       }
     },
   },

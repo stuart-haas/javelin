@@ -18,10 +18,11 @@ import Checkout from './views/pages/cart/Checkout.vue';
 import CP from './views/layouts/CP.vue';
 import CPLogin from './views/pages/cp/Login.vue';
 import CPIndex from './views/pages/cp/Index.vue';
+import CPOrders from './views/pages/cp/orders/Index.vue';
 import CPProducts from './views/pages/cp/products/Index.vue';
-import CPProductsForm from './views/pages/cp/products/Form.vue';
+import CPProduct from './views/pages/cp/products/Product.vue';
 import CPCategories from './views/pages/cp/categories/Index.vue';
-import CPCategoriesForm from './views/pages/cp/categories/Form.vue';
+import CPCategory from './views/pages/cp/categories/Category.vue';
 import CPUsers from './views/pages/cp/users/Index.vue';
 
 Vue.use(Router);
@@ -142,6 +143,12 @@ const router = new Router({
           meta: { title: 'Dashboard' },
           children: [
             {
+              path: 'orders',
+              name: 'cp-order',
+              component: CPOrders,
+              meta: { title: 'Orders' },
+            },
+            {
               path: 'products',
               name: 'cp-products',
               component: CPProducts,
@@ -150,13 +157,13 @@ const router = new Router({
             {
               path: 'products/new',
               name: 'cp-products-new',
-              component: CPProductsForm,
+              component: CPProduct,
               meta: { title: 'New Product' },
             },
             {
               path: 'products/:id',
               name: 'cp-products-id',
-              component: CPProductsForm,
+              component: CPProduct,
               meta: { title: 'Edit Product' },
             },
             {
@@ -168,13 +175,13 @@ const router = new Router({
             {
               path: 'categories/new',
               name: 'cp-categories-new',
-              component: CPCategoriesForm,
+              component: CPCategory,
               meta: { title: 'New Category' },
             },
             {
               path: 'categories/:id',
               name: 'cp-categories-id',
-              component: CPCategoriesForm,
+              component: CPCategory,
               meta: { title: 'Edit Category' },
             },
             {

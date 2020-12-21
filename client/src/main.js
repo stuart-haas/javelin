@@ -13,7 +13,6 @@ import {
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/buttons';
-import './plugins/fields';
 import './plugins/forms';
 import './plugins/api';
 import 'fontsource-libre-baskerville';
