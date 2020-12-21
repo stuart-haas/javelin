@@ -8,7 +8,10 @@
     <tr
       v-for="(row, i) in filteredData"
       :key="i"
-      :class="active === i ? 'font-bold' : ''"
+      :class="[
+        active === i ? 'font-bold' : '',
+        i % 2 === 0 ? 'bg-gray-100' : '',
+      ]"
     >
       <td v-for="(item, j) in row" :key="j">
         <component

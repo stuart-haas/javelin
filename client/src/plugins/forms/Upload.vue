@@ -1,6 +1,6 @@
 <template>
   <div class="mb-6">
-    <label class="mb-1 inline-block text-sm font-medium text-gray-700">{{
+    <label class="mb-2 inline-block text-sm font-medium text-gray-700">{{
       field.label
     }}</label>
     <form v-if="!value" @submit.prevent="submit" enctype="multipart/form-data">
@@ -15,10 +15,10 @@
       <a
         :href="value"
         target="_blank"
-        class="cursor-pointer border border-dashed block p-4 border-gray-500"
+        class="cursor-pointer border border-dashed block p-2 border-gray-500"
         ><img :src="value" class="h-auto w-full" />
       </a>
-      <CloseButton class="absolute top-1 right-1" @click="remove" />
+      <CloseButton class="absolute -top-3 -right-3" @click="remove" />
     </div>
   </div>
 </template>
