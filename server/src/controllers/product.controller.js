@@ -7,7 +7,7 @@ module.exports = {
   },
   find: async (req, res) => {
     const { id } = req.params;
-    const product = await Product.findById(id);
+    const product = await Product.findById(id).populate('category');
     res.json(product);
   },
   create: async (req, res) => {

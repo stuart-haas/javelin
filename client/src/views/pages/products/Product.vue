@@ -1,7 +1,11 @@
 <template>
   <Page>
     <template v-slot:hero>
-      <Hero :image="image" :title="product.name" />
+      <Hero
+        v-if="product.category"
+        :image="product.category.image"
+        :title="product.name"
+      />
     </template>
     <template v-slot:content>
       <div class="grid grid-cols-12 gap-20">
@@ -59,7 +63,6 @@
 </template>
 
 <script>
-import image from '../../../assets/images/tools.jpg';
 import Hero from '../../../components/Hero.vue';
 
 export default {
@@ -68,7 +71,6 @@ export default {
   },
   data() {
     return {
-      image: image,
       product: {},
       quantity: 0,
       favorite: false,

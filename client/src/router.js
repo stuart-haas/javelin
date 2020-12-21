@@ -144,7 +144,7 @@ const router = new Router({
           component: CPIndex,
           meta: { title: 'Dashboard' },
           redirect: () => {
-            return '/cp/products';
+            return '/cp/orders';
           },
           children: [
             {

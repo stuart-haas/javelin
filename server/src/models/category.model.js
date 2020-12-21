@@ -8,6 +8,7 @@ const fields = {
     unique: true,
   },
   slug: String,
+  image: String,
 };
 
 const Category = new Schema(fields, {

@@ -5,8 +5,10 @@
         Delete
       </Button>
     </template>
+    <Upload :field="image" @change="change" />
     <Form
       :fields="fields"
+      :append="append"
       :dispatch="id ? 'put' : 'post'"
       api="category"
       :param="id"
@@ -20,6 +22,7 @@ export default {
   data() {
     return {
       category: {},
+      append: {},
       formFields: [
         {
           label: 'Name',
@@ -35,6 +38,9 @@ export default {
     },
     fields() {
       return this.mapFieldData(this.category, this.formFields);
+    },
+    image() {
+      return { name: 'image', label: 'Image', value: this.category.image };
     },
   },
   mounted() {
@@ -61,6 +67,9 @@ export default {
       if (category) {
         this.$router.push('/cp/categories');
       }
+    },
+    change({ field, value }) {
+      this.$set(this.append, field.name, value);
     },
   },
 };
