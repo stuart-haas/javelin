@@ -32,14 +32,6 @@ export default {
           },
         },
         {
-          label: 'Active Since',
-          key: 'createdAt',
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy',
-          },
-        },
-        {
           label: 'Username',
           key: 'username',
         },
@@ -52,9 +44,17 @@ export default {
           key: 'role',
         },
         {
+          label: 'Active Since',
+          key: 'createdAt',
+          format: {
+            function: format,
+            pattern: 'MMMM d, yyyy',
+          },
+        },
+        {
           value: 'Edit',
           tag: 'router-link',
-          hiddenIf: {
+          hideOn: {
             key: 'role',
             value: 'superadmin',
             and: this.$store.state.user.user.role === 'admin',

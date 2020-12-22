@@ -57,7 +57,7 @@ export default {
     return {
       messages: [],
       formData: {},
-      messageDuration: 3000,
+      messageDuration: 2000,
     };
   },
   watch: {

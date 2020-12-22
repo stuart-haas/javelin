@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
   data() {
     return {
@@ -36,6 +38,14 @@ export default {
         {
           label: 'Inventory',
           key: 'inventory',
+        },
+        {
+          label: 'Last Updated',
+          key: 'updatedAt',
+          format: {
+            function: format,
+            pattern: 'MMMM d, yyyy',
+          },
         },
       ],
     };

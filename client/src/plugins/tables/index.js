@@ -10,9 +10,9 @@ const resolveColumnAttributes = (item, field, colAttrs) => {
   if (field.tag === 'img') {
     attrs.src = item[attrs.src];
   }
-  if (field.hiddenIf) {
+  if (field.hideOn) {
     attrs.hidden =
-      field.hiddenIf.value === item[field.hiddenIf.key] && field.hiddenIf.and;
+      field.hideOn.value === item[field.hideOn.key] && field.hideOn.and;
   }
   return attrs;
 };
@@ -41,13 +41,13 @@ const TableMixin = {
       const rows = [];
       data.map((item) => {
         let row = fields.map((field) => {
-          let { tag = '', hidden = false, hiddenIf = {}, attrs = {} } = field;
+          let { tag = '', hidden = false, hideOn = {}, attrs = {} } = field;
           attrs = resolveColumnAttributes(item, field, attrs);
           const value = resolveValue(item, field);
           return {
             tag,
             hidden,
-            hiddenIf,
+            hideOn,
             value,
             attrs: { ...attrs },
           };

@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
   data() {
     return {
@@ -23,6 +25,14 @@ export default {
             class: 'text-blue-500',
             to: '/cp/categories/:param',
             param: '_id',
+          },
+        },
+        {
+          label: 'Last Updated',
+          key: 'updatedAt',
+          format: {
+            function: format,
+            pattern: 'MMMM d, yyyy',
           },
         },
       ],
