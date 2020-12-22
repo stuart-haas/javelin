@@ -14,7 +14,12 @@
       ]"
     >
       <td v-for="(item, j) in getRow(row)" :key="j">
-        <component v-if="item.tag" :is="item.tag" v-bind="item.attrs">
+        <component
+          v-if="item.tag"
+          :is="item.tag"
+          v-bind="item.attrs"
+          v-on="item.listeners"
+        >
           {{ item.value }}
         </component>
         <span v-else>
@@ -38,15 +43,27 @@ export default {
       });
       return index;
     },
+    disable() {
+      const index = this.data.findIndex((item) => {
+        return item.disable;
+      });
+      return index;
+    },
     filteredFields() {
       return this.fields.filter((item) => {
-        return !item.hidden;
+        if (item.attrs) {
+          return !item.attrs.hidden;
+        }
+        return true;
       });
     },
     filteredData() {
       return this.data.map((item) => {
         return item.filter((item) => {
-          return !item.hidden;
+          if (item.attrs) {
+            return !item.attrs.hidden;
+          }
+          return true;
         });
       });
     },
@@ -54,7 +71,7 @@ export default {
   methods: {
     getRow(row) {
       return row.filter((item) => {
-        return !item.hidden;
+        return !item.disable;
       });
     },
   },

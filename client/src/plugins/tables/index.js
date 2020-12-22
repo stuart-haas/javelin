@@ -2,25 +2,27 @@ import Vue from 'vue';
 import Table from './Table.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumnAttributes = (item, field, colAttrs) => {
-  let attrs = { ...colAttrs };
-  if (field.tag === 'router-link') {
+const resolveColumnAttributes = (item, fieldAttrs, colAttrs) => {
+  let attrs = { ...fieldAttrs };
+  if (attrs.to) {
     attrs.to = attrs.to.replace(':param', item[attrs.param]);
   }
-  if (field.tag === 'img') {
+  if (attrs.src) {
     attrs.src = item[attrs.src];
   }
-  if (field.hiddenIf) {
-    attrs.hidden =
-      field.hiddenIf.value === item[field.hiddenIf.key] && field.hiddenIf.and;
+  if (attrs.disable) {
+    attrs.disable = attrs.disable.value === item[attrs.disable.key];
   }
   return attrs;
 };
 
-const resolveRowAttributes = (item, fields, rowAttrs) => {
+const resolveRowAttributes = (item, rowAttrs) => {
   let attrs = { ...rowAttrs };
   if (attrs.active) {
     attrs.active = attrs.active.value === item[attrs.active.key];
+  }
+  if (attrs.disable) {
+    attrs.disable = attrs.disable.value === item[attrs.disable.key];
   }
   return attrs;
 };
@@ -31,22 +33,24 @@ const resolveValue = (item, field) => {
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, rowAttrs = {}) {
+    mapTableData(data, fields, rowAttrs = {}, colAttrs = {}) {
       const rows = [];
       data.map((item) => {
         let row = fields.map((field) => {
-          let { tag = '', hidden = false, hiddenIf = {}, attrs = {} } = field;
-          attrs = resolveColumnAttributes(item, field, attrs);
+          let { label = '', tag = '', attrs = {}, listeners = {} } = field;
+          attrs = resolveColumnAttributes(item, attrs, colAttrs);
           const value = resolveValue(item, field);
+          const { disable = false } = attrs;
           return {
+            label,
             tag,
-            hidden,
-            hiddenIf,
             value,
+            disable,
             attrs: { ...attrs },
+            listeners: { ...listeners },
           };
         });
-        const attrs = resolveRowAttributes(item, fields, rowAttrs);
+        const attrs = resolveRowAttributes(item, rowAttrs);
         Object.assign(row, attrs);
         rows.push(row);
       });
