@@ -18,9 +18,7 @@ export default {
         {
           label: 'Id',
           key: '_id',
-          attrs: {
-            hidden: true,
-          },
+          hidden: true,
         },
         {
           label: 'Avatar',
