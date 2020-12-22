@@ -80,6 +80,12 @@ module.exports = {
   find: async (req, res) => {
     const { id } = req.params;
     const user = await User.findById(id).populate('favorites', '_id name');
+    if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
+      return res.status(403).json({
+        error: true,
+        message: 'You are not permitted',
+      });
+    }
     res.json(user);
   },
   update: async (req, res) => {
