@@ -31,7 +31,7 @@ export default {
         },
         {
           label: 'Price',
-          key: 'price',
+          key: 'formattedPrice',
         },
         {
           label: 'Inventory',
