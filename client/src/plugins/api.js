@@ -23,13 +23,17 @@ api.interceptors.response.use(
   },
   (error) => {
     if (error.response) {
-      if (error.response.status === 401) {
+      const {
+        status,
+        data: { message },
+      } = error.response;
+      if (status === 401) {
         store.dispatch('user/logout');
       }
-      if (error.response.status === 403) {
+      if ([403, 404, 500].includes(status)) {
         const options = {
           type: 'error',
-          message: error.response.data.message,
+          message,
           duration: 2000,
         };
         store.dispatch('toast', { options });
