@@ -30,6 +30,11 @@ const fields = {
   shippingProvider: {
     type: String,
   },
+  status: {
+    type: String,
+    enum: ['authorized', 'shipped', 'completed', 'canceled', 'refunded'],
+    default: 'authorized',
+  },
 };
 
 const Order = new Schema(fields, {

@@ -6,7 +6,8 @@ import Index from './views/pages/Index.vue';
 import Login from './views/pages/account/Login.vue';
 import Register from './views/pages/account/Register.vue';
 import Account from './views/pages/account/Index.vue';
-import Orders from './views/pages/account/Orders.vue';
+import Orders from './views/pages/account/orders/Index.vue';
+import Order from './views/pages/account/orders/Order.vue';
 import Favorites from './views/pages/account/Favorites.vue';
 import Settings from './views/pages/account/settings/Index.vue';
 import UserContact from './views/pages/account/settings/Contact.vue';
@@ -100,6 +101,12 @@ const router = new Router({
               name: 'account-orders',
               component: Orders,
               meta: { title: 'Orders' },
+            },
+            {
+              path: 'orders/:id',
+              name: 'account-order-id',
+              component: Order,
+              meta: { title: 'Order' },
             },
             {
               path: 'favorites',

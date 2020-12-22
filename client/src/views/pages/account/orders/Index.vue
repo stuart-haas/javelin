@@ -1,10 +1,5 @@
 <template>
-  <Content title="Orders">
-    <template v-slot:header>
-      <Button theme="secondary" tag="router-link" to="/cp/orders/new"
-        >New Order</Button
-      >
-    </template>
+  <Content title="Your Orders">
     <Table :data="data" :fields="fields" v-if="data.length" />
     <div v-else>There aren't any orders</div>
   </Content>
@@ -31,23 +26,11 @@ export default {
           key: 'orderId',
         },
         {
-          label: 'First Name',
-          key: 'user.firstName',
-        },
-        {
-          label: 'Last Name',
-          key: 'user.lastName',
-        },
-        {
-          label: 'Email',
-          key: 'user.email',
-        },
-        {
           value: 'View',
           tag: 'router-link',
           attrs: {
             class: 'text-blue-500',
-            to: '/cp/orders/:param',
+            to: '/account/orders/:param',
             param: '_id',
           },
         },
@@ -64,7 +47,8 @@ export default {
   },
   methods: {
     async fetch() {
-      const orders = await this.$store.dispatch('get', { api: 'order/cp' });
+      const param = this.$store.state.user.user._id;
+      const orders = await this.$store.dispatch('get', { api: 'order', param });
       if (orders) {
         this.orders = orders;
       }

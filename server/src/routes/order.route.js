@@ -4,11 +4,20 @@ const auth = require('../utils/auth');
 
 router
   .route('/')
-  .get(controller.findAll)
+  .get(controller.admin.findAll)
   .post(controller.create)
-  .put(controller.update)
   .delete(controller.deleteAll);
 
-router.route('/:id').get(controller.find).delete(controller.delete);
+router.route('/cp').get(auth.isAdmin, controller.admin.findAll);
+
+router
+  .route('/cp/:id')
+  .get(auth.isAdmin, controller.find)
+  .put(auth.isAdmin, controller.update)
+  .delete(auth.isAdmin, controller.delete);
+
+router.route('/:user').get(auth.isMe, controller.findAll);
+
+router.route('/:user/:id').get(auth.isMe, controller.findMine);
 
 module.exports = router;

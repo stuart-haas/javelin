@@ -65,5 +65,6 @@ export default {
 th,
 td {
   @apply p-3;
+  @apply text-sm;
 }
 </style>

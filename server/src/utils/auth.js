@@ -23,7 +23,8 @@ module.exports = {
   },
   isMe: (req, res, next) => {
     const isAuthenticated = req.isAuthenticated();
-    const isMe = req.user._id && String(req.user._id) === String(req.params.id);
+    const isMe =
+      req.user._id && String(req.user._id) === String(req.params.user);
 
     if (isAuthenticated && isMe) {
       return next();

@@ -72,7 +72,7 @@ export default {
       const param = this.$route.params.id;
       if (param) {
         const order = await this.$store.dispatch('get', {
-          api: 'order',
+          api: 'order/cp',
           param,
         });
         this.order = order;
@@ -82,7 +82,7 @@ export default {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
       const { order, message } = await this.$store.dispatch('delete', {
-        api: 'order',
+        api: 'order/cp',
         param,
       });
       if (order) {

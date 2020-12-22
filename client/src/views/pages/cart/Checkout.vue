@@ -67,6 +67,7 @@ export default {
         api: 'order',
       });
       this.$toast({ type: 'success', message, duration: 3000 });
+      this.$router.push('/');
     },
     input(e) {
       const { name, value } = e.target;

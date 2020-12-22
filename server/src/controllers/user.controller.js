@@ -14,46 +14,6 @@ module.exports = {
         res.status(422).json({ error: true, message: 'Something went wrong' });
       }
     },
-    impersonate: async (req, res, next) => {
-      try {
-        const authUser = await User.findById(req.body.id);
-        if (req.user.role !== 'superadmin' && authUser.role === 'superadmin') {
-          return res.status(403).json({
-            error: true,
-            message: 'You are not permitted',
-          });
-        }
-        req.login(authUser, () => {
-          const user = authUser.toJSON();
-          return res.json({
-            success: true,
-            message: 'Login successful',
-            user,
-          });
-        });
-      } catch (error) {
-        res.status(422).json({ error: true, message: 'Something went wrong' });
-      }
-    },
-    update: async (req, res) => {
-      const { id } = req.params;
-      try {
-        const user = await User.findById(id);
-        if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
-          return res.status(403).json({
-            error: true,
-            message: 'You are not permitted',
-          });
-        }
-        Object.keys(req.body).forEach((key) => {
-          user[key] = req.body[key];
-        });
-        await user.save();
-        res.json({ success: true, message: 'User updated', user });
-      } catch (error) {
-        res.status(422).json({ error: true, message: 'Something went wrong' });
-      }
-    },
   },
   session: async (req, res) => {
     const { user } = req;
@@ -61,6 +21,27 @@ module.exports = {
       return res.json({ error: true, message: 'Session expired' });
     }
     res.json({ user });
+  },
+  impersonate: async (req, res) => {
+    try {
+      const authUser = await User.findById(req.body.id);
+      if (req.user.role !== 'superadmin' && authUser.role === 'superadmin') {
+        return res.status(403).json({
+          error: true,
+          message: 'You are not permitted',
+        });
+      }
+      req.login(authUser, () => {
+        const user = authUser.toJSON();
+        return res.json({
+          success: true,
+          message: 'Login successful',
+          user,
+        });
+      });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
   register: async (req, res) => {
     const { username, email, password } = req.body;
@@ -105,10 +86,14 @@ module.exports = {
     const { id } = req.params;
     try {
       const user = await User.findById(id);
+      if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
+        return res.status(403).json({
+          error: true,
+          message: 'You are not permitted',
+        });
+      }
       Object.keys(req.body).forEach((key) => {
-        if (key !== 'role') {
-          user[key] = req.body[key];
-        }
+        user[key] = req.body[key];
       });
       await user.save();
       res.json({ success: true, message: 'User updated', user });
@@ -117,7 +102,7 @@ module.exports = {
     }
   },
   delete: async (req, res) => {
-    const { id } = req.params;
+    const id = req.params.user;
     try {
       const user = await User.findById(id);
       if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
@@ -136,8 +121,42 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  findMine: async (req, res) => {
+    const id = req.params.user;
+    const user = await User.findById(id).populate('favorites', '_id name');
+    res.json(user);
+  },
+  updateMine: async (req, res) => {
+    const id = req.params.user;
+    try {
+      const user = await User.findById(id);
+      Object.keys(req.body).forEach((key) => {
+        if (key !== 'role') {
+          user[key] = req.body[key];
+        }
+      });
+      await user.save();
+      res.json({ success: true, message: 'User updated', user });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
+  deleteMine: async (req, res) => {
+    const id = req.params.user;
+    try {
+      const user = await User.findById(id);
+      await user.deleteOne();
+      res.json({
+        success: true,
+        message: 'User deleted',
+        user,
+      });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
   addFavorite: async (req, res) => {
-    const { id } = req.params;
+    const id = req.params.user;
     const { favorite } = req.body;
     try {
       const user = await User.findByIdAndUpdate(
@@ -155,7 +174,7 @@ module.exports = {
     }
   },
   removeFavorite: async (req, res) => {
-    const { id } = req.params;
+    const id = req.params.user;
     const { favorite } = req.body;
     try {
       const user = await User.findByIdAndUpdate(

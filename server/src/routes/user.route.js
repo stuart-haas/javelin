@@ -24,7 +24,7 @@ router.post(
 router.post(
   '/cp/impersonate',
   auth.isAdmin,
-  controller.admin.impersonate,
+  controller.impersonate,
   passport.authenticate('local'),
   controller.login
 );
@@ -32,7 +32,7 @@ router.post(
 router
   .route('/cp/:id')
   .get(auth.isAdmin, controller.find)
-  .put(auth.isAdmin, controller.admin.update)
+  .put(auth.isAdmin, controller.update)
   .delete(auth.isAdmin, controller.delete);
 
 router.post(
@@ -52,13 +52,13 @@ router.post('/logout', controller.logout);
 
 router.get('/session', controller.session);
 
-router.post('/favorite/:id', auth.isMe, controller.addFavorite);
-router.put('/favorite/:id', auth.isMe, controller.removeFavorite);
+router.post('/favorite/:user', auth.isMe, controller.addFavorite);
+router.put('/favorite/:user', auth.isMe, controller.removeFavorite);
 
 router
-  .route('/:id')
-  .get(auth.isMe, controller.find)
-  .put(auth.isMe, controller.update)
-  .delete(auth.isMe, controller.delete);
+  .route('/:user')
+  .get(auth.isMe, controller.findMine)
+  .put(auth.isMe, controller.updateMine)
+  .delete(auth.isMe, controller.deleteMine);
 
 module.exports = router;
