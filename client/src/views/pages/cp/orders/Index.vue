@@ -43,6 +43,10 @@ export default {
           key: 'user.email',
         },
         {
+          label: 'Status',
+          key: 'status',
+        },
+        {
           value: 'View',
           tag: 'router-link',
           attrs: {
