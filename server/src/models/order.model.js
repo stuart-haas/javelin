@@ -4,29 +4,32 @@ const orderid = require('order-id')(process.env.ORDER_ID_SECRET);
 const fields = {
   orderId: {
     type: String,
-    required: true,
   },
+  user: {
+    type: Schema.Types.ObjectId,
+    ref: 'User',
+  },
+  products: [
+    {
+      product: {
+        type: Schema.Types.ObjectId,
+        ref: 'Product',
+      },
+      quantity: Number,
+    },
+  ],
   subtotal: {
     type: Number,
-    required: true,
   },
   shipping: {
     type: Number,
-    required: true,
   },
   total: {
     type: Number,
-    required: true,
   },
   shippingProvider: {
     type: String,
-    required: true,
   },
-  products: [{
-    type: Schema.Types.ObjectId,
-    ref: 'Product',
-    default: null,
-  }],
 };
 
 const Order = new Schema(fields, {
@@ -36,12 +39,12 @@ const Order = new Schema(fields, {
   },
 });
 
-Order.pre('save', (next) => {
-  if(!this.orderId) {
+Order.pre('save', function () {
+  if (!this.orderId) {
     const id = orderid.generate();
     this.orderId = id;
   }
-  next();
+  return this;
 });
 
 module.exports = model('Order', Order, 'order');

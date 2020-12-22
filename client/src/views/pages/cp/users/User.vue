@@ -108,10 +108,11 @@ export default {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
       try {
-        await this.$store.dispatch('delete', {
+        const { message } = await this.$store.dispatch('delete', {
           api: 'user/cp',
           param,
         });
+        this.$toast({ type: 'success', message, duration: 3000 });
         this.$router.push('/cp/users');
       } catch (error) {
         /**/

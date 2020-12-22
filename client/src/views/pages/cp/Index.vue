@@ -1,7 +1,7 @@
 <template>
   <Page>
-    <template v-slot:sidebar>
-      <Menu :items="items" />
+    <template v-slot:header>
+      <Menu :items="items" direction="horizontal" />
     </template>
     <template v-slot:content>
       <router-view />

@@ -111,7 +111,7 @@ module.exports = {
         }
       });
       await user.save();
-      res.json({ success: true, message: 'Account updated', user });
+      res.json({ success: true, message: 'User updated', user });
     } catch (error) {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
@@ -129,7 +129,7 @@ module.exports = {
       await user.deleteOne();
       res.json({
         success: true,
-        message: 'Your account has been deleted',
+        message: 'User deleted',
         user,
       });
     } catch (error) {

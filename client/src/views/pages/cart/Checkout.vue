@@ -29,112 +29,7 @@
       </div>
     </template>
     <template v-slot:content>
-      <div v-if="!user" class="text-center">
-        <router-link
-          to="/login?from=cart/checkout"
-          class="text-blue-500 hover:underline my-6 block"
-          >Login to Your Account</router-link
-        >
-      </div>
-      <h2 class="h2">Contact Information</h2>
-      <div class="mt-3 mb-8">{{ user.email }}</div>
-      <form @submit.prevent="submit">
-        <h2 class="h2 my-3">Shipping Address</h2>
-        <div class="space-y-6">
-          <div class="grid grid-cols-2 gap-6">
-            <fieldset>
-              <label
-                for="firstName"
-                class="block text-sm font-medium text-gray-700"
-                >First Name</label
-              >
-              <input
-                type="text"
-                name="firstName"
-                id="firstName"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                v-model="formData['firstName']"
-                @input="input"
-              />
-            </fieldset>
-            <fieldset>
-              <label
-                for="lastName"
-                class="block text-sm font-medium text-gray-700"
-                >Last Name</label
-              >
-              <input
-                type="text"
-                name="lastName"
-                id="lastName"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                v-model="formData['lastName']"
-                @input="input"
-              />
-            </fieldset>
-          </div>
-          <fieldset>
-            <label for="street" class="block text-sm font-medium text-gray-700"
-              >Street</label
-            >
-            <input
-              type="text"
-              name="street"
-              id="street"
-              class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-              v-model="formData['street']"
-              @input="input"
-            />
-          </fieldset>
-          <div class="grid grid-cols-3 gap-6">
-            <fieldset>
-              <label for="city" class="block text-sm font-medium text-gray-700"
-                >City</label
-              >
-              <input
-                type="text"
-                name="city"
-                id="city"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                v-model="formData['city']"
-                @input="input"
-              />
-            </fieldset>
-            <fieldset>
-              <label for="state" class="block text-sm font-medium text-gray-700"
-                >State</label
-              >
-              <input
-                type="text"
-                name="state"
-                id="state"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                v-model="formData['state']"
-                @input="input"
-              />
-            </fieldset>
-            <fieldset>
-              <label
-                for="zipCode"
-                class="block text-sm font-medium text-gray-700"
-                >Zip Code</label
-              >
-              <input
-                type="text"
-                name="zipCode"
-                id="zipCode"
-                class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-                v-model="formData['zipCode']"
-                @input="input"
-              />
-            </fieldset>
-          </div>
-          <div class="text-right">
-            <Button type="submit" theme="secondary"> Continue </Button>
-          </div>
-          <div v-if="message" class="text-center">{{ message }}</div>
-        </div>
-      </form>
+      <Button theme="secondary" @click="order">Place Order</Button>
     </template>
   </Page>
 </template>
@@ -167,19 +62,11 @@ export default {
       const user = this.$store.state.user.user;
       this.formData = user || {};
     },
-    async submit() {
-      const { formData } = this;
-      const param = this.$store.state.user.user._id;
-      const { user } = await this.$store.dispatch('put', {
-        api: 'user',
-        formData,
-        param,
+    async order() {
+      const { message } = await this.$store.dispatch('post', {
+        api: 'order',
       });
-
-      if (user) {
-        this.$store.commit('user/setState', { name: 'user', value: user });
-        this.message = 'Shipping settings saved';
-      }
+      this.$toast({ type: 'success', message, duration: 3000 });
     },
     input(e) {
       const { name, value } = e.target;

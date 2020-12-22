@@ -10,6 +10,8 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
   data() {
     return {
@@ -27,6 +29,14 @@ export default {
           attrs: {
             src: 'avatar',
             class: 'w-8 h-8 rounded-full',
+          },
+        },
+        {
+          label: 'Active Since',
+          key: 'createdAt',
+          format: {
+            function: format,
+            pattern: 'MMMM d, yyyy',
           },
         },
         {

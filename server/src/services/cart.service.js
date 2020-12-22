@@ -63,7 +63,7 @@ module.exports = {
   save: async (req, res, cart) => {
     if (req.session) {
       req.session.cart = cart;
-      res.json({ success: true, message: 'Product added to cart', cart });
+      res.json({ success: true, cart });
     }
   },
   session: (req) => {

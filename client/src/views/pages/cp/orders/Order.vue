@@ -1,16 +1,14 @@
 <template>
-  <Content :title="id ? 'Edit Category' : 'New Category'">
+  <Content :title="id ? 'Edit Order' : 'New Order'">
     <template v-slot:header>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
       </Button>
     </template>
-    <Upload :field="image" @change="change" />
     <Form
       :fields="fields"
-      :append="append"
       :dispatch="id ? 'put' : 'post'"
-      api="category"
+      api="order"
       :param="id"
       :submitLabel="id ? 'Update' : 'Create'"
       @success="success"
@@ -22,12 +20,21 @@
 export default {
   data() {
     return {
-      category: {},
-      append: {},
+      order: {},
       formFields: [
         {
-          label: 'Name',
-          name: 'name',
+          label: 'Order Id',
+          name: 'orderId',
+          disabled: true,
+        },
+        {
+          label: 'First Name',
+          name: 'user.firstName',
+          required: true,
+        },
+        {
+          label: 'Last Name',
+          name: 'user.lastName',
           required: true,
         },
       ],
@@ -38,10 +45,7 @@ export default {
       return this.$route.params.id;
     },
     fields() {
-      return this.mapFieldData(this.category, this.formFields);
-    },
-    image() {
-      return { name: 'image', label: 'Image', value: this.category.image };
+      return this.mapFieldData(this.order, this.formFields);
     },
   },
   mounted() {
@@ -51,32 +55,29 @@ export default {
     async fetch() {
       const param = this.$route.params.id;
       if (param) {
-        const category = await this.$store.dispatch('get', {
-          api: 'category',
+        const order = await this.$store.dispatch('get', {
+          api: 'order',
           param,
         });
-        this.category = category;
+        this.order = order;
       }
     },
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
-      const { category, message } = await this.$store.dispatch('delete', {
-        api: 'category',
+      const { order, message } = await this.$store.dispatch('delete', {
+        api: 'order',
         param,
       });
-      if (category) {
+      if (order) {
         this.$toast({ type: 'success', message, duration: 3000 });
-        this.$router.push('/cp/categories');
+        this.$router.push('/cp/orders');
       }
-    },
-    change({ field, value }) {
-      this.$set(this.append, field.name, value);
     },
     success(response) {
       const { message } = response;
       this.$toast({ type: 'success', message, duration: 3000 });
-      this.$router.push('/cp/categories');
+      this.$router.push('/cp/orders');
     },
   },
 };

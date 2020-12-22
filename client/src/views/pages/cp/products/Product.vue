@@ -102,11 +102,12 @@ export default {
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
-      const { product } = await this.$store.dispatch('delete', {
+      const { product, message } = await this.$store.dispatch('delete', {
         api: 'product',
         param,
       });
       if (product) {
+        this.$toast({ type: 'success', message, duration: 3000 });
         this.$router.push('/cp/product');
       }
     },

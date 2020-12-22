@@ -26,6 +26,12 @@ const resolveRowAttributes = (item, fields, rowAttrs) => {
 };
 
 const resolveValue = (item, field) => {
+  if (field.format) {
+    return field.format.function(
+      Date.parse(item[field.key]),
+      field.format.pattern
+    );
+  }
   return field.key ? resolvePath(item, field.key) : field.value;
 };
 

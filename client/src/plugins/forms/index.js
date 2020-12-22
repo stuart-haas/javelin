@@ -14,7 +14,7 @@ const FormMixin = {
           const value = resolvePath(data, keys[item.name]);
           Object.assign(item, { value: value });
         } else {
-          const value = data[item.name];
+          const value = resolvePath(data, item.name);
           Object.assign(item, { value });
         }
         return item;

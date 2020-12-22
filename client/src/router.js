@@ -19,6 +19,7 @@ import CP from './views/layouts/CP.vue';
 import CPLogin from './views/pages/cp/Login.vue';
 import CPIndex from './views/pages/cp/Index.vue';
 import CPOrders from './views/pages/cp/orders/Index.vue';
+import CPOrder from './views/pages/cp/orders/Order.vue';
 import CPProducts from './views/pages/cp/products/Index.vue';
 import CPProduct from './views/pages/cp/products/Product.vue';
 import CPCategories from './views/pages/cp/categories/Index.vue';
@@ -152,6 +153,18 @@ const router = new Router({
               name: 'cp-order',
               component: CPOrders,
               meta: { title: 'Orders' },
+            },
+            {
+              path: 'orders/new',
+              name: 'cp-orders-new',
+              component: CPOrder,
+              meta: { title: 'New Order' },
+            },
+            {
+              path: 'orders/:id',
+              name: 'cp-orders-id',
+              component: CPOrder,
+              meta: { title: 'Edit Order' },
             },
             {
               path: 'products',
