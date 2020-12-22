@@ -7,26 +7,7 @@ const state = () => {
   };
 };
 
-const getters = {
-  user(state) {
-    return state.user;
-  },
-  id(state, getters) {
-    return getters.user._id;
-  },
-  role(state, getters) {
-    return getters.user.role;
-  },
-  isAdmin(state, getters) {
-    return getters.user.role === 'admin';
-  },
-  isSuperAdmin(state, getters) {
-    return getters.user.role === 'superadmin';
-  },
-  favorites(state) {
-    return state.favorites;
-  },
-};
+const getters = {};
 
 const mutations = {
   setState(state, { name, value }) {

@@ -23,7 +23,7 @@ export default {
   },
   computed: {
     favorites() {
-      return this.$store.getters['user/favorites'];
+      return this.$store.state.user.favorites;
     },
   },
   mounted() {
@@ -34,7 +34,7 @@ export default {
       this.$store.dispatch('user/favorites');
     },
     async removeFavorite(favorite) {
-      const param = this.$store.getters['user/id'];
+      const param = this.$store.state.user.user._id;
       const formData = { favorite };
       await this.$store.dispatch('user/removeFavorite', { param, formData });
     },

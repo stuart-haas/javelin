@@ -38,10 +38,10 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.getters['cart/items'];
+      return this.$store.state.cart.items;
     },
     formattedTotal() {
-      return this.$store.getters['cart/formattedTotal'];
+      return this.$store.state.cart.formattedTotal;
     },
   },
 };

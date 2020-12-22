@@ -26,10 +26,10 @@
 export default {
   computed: {
     items() {
-      return this.$store.getters['cart/items'];
+      return this.$store.state.cart.items;
     },
     user() {
-      return this.$store.getters['user/user'];
+      return this.$store.state.user.user;
     },
   },
   methods: {

@@ -78,7 +78,7 @@ export default {
   },
   computed: {
     user() {
-      return this.$store.getters['user/user'];
+      return this.$store.state.user.user;
     },
   },
   mounted() {
@@ -103,7 +103,7 @@ export default {
     async toggleFavorite(favorite) {
       const isFavorite = this.checkFavorite(favorite);
       this.favorite = !this.favorite;
-      const param = this.$store.getters['user/id'];
+      const param = this.$store.state.user.user._id;
       const formData = { favorite };
       if (!isFavorite) {
         await this.$store.dispatch('user/addFavorite', { param, formData });
@@ -115,7 +115,7 @@ export default {
       this.quantity = value;
     },
     getQuantityInCart(id) {
-      const item = this.$store.getters['cart/items'].find((item) => {
+      const item = this.$store.state.cart.items.find((item) => {
         return item.id === id;
       });
       return item ? item.quantity : 0;
@@ -128,7 +128,7 @@ export default {
       return quantity + this.quantity > this.product.inventory ? false : true;
     },
     checkFavorite(id) {
-      const item = this.$store.getters['user/favorites'].find((item) => {
+      const item = this.$store.state.user.favorites.find((item) => {
         return item._id === id;
       });
       return item ? true : false;

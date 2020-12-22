@@ -6,14 +6,7 @@ const state = () => {
   };
 };
 
-const getters = {
-  items(state) {
-    return state.items;
-  },
-  formattedTotal(state) {
-    return state.formattedTotal;
-  },
-};
+const getters = {};
 
 const mutations = {
   setState(state, { name, value }) {
