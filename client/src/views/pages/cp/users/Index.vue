@@ -47,7 +47,7 @@ export default {
           hiddenIf: {
             key: 'role',
             value: 'superadmin',
-            and: this.$store.state.user.user.role === 'admin',
+            condition: this.$store.state.user.user.role === 'admin',
           },
           attrs: {
             class: 'text-blue-500',

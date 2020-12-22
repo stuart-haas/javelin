@@ -12,7 +12,8 @@ const resolveColumnAttributes = (item, field, colAttrs) => {
   }
   if (field.hiddenIf) {
     attrs.hidden =
-      field.hiddenIf.value === item[field.hiddenIf.key] && field.hiddenIf.and;
+      field.hiddenIf.value === item[field.hiddenIf.key] &&
+      field.hiddenIf.condition;
   }
   return attrs;
 };

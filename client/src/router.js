@@ -219,7 +219,7 @@ const router = new Router({
       beforeEnter: (to, from, next) => {
         const user = store.state.user.user;
         if (user) {
-          if (user.role !== 'admin') {
+          if (!user.isAdmin) {
             next({ name: 'index' });
           } else {
             next({ name: 'cp' });
@@ -250,7 +250,7 @@ router.beforeEach(async (to, from, next) => {
     }
   } else if (to.matched.some((records) => records.meta.requiresAdmin)) {
     if (user) {
-      if (user.role !== 'admin') {
+      if (!user.isAdmin) {
         next({ name: 'index' });
       } else {
         next();
