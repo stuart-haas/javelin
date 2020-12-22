@@ -149,13 +149,13 @@ export default {
   },
   computed: {
     items() {
-      return this.$store.state.cart.items;
+      return this.$store.getters['cart/items'];
     },
     formattedTotal() {
-      return this.$store.state.cart.formattedTotal;
+      return this.$store.getters['cart/formattedTotal'];
     },
     user() {
-      return this.$store.state.user.user;
+      return this.$store.getters['user/user'];
     },
   },
   mounted() {
@@ -164,12 +164,12 @@ export default {
   methods: {
     async fetch() {
       await this.$store.dispatch('user/initialize');
-      const user = this.$store.state.user.user;
+      const user = this.$store.getters['user/user'];
       this.formData = user || {};
     },
     async submit() {
       const { formData } = this;
-      const param = this.$store.state.user.user._id;
+      const param = this.$store.getters['user/id'];
       const { user } = await this.$store.dispatch('put', {
         api: 'user',
         formData,

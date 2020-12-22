@@ -18,9 +18,7 @@ export default {
         {
           label: 'Id',
           key: '_id',
-          attrs: {
-            hidden: true,
-          },
+          hidden: true,
         },
         {
           label: 'Avatar',
@@ -44,16 +42,18 @@ export default {
           key: 'role',
         },
         {
-          value: 'Edit',
+          label: 'Edit',
+          value: 'edit',
           tag: 'router-link',
+          hiddenIf: {
+            key: 'role',
+            value: 'superadmin',
+            and: this.$store.getters['user/role'] === 'admin',
+          },
           attrs: {
             class: 'text-blue-500',
             to: '/cp/users/:param',
             param: '_id',
-            disable: {
-              key: 'role',
-              value: 'superadmin',
-            },
           },
         },
       ],
@@ -62,7 +62,7 @@ export default {
   computed: {
     data() {
       return this.mapTableData(this.users, this.fields, {
-        active: { key: '_id', value: this.$store.state.user.user._id },
+        active: { key: '_id', value: this.$store.getters['user/id'] },
       });
     },
   },

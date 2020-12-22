@@ -50,7 +50,7 @@ const router = new Router({
           component: Login,
           meta: { title: 'Login' },
           beforeEnter: (to, from, next) => {
-            const user = store.state.user.user;
+            const user = store.getters['user/user'];
             if (user) {
               return next({ name: 'index' });
             }
@@ -217,9 +217,9 @@ const router = new Router({
       component: CPLogin,
       meta: { title: 'Login' },
       beforeEnter: (to, from, next) => {
-        const user = store.state.user.user;
+        const user = store.getters['user/user'];
         if (user) {
-          if (user.role !== 'admin') {
+          if (!user.isAdmin) {
             next({ name: 'index' });
           } else {
             next({ name: 'cp' });
@@ -238,10 +238,10 @@ router.beforeEach(async (to, from, next) => {
     ? `${to.meta.title} - Full-Stack Docker`
     : 'Full-Stack Docker';
 
-  if (!store.state.user.user) {
+  if (!store.getters['users/user']) {
     await store.dispatch('user/initialize');
   }
-  const user = store.state.user.user;
+  const user = store.getters['user/user'];
   if (to.matched.some((records) => records.meta.requiresAuth)) {
     if (!user) {
       next({ name: 'login', query: { from: to.fullPath } });
@@ -250,7 +250,7 @@ router.beforeEach(async (to, from, next) => {
     }
   } else if (to.matched.some((records) => records.meta.requiresAdmin)) {
     if (user) {
-      if (user.role !== 'admin') {
+      if (!user.isAdmin) {
         next({ name: 'index' });
       } else {
         next();

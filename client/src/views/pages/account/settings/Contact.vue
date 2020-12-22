@@ -30,7 +30,7 @@ export default {
   },
   computed: {
     id() {
-      return this.$store.state.user.user._id;
+      return this.$store.getters['user/id'];
     },
     fields() {
       return this.mapFieldData(this.user, this.formFields);
@@ -41,7 +41,7 @@ export default {
   },
   methods: {
     async fetch() {
-      const user = this.$store.state.user.user;
+      const user = this.$store.getters['user/user'];
       this.user = user;
     },
     success({ user }) {

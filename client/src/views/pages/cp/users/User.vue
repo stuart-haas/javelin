@@ -3,7 +3,7 @@
     <template v-slot:header>
       <div>
         <Button
-          v-if="id && user._id !== userId"
+          v-if="id && user._id !== userId && user.role !== 'superadmin'"
           theme="secondary"
           class="mr-3"
           @click="impersonate"
@@ -11,7 +11,7 @@
           Impersonate
         </Button>
         <Button
-          v-if="id && user._id !== userId"
+          v-if="id && user._id !== userId && user.role !== 'superadmin'"
           theme="danger"
           @click="deleteThis"
         >
@@ -49,33 +49,44 @@ export default {
           tag: 'select',
           label: 'Role',
           name: 'role',
-          items: [
-            {
-              value: 'member',
-              label: 'Member',
-            },
-            {
-              value: 'admin',
-              label: 'Admin',
-            },
-            {
-              value: 'superadmin',
-              label: 'Super Admin',
-            },
-          ],
+          items: [],
         },
       ],
     };
   },
   computed: {
     userId() {
-      return this.$store.state.user.user._id;
+      return this.$store.getters['user/id'];
     },
     id() {
       return this.$route.params.id;
     },
     fields() {
-      return this.mapFieldData(this.user, this.formFields);
+      let roles = [
+        {
+          value: 'member',
+          label: 'Member',
+        },
+        {
+          value: 'admin',
+          label: 'Admin',
+        },
+        {
+          value: 'superadmin',
+          label: 'Super Admin',
+        },
+      ];
+      roles = roles.filter((role) => {
+        if (this.$store.getters['user/isAdmin']) {
+          return role.value !== 'superadmin';
+        }
+        return role;
+      });
+      const formFields = this.mapFieldItemsData(roles, this.formFields, {
+        label: 'label',
+        value: 'value',
+      });
+      return this.mapFieldData(this.user, formFields);
     },
   },
   mounted() {
