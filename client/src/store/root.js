@@ -32,6 +32,9 @@ const actions = {
     const route = param ? `${api}/${param}` : api;
     return this._vm.$api.delete(route).then(returnData);
   },
+  toast(ctx, { options }) {
+    this._vm.$toast(options);
+  },
 };
 
 export default { state, getters, mutations, actions };

@@ -27,7 +27,12 @@ api.interceptors.response.use(
         store.dispatch('user/logout');
       }
       if (error.response.status === 403) {
-        console.log(error.response);
+        const options = {
+          type: 'error',
+          message: error.response.data.message,
+          duration: 2000,
+        };
+        store.dispatch('toast', { options });
       }
     }
     return Promise.reject(error);

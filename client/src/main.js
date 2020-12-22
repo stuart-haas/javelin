@@ -2,30 +2,15 @@ import Vue from 'vue';
 import store from './store/store';
 import router from './router';
 import App from './App.vue';
-import { library } from '@fortawesome/fontawesome-svg-core';
-import {
-  faShoppingCart,
-  faStar,
-  faToolbox,
-  faPlus,
-  faMinus,
-  faTimes,
-} from '@fortawesome/free-solid-svg-icons';
-import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 import './plugins/buttons';
 import './plugins/forms';
 import './plugins/tables';
 import './plugins/menus';
+import './plugins/toast';
+import './plugins/icons';
 import './plugins/layouts';
 import './plugins/api';
-import 'fontsource-libre-baskerville';
-import 'fontsource-nunito';
-import 'fontsource-nunito/700.css';
 import './assets/css/index.css';
-
-library.add(faShoppingCart, faStar, faToolbox, faPlus, faMinus, faTimes);
-
-Vue.component('Icon', FontAwesomeIcon);
 
 new Vue({
   store,

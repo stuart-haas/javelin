@@ -2,6 +2,7 @@
   <div class="mb-20">
     <Header />
     <router-view />
+    <Toast />
   </div>
 </template>
 
