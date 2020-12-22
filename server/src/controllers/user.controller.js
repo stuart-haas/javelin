@@ -17,6 +17,12 @@ module.exports = {
     impersonate: async (req, res, next) => {
       try {
         const authUser = await User.findById(req.body.id);
+        if (req.user.role !== 'superadmin' && authUser.role === 'superadmin') {
+          return res.status(403).json({
+            error: true,
+            message: 'You are not permitted',
+          });
+        }
         req.login(authUser, () => {
           const user = authUser.toJSON();
           return res.json({
@@ -33,6 +39,12 @@ module.exports = {
       const { id } = req.params;
       try {
         const user = await User.findById(id);
+        if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
+          return res.status(403).json({
+            error: true,
+            message: 'You are not permitted',
+          });
+        }
         Object.keys(req.body).forEach((key) => {
           user[key] = req.body[key];
         });
@@ -107,7 +119,14 @@ module.exports = {
   delete: async (req, res) => {
     const { id } = req.params;
     try {
-      const user = await User.findByIdAndDelete(id);
+      const user = await User.findById(id);
+      if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
+        return res.status(403).json({
+          error: true,
+          message: 'You are not permitted',
+        });
+      }
+      await user.deleteOne();
       res.json({
         success: true,
         message: 'Your account has been deleted',

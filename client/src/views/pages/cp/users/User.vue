@@ -49,20 +49,7 @@ export default {
           tag: 'select',
           label: 'Role',
           name: 'role',
-          items: [
-            {
-              value: 'member',
-              label: 'Member',
-            },
-            {
-              value: 'admin',
-              label: 'Admin',
-            },
-            {
-              value: 'superadmin',
-              label: 'Super Admin',
-            },
-          ],
+          items: [],
         },
       ],
     };
@@ -75,7 +62,31 @@ export default {
       return this.$route.params.id;
     },
     fields() {
-      return this.mapFieldData(this.user, this.formFields);
+      let roles = [
+        {
+          value: 'member',
+          label: 'Member',
+        },
+        {
+          value: 'admin',
+          label: 'Admin',
+        },
+        {
+          value: 'superadmin',
+          label: 'Super Admin',
+        },
+      ];
+      roles = roles.filter((role) => {
+        if (this.$store.state.user.user.role === 'admin') {
+          return role.value !== 'superadmin';
+        }
+        return role;
+      });
+      const formFields = this.mapFieldItemsData(roles, this.formFields, {
+        label: 'label',
+        value: 'value',
+      });
+      return this.mapFieldData(this.user, formFields);
     },
   },
   mounted() {

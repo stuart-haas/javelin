@@ -53,10 +53,6 @@ export default {
             class: 'text-blue-500',
             to: '/cp/users/:param',
             param: '_id',
-            disable: {
-              key: 'role',
-              value: 'superadmin',
-            },
           },
         },
       ],

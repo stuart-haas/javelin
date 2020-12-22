@@ -13,7 +13,7 @@
 export default {
   data() {
     return {
-      fields: [
+      formFields: [
         {
           label: 'Username',
           name: 'username',
@@ -41,19 +41,39 @@ export default {
           label: 'Role',
           name: 'role',
           value: 'member',
-          items: [
-            {
-              value: 'member',
-              label: 'Member',
-            },
-            {
-              value: 'admin',
-              label: 'Admin',
-            },
-          ],
+          items: [],
         },
       ],
     };
+  },
+  computed: {
+    fields() {
+      let roles = [
+        {
+          value: 'member',
+          label: 'Member',
+        },
+        {
+          value: 'admin',
+          label: 'Admin',
+        },
+        {
+          value: 'superadmin',
+          label: 'Super Admin',
+        },
+      ];
+      roles = roles.filter((role) => {
+        if (this.$store.state.user.user.role === 'admin') {
+          return role.value !== 'superadmin';
+        }
+        return role;
+      });
+      const formFields = this.mapFieldItemsData(roles, this.formFields, {
+        label: 'label',
+        value: 'value',
+      });
+      return this.mapFieldData({ role: 'member' }, formFields);
+    },
   },
   methods: {
     success() {

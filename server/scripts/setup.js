@@ -40,7 +40,7 @@ async function setup() {
       new User({
         username: response.username,
         email: response.email,
-        role: 'admin',
+        role: 'superadmin',
       }),
       response.password
     );

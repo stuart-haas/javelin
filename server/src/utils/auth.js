@@ -46,9 +46,10 @@ module.exports = {
     let user = await User.findOne({ username });
 
     if (!user.isAdmin) {
-      return res
-        .status(401)
-        .json({ error: true, message: 'You are not authorized ' });
+      return res.status(401).json({
+        error: true,
+        message: 'You are not authorized',
+      });
     }
     next();
   },
