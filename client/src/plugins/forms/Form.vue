@@ -90,7 +90,7 @@ export default {
         });
         const { message } = response;
         this.messages = [{ type: 'success', value: message }];
-        window.setTimeout(this.hideMessages, this.messageDuration);
+        window.setTimeout(this.removeMessages, this.messageDuration);
         this.$emit('success', response);
       } catch (error) {
         let { message, errors } = error.response.data;
@@ -104,11 +104,11 @@ export default {
         } else {
           this.messages = [{ type: 'error', value: message }];
         }
-        window.setTimeout(this.hideMessages, this.messageDuration);
+        window.setTimeout(this.removeMessages, this.messageDuration);
         this.$emit('error', { error, message, formData });
       }
     },
-    hideMessages() {
+    removeMessages() {
       this.messages = [];
     },
     update({ field, value }) {
