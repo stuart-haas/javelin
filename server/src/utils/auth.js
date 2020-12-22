@@ -29,14 +29,14 @@ module.exports = {
       return next();
     }
 
-    res.status(401).send({ error: true, message: 'You are not authorized' });
+    res.status(403).send({ error: true, message: 'You are not authorized' });
   },
   isAdmin: async (req, res, next) => {
     const isAuthenticated = req.isAuthenticated();
 
     if (!req.user.isAdmin || !isAuthenticated) {
       return res
-        .status(401)
+        .status(403)
         .json({ error: true, message: 'You are not authorized ' });
     }
     next();
@@ -46,7 +46,7 @@ module.exports = {
     let user = await User.findOne({ username });
 
     if (!user.isAdmin) {
-      return res.status(401).json({
+      return res.status(403).json({
         error: true,
         message: 'You are not authorized',
       });

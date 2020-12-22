@@ -106,23 +106,27 @@ export default {
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
-      const { user } = await this.$store.dispatch('delete', {
-        api: 'user/cp',
-        param,
-      });
-      if (user) {
+      try {
+        await this.$store.dispatch('delete', {
+          api: 'user/cp',
+          param,
+        });
         this.$router.push('/cp/users');
+      } catch (error) {
+        /**/
       }
     },
     async impersonate() {
       const { id } = this.$route.params;
       const formData = { id };
-      const { user } = await this.$store.dispatch('post', {
-        api: 'user/cp/impersonate',
-        formData,
-      });
-      if (user) {
+      try {
+        await this.$store.dispatch('post', {
+          api: 'user/cp/impersonate',
+          formData,
+        });
         this.$router.go();
+      } catch (error) {
+        /**/
       }
     },
   },
