@@ -25,6 +25,7 @@
       api="user/cp"
       :param="id"
       submitLabel="Update"
+      @success="success"
     />
   </Content>
 </template>
@@ -128,6 +129,11 @@ export default {
       } catch (error) {
         /**/
       }
+    },
+    success(response) {
+      const { message } = response;
+      this.$toast({ type: 'success', message, duration: 3000 });
+      this.$router.push('/cp/users');
     },
   },
 };

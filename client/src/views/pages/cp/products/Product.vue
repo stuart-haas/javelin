@@ -13,6 +13,7 @@
       api="product"
       :param="id"
       :submitLabel="id ? 'Update' : 'Create'"
+      @success="success"
     />
   </Content>
 </template>
@@ -111,6 +112,11 @@ export default {
     },
     change({ field, value }) {
       this.$set(this.append, field.name, value);
+    },
+    success(response) {
+      const { message } = response;
+      this.$toast({ type: 'success', message, duration: 3000 });
+      this.$router.push('/cp/products');
     },
   },
 };

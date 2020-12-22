@@ -4,7 +4,7 @@
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        class="list p-2 mb-4 shadow-lg bg-danger-base text-white transition-all duration-500"
+        :class="`list p-2 mb-4 shadow-lg bg-${toast.type} text-white transition-all duration-500`"
       >
         {{ toast.message }}
       </div>

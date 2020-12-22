@@ -49,7 +49,7 @@ module.exports = {
           user[key] = req.body[key];
         });
         await user.save();
-        res.json({ success: true, message: 'Account updated', user });
+        res.json({ success: true, message: 'User updated', user });
       } catch (error) {
         res.status(422).json({ error: true, message: 'Something went wrong' });
       }
