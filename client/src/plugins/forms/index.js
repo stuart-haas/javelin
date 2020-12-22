@@ -5,35 +5,51 @@ import Field from './Field.vue';
 import Counter from './Counter.vue';
 import resolvePath from 'object-resolve-path';
 
+const copyFields = (fields) => {
+  return [...fields].map((field) => Object.assign({}, field));
+};
+
+const resolveValue = (data, field, value) => {
+  const val = resolvePath(data, value);
+  if (val) {
+    if (field.format) {
+      return field.format.function(Date.parse(val), field.format.pattern);
+    }
+  }
+  return val;
+};
+
 const FormMixin = {
   methods: {
-    mapFieldData(data, fields, keys = {}) {
-      const fieldsCopy = [...fields].map((field) => Object.assign({}, field));
-      const fieldData = fieldsCopy.map((item) => {
-        if (keys[item.name]) {
-          const value = resolvePath(data, keys[item.name]);
-          Object.assign(item, { value: value });
+    mapFieldData(data, fields) {
+      const fieldData = copyFields(fields).map((field) => {
+        let { name, value } = field;
+        if (value) {
+          // Resolve field value by the field value key
+          if (typeof value === 'object') {
+            value = resolveValue(data, field, value.key);
+          }
+          Object.assign(field, { value });
         } else {
-          const value = resolvePath(data, item.name);
-          Object.assign(item, { value });
+          // Resolve field value by the field name
+          const value = resolveValue(data, field, name);
+          Object.assign(field, { value });
         }
-        return item;
+        return field;
       });
       return fieldData;
     },
     mapFieldItemsData(data, fields, keys) {
-      const fieldsCopy = [...fields].map((field) => Object.assign({}, field));
-      const itemsData = fieldsCopy.map((item) => {
-        if (item.items) {
-          item.items = data.map((item) => {
+      return copyFields(fields).map((field) => {
+        if (field.items) {
+          field.items = data.map((item) => {
             item.label = item[keys.label];
             item.value = item[keys.value];
             return item;
           });
         }
-        return item;
+        return field;
       });
-      return itemsData;
     },
   },
 };

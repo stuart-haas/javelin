@@ -55,6 +55,9 @@ export default {
           tag: 'select',
           label: 'Category',
           name: 'category',
+          value: {
+            key: 'category._id',
+          },
           items: [],
         },
       ],
@@ -73,9 +76,7 @@ export default {
           value: '_id',
         }
       );
-      return this.mapFieldData(this.product, formFields, {
-        category: 'category._id',
-      });
+      return this.mapFieldData(this.product, formFields);
     },
     image() {
       return { name: 'image', label: 'Image', value: this.product.image };

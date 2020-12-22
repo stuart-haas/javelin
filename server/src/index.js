@@ -66,6 +66,17 @@ passport.use(new LocalStrategy(User.authenticate()));
 app.use('/uploads', express.static(__dirname + './../uploads'));
 app.use('/api', require('./routes/api.route'));
 
+app.use(function (req, res, next) {
+  var err = new Error('Not Found');
+  err.status = 404;
+  next(err);
+});
+
+app.use(function (error, req, res, next) {
+  res.status(error.status || 500);
+  res.json({ error: true, message: error.message });
+});
+
 app.listen(PORT, () => {
   console.log(`Application is up and running on port ${PORT}`);
 });

@@ -17,11 +17,22 @@
 </template>
 
 <script>
+import { format } from 'date-fns';
+
 export default {
   data() {
     return {
       order: {},
       formFields: [
+        {
+          label: 'Date',
+          name: 'createdAt',
+          disabled: true,
+          format: {
+            function: format,
+            pattern: 'MMMM d, yyyy h:mm:ss a',
+          },
+        },
         {
           label: 'Order Id',
           name: 'orderId',
@@ -30,12 +41,17 @@ export default {
         {
           label: 'First Name',
           name: 'user.firstName',
-          required: true,
+          disabled: true,
         },
         {
           label: 'Last Name',
           name: 'user.lastName',
-          required: true,
+          disabled: true,
+        },
+        {
+          label: 'Email',
+          name: 'user.email',
+          disabled: true,
         },
       ],
     };

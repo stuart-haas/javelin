@@ -101,7 +101,7 @@ export default {
             return error;
           });
           this.messages = messages;
-        } else {
+        } else if (message) {
           this.messages = [{ type: 'error', value: message }];
         }
         window.setTimeout(this.removeMessages, this.messageDuration);
