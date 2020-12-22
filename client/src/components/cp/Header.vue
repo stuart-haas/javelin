@@ -13,7 +13,7 @@
                 class="rounded-full max-w-full h-auto align-middle"
               />
             </div>
-            <div class="ml-4 text-sm">{{ user.username }}</div>
+            <div class="ml-4 text-sm">{{ user && user.username }}</div>
           </div>
         </div>
         <Button type="submit" theme="danger" @click="logout"> Logout </Button>
