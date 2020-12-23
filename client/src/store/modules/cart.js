@@ -53,6 +53,10 @@ const actions = {
       commit('setState', { name: 'total', value: total });
     }
   },
+  clear({ commit }) {
+    commit('setState', { name: 'items', value: [] });
+    commit('setState', { name: 'total', value: 0 });
+  },
 };
 
 export default { namespaced: true, state, getters, mutations, actions };

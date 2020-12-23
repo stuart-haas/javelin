@@ -22,7 +22,7 @@
             {{ product.description }}
           </div>
           <div class="space-y-2 border-b border-gray-300 pb-4">
-            <div>{{ product.price }}</div>
+            <div>{{ product.price | currency }}</div>
             <div>{{ product.inventory }} in stock</div>
           </div>
           <div class="mt-4">

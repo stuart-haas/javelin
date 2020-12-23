@@ -1,7 +1,7 @@
 <template>
   <Page>
-    <template v-slot:header>
-      <Menu :items="items" direction="horizontal" />
+    <template v-slot:sidebar>
+      <Menu :items="items" direction="vertical" />
     </template>
     <template v-slot:content>
       <transition name="page" mode="out-in">

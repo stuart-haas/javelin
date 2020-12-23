@@ -16,7 +16,7 @@
           >
         </div>
         <div v-else class="text-right">
-          <p class="text-lg my-4">{{ total }}</p>
+          <p class="text-lg my-4">{{ total | currency }}</p>
           <Button
             class="inline-block mt-1"
             tag="router-link"

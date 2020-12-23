@@ -10,6 +10,7 @@ import './plugins/toast';
 import './plugins/icons';
 import './plugins/layouts';
 import './plugins/api';
+import './plugins/filters';
 import './assets/css/index.css';
 
 new Vue({

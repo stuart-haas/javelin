@@ -9,7 +9,7 @@
       </div>
       <div class="relative py-4 text-center">
         <p class="text">{{ product.name }}</p>
-        <p class="text-sm mt-1">{{ product.price }}</p>
+        <p class="text-sm mt-1">{{ product.price | currency }}</p>
       </div>
     </div>
   </router-link>

@@ -40,7 +40,6 @@ export default {
   data() {
     return {
       formData: {},
-      message: '',
     };
   },
   computed: {
@@ -68,6 +67,7 @@ export default {
         api: 'order',
       });
       this.$toast({ type: 'success', message, duration: 2000 });
+      this.$store.dispatch('cart/clear');
       this.$router.push('/');
     },
     input(e) {
