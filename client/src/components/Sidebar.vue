@@ -51,13 +51,16 @@
             <span>{{ total | currency }}</span>
           </div>
         </div>
-        <div class="px-4">
+        <div class="px-4 text-center space-y-3 mt-3">
           <Button
             theme="secondary"
             tag="router-link"
             to="/cart/checkout"
-            class="block w-full text-center"
+            class="block"
             >Checkout</Button
+          >
+          <Button theme="primary" tag="router-link" to="/products" class="block"
+            >Continue Shopping</Button
           >
         </div>
       </div>
