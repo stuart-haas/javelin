@@ -45,6 +45,7 @@ const fields = {
     enum: ['authorized', 'shipped', 'completed', 'canceled', 'refunded'],
     default: 'authorized',
   },
+  note: String,
 };
 
 const Order = new Schema(fields, {

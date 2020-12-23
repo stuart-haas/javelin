@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="flex items-center justify-between">
-      <h2 class="h2">{{ title }}</h2>
+      <h2 v-if="title" class="h2">{{ title }}</h2>
       <slot name="header"></slot>
     </div>
     <div class="mt-8">

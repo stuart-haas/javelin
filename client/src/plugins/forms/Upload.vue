@@ -11,7 +11,7 @@
         <Button type="submit" theme="secondary">Upload</Button>
       </div>
     </form>
-    <div v-else class="relative w-1/3">
+    <div v-else class="relative w-1/4">
       <a
         :href="value"
         target="_blank"

@@ -3,7 +3,7 @@
     :is="tag"
     v-bind="$attrs"
     v-on="$listeners"
-    class="p-2 transition duration-300 text-white outline-none focus:outline-none"
+    class="p-2 transition duration-300 text-white outline-none focus:outline-none rounded-sm shadow"
     :class="[`bg-${theme}-${variant.base} hover:bg-${theme}-${variant.dark}`]"
   >
     <slot></slot>

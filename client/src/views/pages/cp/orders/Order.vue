@@ -1,18 +1,85 @@
 <template>
-  <Content :title="id ? 'Edit Order' : 'New Order'">
+  <Content>
     <template v-slot:header>
+      <div>
+        <h1 class="h2 text-gray-600">{{ order.orderId }}</h1>
+        <p v-if="order.createdAt" class="text-gray-600 mt-2">
+          {{ order.createdAt | date }} at {{ order.createdAt | time }}
+        </p>
+      </div>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
       </Button>
     </template>
-    <Form
-      :fields="fields"
-      :dispatch="id ? 'put' : 'post'"
-      api="order"
-      :param="id"
-      :submitLabel="id ? 'Update' : 'Create'"
-      @success="success"
-    />
+    <div class="grid grid-cols-12 gap-6">
+      <div class="col-span-8">
+        <Pane>
+          <p class="text-xl font-medium border-b border-gray-300 pb-2">
+            Order Details
+          </p>
+          <div class="space-y-4 mt-3">
+            <div
+              v-for="(item, index) in items"
+              :key="index"
+              class="grid grid-cols-12 gap-6"
+            >
+              <div class="col-span-8 flex flex items-center">
+                <div
+                  class="w-16 h-16 bg-no-repeat bg-center bg-contain mr-4"
+                  :style="{
+                    'background-image': `url(${item.product.image})`,
+                  }"
+                ></div>
+                <div>
+                  <router-link
+                    class="block text-blue-500"
+                    :to="`/cp/products/${item.product._id}`"
+                    >{{ item.product.name }}</router-link
+                  >
+                  <p class="text-sm">SKU: {{ item.product.sku }}</p>
+                </div>
+              </div>
+              <div class="col-span-2 flex items-center justify-between">
+                <div>{{ item.price | currency }}</div>
+                <div class="">x</div>
+                <div>{{ item.quantity }}</div>
+              </div>
+              <div class="col-span-2 flex items-center justify-between">
+                <div class="w-full text-right">{{ item.total | currency }}</div>
+              </div>
+            </div>
+            <div class="grid grid-cols-12 gap-6">
+              <div class="col-span-8">
+                <textarea
+                  class="w-full border border-gray-300 resize-none rounded p-1"
+                  rows="1"
+                  placeholder="Note"
+                />
+              </div>
+              <div class="col-span-2 text-gray-500 space-y-4">
+                <div>Subtotal</div>
+                <div>Shipping</div>
+                <div class="text-black font-bold">Total</div>
+              </div>
+              <div class="col-span-2 text-right space-y-4">
+                <div>{{ order.subtotal | currency }}</div>
+                <div>{{ order.shipping | currency }}</div>
+                <div class="text-black font-bold">
+                  {{ order.total | currency }}
+                </div>
+              </div>
+            </div>
+          </div>
+        </Pane>
+      </div>
+      <div class="col-span-4">
+        <Pane>
+          <p class="text-xl font-medium border-b border-gray-300 pb-2">
+            Customer Details
+          </p>
+        </Pane>
+      </div>
+    </div>
   </Content>
 </template>
 
@@ -23,6 +90,7 @@ export default {
   data() {
     return {
       order: {},
+      user: {},
       formFields: [
         {
           label: 'Date',
@@ -63,6 +131,9 @@ export default {
     fields() {
       return this.mapFieldData(this.order, this.formFields);
     },
+    items() {
+      return this.order.items;
+    },
   },
   mounted() {
     this.fetch();
@@ -77,6 +148,10 @@ export default {
         });
         this.order = order;
       }
+
+      await this.$store.dispatch('user/initialize');
+      const user = this.$store.state.user.user;
+      this.user = user;
     },
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
