@@ -40,6 +40,7 @@ export default {
           label: 'Username',
           name: 'username',
           required: true,
+          focus: true,
         },
         {
           label: 'Email',
@@ -123,8 +124,9 @@ export default {
       });
       this.$router.go();
     },
-    success({ user }) {
+    success({ user, message }) {
       this.$store.commit('user/setState', { name: 'user', value: user });
+      this.$toast({ type: 'success', message, duration: 2000 });
       this.$router.push('/cp/users');
     },
   },

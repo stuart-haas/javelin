@@ -4,8 +4,9 @@
       :fields="fields"
       dispatch="user/login"
       api="user/cp/login"
-      submitLabel="Login"
       @success="success"
+      submitLabel="Login"
+      submitClass="w-full"
       class="shadow-lg px-4 py-8 rounded bg-gray-200 bg-opacity-75"
     />
   </Splash>
@@ -23,6 +24,7 @@ export default {
           label: 'Username',
           name: 'username',
           required: true,
+          focus: true,
         },
         {
           label: 'Password',

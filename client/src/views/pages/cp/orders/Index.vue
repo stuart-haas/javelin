@@ -6,7 +6,7 @@
       >
     </template>
     <Table :data="data" :fields="fields" v-if="data.length" />
-    <div v-else>There aren't any orders</div>
+    <div v-else>There aren't any orders.</div>
   </Content>
 </template>
 

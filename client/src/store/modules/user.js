@@ -57,11 +57,6 @@ const actions = {
       commit('setState', { name: 'user', value: null });
       commit('cart/setState', { name: 'items', value: [] }, { root: true });
       commit('cart/setState', { name: 'total', value: 0 }, { root: true });
-      commit(
-        'cart/setState',
-        { name: 'formattedTotal', value: '' },
-        { root: true }
-      );
     }
     return success;
   },

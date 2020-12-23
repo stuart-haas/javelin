@@ -13,17 +13,17 @@
             </p>
             <p class="flex items-center justify-between">
               <span class="text-gray-700">Price:</span
-              ><span class="text-black">{{ product.formattedPrice }}</span>
+              ><span class="text-black">{{ product.price }}</span>
             </p>
             <p class="flex items-center justify-between">
               <span class="text-gray-700">Total:</span
-              ><span class="text-black">{{ product.formattedTotal }}</span>
+              ><span class="text-black">{{ product.total }}</span>
             </p>
           </div>
         </div>
         <div class="flex items-center justify-between text-xl">
           <span class="font-medium">Total:</span>
-          <span>{{ formattedTotal }}</span>
+          <span>{{ total }}</span>
         </div>
       </div>
     </template>
@@ -47,8 +47,8 @@ export default {
     items() {
       return this.$store.state.cart.items;
     },
-    formattedTotal() {
-      return this.$store.state.cart.formattedTotal;
+    total() {
+      return this.$store.state.cart.total;
     },
     user() {
       return this.$store.state.user.user;

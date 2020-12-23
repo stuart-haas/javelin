@@ -16,7 +16,7 @@
           >
         </div>
         <div v-else class="text-right">
-          <p class="text-lg my-4">{{ formattedTotal }}</p>
+          <p class="text-lg my-4">{{ total }}</p>
           <Button
             class="inline-block mt-1"
             tag="router-link"
@@ -42,8 +42,8 @@ export default {
     items() {
       return this.$store.state.cart.items;
     },
-    formattedTotal() {
-      return this.$store.state.cart.formattedTotal;
+    total() {
+      return this.$store.state.cart.total;
     },
   },
 };

@@ -6,9 +6,10 @@ module.exports = {
     findAll: async (req, res) => {
       const orders = await Order.find()
         .populate({
-          path: 'products',
+          path: 'items',
           populate: {
             path: 'product',
+            select: 'name sku price image',
             model: 'Product',
           },
         })
@@ -21,7 +22,7 @@ module.exports = {
     const user = req.params.user;
     const orders = await Order.find({ user })
       .populate({
-        path: 'products',
+        path: 'items',
         populate: {
           path: 'product',
           model: 'Product',
@@ -35,7 +36,7 @@ module.exports = {
     const { id } = req.params;
     const order = await Order.findById(id)
       .populate({
-        path: 'products',
+        path: 'items',
         populate: {
           path: 'product',
           model: 'Product',
@@ -47,12 +48,11 @@ module.exports = {
   },
   create: async (req, res) => {
     const user = req.user._id;
-    const products = req.session.cart.items.map((item) => {
+    const items = req.session.cart.items.map((item) => {
       return { product: item.id, quantity: item.quantity };
     });
-    const { total } = req.session.cart;
     try {
-      const order = new Order({ user, products, total });
+      const order = new Order({ user, items });
       await order.save();
       req.session.cart = new Cart();
       res.json({ success: true, message: 'Order created', order });
@@ -75,7 +75,7 @@ module.exports = {
     const { id } = req.params;
     const order = await Order.findById(id)
       .populate({
-        path: 'products',
+        path: 'items',
         populate: {
           path: 'product',
           model: 'Product',

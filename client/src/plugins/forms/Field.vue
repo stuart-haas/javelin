@@ -7,6 +7,7 @@
       v-if="tag === 'input'"
       :type="type"
       :id="id"
+      ref="input"
       v-bind="attrs"
       v-model="value"
       @input="input"
@@ -15,6 +16,7 @@
     <textarea
       v-if="tag === 'textarea'"
       :id="id"
+      ref="input"
       v-bind="attrs"
       v-model="value"
       @input="input"
@@ -23,6 +25,7 @@
     <select
       v-if="tag === 'select'"
       :id="id"
+      ref="input"
       v-bind="attrs"
       v-model="value"
       @change="input"
@@ -49,6 +52,7 @@ export default {
   data() {
     return {
       value: this.field.value,
+      focus: this.field.focus,
     };
   },
   computed: {
@@ -75,6 +79,11 @@ export default {
     'field.value': function (newVal, oldVal) {
       this.value = oldVal || newVal;
     },
+  },
+  mounted() {
+    if (this.focus) {
+      this.$refs.input.focus();
+    }
   },
   methods: {
     input(e) {

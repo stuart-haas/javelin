@@ -12,7 +12,9 @@
       :index="index"
       @update="update"
     />
-    <Button type="submit" theme="secondary">{{ submitLabel }}</Button>
+    <Button type="submit" theme="secondary" :class="submitClass">{{
+      submitLabel
+    }}</Button>
     <slot></slot>
     <transition name="fade">
       <div
@@ -52,6 +54,7 @@ export default {
       type: String,
       default: 'Submit',
     },
+    submitClass: String,
   },
   data() {
     return {

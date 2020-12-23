@@ -18,7 +18,7 @@
         />
         <div class="flex justify-items-center justify-between">
           <div class="text-center mr-20 w-20">
-            {{ product.formattedTotal }}
+            {{ product.total }}
           </div>
           <CloseButton @click="removeFromCart({ id: product.id })">
             <Icon icon="times" />

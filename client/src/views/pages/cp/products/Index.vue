@@ -33,7 +33,7 @@ export default {
         },
         {
           label: 'Price',
-          key: 'formattedPrice',
+          key: 'price',
         },
         {
           label: 'Inventory',

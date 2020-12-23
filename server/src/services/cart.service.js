@@ -1,24 +1,20 @@
 const Product = require('../models/product.model');
 const Cart = require('../models/cart.model');
-const fns = require('../utils/functions');
 
 module.exports = {
   item: async (req, callback) => {
     try {
       const product = await Product.findById(req.body.id);
-      const { price, formattedPrice, image } = product;
+      const { price, image } = product;
       const quantity = parseInt(req.body.quantity);
       const total = quantity * price;
-      const formattedTotal = fns.formatCurrency(total);
       const item = {
         id: product._id,
         name: product.name,
         inventory: product.inventory,
         price,
-        formattedPrice,
         quantity,
         total,
-        formattedTotal,
         image,
       };
       callback(item);
@@ -56,8 +52,8 @@ module.exports = {
   empty: (req, callback) => {
     if (req.session) {
       const cart = new Cart();
-      const { items, total, formattedTotal } = cart;
-      callback({ items, total, formattedTotal });
+      const { items, total } = cart;
+      callback({ items, total });
     }
   },
   save: async (req, res, cart) => {
@@ -68,8 +64,8 @@ module.exports = {
   },
   session: (req) => {
     const cart = new Cart();
-    const { items, total, formattedTotal } = cart;
-    return req.session.cart || { items, total, formattedTotal };
+    const { items, total } = cart;
+    return req.session.cart || { items, total };
   },
 };
 
@@ -81,5 +77,4 @@ function calculateTotal(cart) {
     const total = price * quantity;
     cart.total += total;
   });
-  cart.formattedTotal = fns.formatCurrency(cart.total);
 }

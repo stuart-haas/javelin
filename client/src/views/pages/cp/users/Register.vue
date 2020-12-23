@@ -18,6 +18,7 @@ export default {
           label: 'Username',
           name: 'username',
           required: true,
+          focus: true,
         },
         {
           label: 'Email',

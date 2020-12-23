@@ -5,7 +5,7 @@
         Cancel
       </Button>
     </template>
-    <div v-for="(item, index) in products" :key="index">
+    <div v-for="(item, index) in items" :key="index">
       <p>{{ item.product.name }}</p>
     </div>
   </Content>
@@ -22,8 +22,8 @@ export default {
     id() {
       return this.$route.params.id;
     },
-    products() {
-      return this.order.products;
+    items() {
+      return this.order.items;
     },
   },
   mounted() {

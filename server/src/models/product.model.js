@@ -19,7 +19,6 @@ const fields = {
     type: Number,
     required: true,
   },
-  formattedPrice: String,
   inventory: {
     type: Number,
     required: true,
@@ -40,7 +39,6 @@ const Product = new Schema(fields, {
 
 Product.pre('save', function () {
   this.slug = fns.slugify(this.name);
-  this.formattedPrice = fns.formatCurrency(this.price);
   return this;
 });
 

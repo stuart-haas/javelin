@@ -2,7 +2,6 @@ const state = () => {
   return {
     items: [],
     total: 0,
-    formattedTotal: '',
   };
 };
 
@@ -19,7 +18,7 @@ const actions = {
     dispatch('get');
   },
   async get({ commit, dispatch }) {
-    const { items, total, formattedTotal } = await dispatch(
+    const { items, total } = await dispatch(
       'get',
       { api: 'cart' },
       { root: true }
@@ -27,7 +26,6 @@ const actions = {
     if (items) {
       commit('setState', { name: 'items', value: items });
       commit('setState', { name: 'total', value: total });
-      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
   },
   async add({ commit, dispatch }, { formData }) {
@@ -37,10 +35,9 @@ const actions = {
       { root: true }
     );
     if (success) {
-      const { items, total, formattedTotal } = cart;
+      const { items, total } = cart;
       commit('setState', { name: 'items', value: items });
       commit('setState', { name: 'total', value: total });
-      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
     return success;
   },
@@ -51,10 +48,9 @@ const actions = {
       { root: true }
     );
     if (success) {
-      const { items, total, formattedTotal } = cart;
+      const { items, total } = cart;
       commit('setState', { name: 'items', value: items });
       commit('setState', { name: 'total', value: total });
-      commit('setState', { name: 'formattedTotal', value: formattedTotal });
     }
   },
 };
