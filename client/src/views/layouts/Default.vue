@@ -32,7 +32,9 @@
         </div>
       </template>
     </Header>
-    <router-view />
+    <transition name="page" mode="out-in">
+      <router-view />
+    </transition>
     <Toast />
   </div>
 </template>

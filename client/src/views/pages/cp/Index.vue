@@ -4,7 +4,9 @@
       <Menu :items="items" direction="horizontal" />
     </template>
     <template v-slot:content>
-      <router-view />
+      <transition name="page" mode="out-in">
+        <router-view />
+      </transition>
     </template>
   </Page>
 </template>

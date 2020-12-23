@@ -2,7 +2,9 @@
   <Content title="Settings">
     <Menu :items="items" direction="horizontal" />
     <div class="mt-12 w-8/12">
-      <router-view />
+      <transition name="page" mode="out-in">
+        <router-view />
+      </transition>
     </div>
   </Content>
 </template>
