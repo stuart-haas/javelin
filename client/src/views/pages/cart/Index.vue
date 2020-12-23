@@ -11,7 +11,9 @@
       <div class="mt-6">
         <div v-if="!items.length">
           Your cart is empty.
-          <router-link class="underline" to="/products">Shop now.</router-link>
+          <router-link class="link underline" to="/products"
+            >Shop now.</router-link
+          >
         </div>
         <div v-else class="text-right">
           <p class="text-lg my-4">{{ formattedTotal }}</p>

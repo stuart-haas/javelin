@@ -107,33 +107,25 @@ export default {
     async deleteThis() {
       if (!window.confirm('Are you sure?')) return;
       const param = this.$route.params.id;
-      try {
-        const { message } = await this.$store.dispatch('delete', {
-          api: 'user/cp',
-          param,
-        });
-        this.$toast({ type: 'success', message, duration: 3000 });
-        this.$router.push('/cp/users');
-      } catch (error) {
-        /**/
-      }
+      const { message } = await this.$store.dispatch('delete', {
+        api: 'user/cp',
+        param,
+      });
+      this.$toast({ type: 'success', message, duration: 2000 });
+      this.$router.push('/cp/users');
     },
     async impersonate() {
       const { id } = this.$route.params;
       const formData = { id };
-      try {
-        await this.$store.dispatch('post', {
-          api: 'user/cp/impersonate',
-          formData,
-        });
-        this.$router.go();
-      } catch (error) {
-        /**/
-      }
+      await this.$store.dispatch('post', {
+        api: 'user/cp/impersonate',
+        formData,
+      });
+      this.$router.go();
     },
-    success(response) {
-      const { message } = response;
-      this.$toast({ type: 'success', message, duration: 3000 });
+    success({ message, user }) {
+      this.$toast({ type: 'success', message, duration: 2000 });
+      this.$store.commit('user/setState', { name: 'user', value: user });
       this.$router.push('/cp/users');
     },
   },

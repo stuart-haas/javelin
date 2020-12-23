@@ -2,7 +2,6 @@ import Vue from 'vue';
 import store from './store/store';
 import Router from 'vue-router';
 import Default from './views/layouts/Default.vue';
-import Index from './views/pages/Index.vue';
 import Login from './views/pages/account/Login.vue';
 import Register from './views/pages/account/Register.vue';
 import Account from './views/pages/account/Index.vue';
@@ -41,7 +40,6 @@ const router = new Router({
         {
           path: '',
           name: 'index',
-          component: Index,
           redirect: () => {
             return '/products';
           },

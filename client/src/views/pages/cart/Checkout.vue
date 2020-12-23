@@ -1,8 +1,7 @@
 <template>
   <Page>
     <template v-slot:sidebar>
-      <h1 class="h1">Checkout</h1>
-      <div class="mt-6 space-y-6 pr-6">
+      <div class="space-y-6 pr-6">
         <div v-for="product in items" :key="product.id">
           <p class="font-medium">
             {{ product.name }}
@@ -29,7 +28,9 @@
       </div>
     </template>
     <template v-slot:content>
-      <Button theme="secondary" @click="order">Place Order</Button>
+      <Content title="Checkout">
+        <Button theme="secondary" @click="order">Place Order</Button>
+      </Content>
     </template>
   </Page>
 </template>
@@ -66,7 +67,7 @@ export default {
       const { message } = await this.$store.dispatch('post', {
         api: 'order',
       });
-      this.$toast({ type: 'success', message, duration: 3000 });
+      this.$toast({ type: 'success', message, duration: 2000 });
       this.$router.push('/');
     },
     input(e) {

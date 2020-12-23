@@ -102,6 +102,16 @@ module.exports = {
         user[key] = req.body[key];
       });
       await user.save();
+      if (String(user._id) === String(req.user._id)) {
+        return req.login(user, () => {
+          const authUser = user.toJSON();
+          return res.json({
+            success: true,
+            message: 'Session reloded',
+            user: authUser,
+          });
+        });
+      }
       res.json({ success: true, message: 'User updated', user });
     } catch (error) {
       res.status(422).json({ error: true, message: 'Something went wrong' });
@@ -142,6 +152,19 @@ module.exports = {
         }
       });
       await user.save();
+      if (
+        user.username !== req.user.username ||
+        user.email !== req.user.email
+      ) {
+        return req.login(user, () => {
+          const authUser = user.toJSON();
+          return res.json({
+            success: true,
+            message: 'Session reloded',
+            user: authUser,
+          });
+        });
+      }
       res.json({ success: true, message: 'User updated', user });
     } catch (error) {
       res.status(422).json({ error: true, message: 'Something went wrong' });

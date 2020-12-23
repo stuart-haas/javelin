@@ -86,13 +86,13 @@ export default {
         param,
       });
       if (order) {
-        this.$toast({ type: 'success', message, duration: 3000 });
+        this.$toast({ type: 'success', message, duration: 2000 });
         this.$router.push('/cp/orders');
       }
     },
     success(response) {
       const { message } = response;
-      this.$toast({ type: 'success', message, duration: 3000 });
+      this.$toast({ type: 'success', message, duration: 2000 });
       this.$router.push('/cp/orders');
     },
   },
