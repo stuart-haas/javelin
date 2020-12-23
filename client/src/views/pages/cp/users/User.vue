@@ -123,8 +123,7 @@ export default {
       });
       this.$router.go();
     },
-    success({ message, user }) {
-      this.$toast({ type: 'success', message, duration: 2000 });
+    success({ user }) {
       this.$store.commit('user/setState', { name: 'user', value: user });
       this.$router.push('/cp/users');
     },

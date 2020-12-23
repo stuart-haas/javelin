@@ -44,8 +44,7 @@ export default {
       const user = this.$store.state.user.user;
       this.user = user;
     },
-    success({ message, user }) {
-      this.$toast({ type: 'success', message, duration: 2000 });
+    success({ user }) {
       this.$store.commit('user/setState', { name: 'user', value: user });
     },
   },
