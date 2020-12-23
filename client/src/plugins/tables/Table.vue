@@ -1,27 +1,32 @@
 <template>
   <table class="w-full table-auto text-left mt-6">
-    <tr class="font-bold border-b border-gray-300">
-      <th v-for="(field, index) in filteredFields" :key="index">
-        {{ field.label }}
-      </th>
-    </tr>
-    <tr
-      v-for="(row, i) in filteredData"
-      :key="i"
-      :class="[
-        active === i ? 'font-bold' : '',
-        i % 2 === 0 ? 'bg-gray-100' : '',
-      ]"
-    >
-      <td v-for="(item, j) in getRow(row)" :key="j">
-        <component v-if="item.tag" :is="item.tag" v-bind="item.attrs">
-          {{ item.value }}
-        </component>
-        <span v-else>
-          {{ item.value }}
-        </span>
-      </td>
-    </tr>
+    <thead>
+      <tr class="font-bold border-b border-gray-300">
+        <th v-for="(field, index) in filteredFields" :key="index">
+          {{ field.label }}
+        </th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr
+        v-for="(row, i) in filteredData"
+        :key="i"
+        :class="[
+          active === i ? 'font-bold' : '',
+          i % 2 === 0 ? 'bg-gray-100' : '',
+        ]"
+        class="slideUp"
+      >
+        <td v-for="(item, j) in getRow(row)" :key="j">
+          <component v-if="item.tag" :is="item.tag" v-bind="item.attrs">
+            {{ item.value }}
+          </component>
+          <span v-else>
+            {{ item.value }}
+          </span>
+        </td>
+      </tr>
+    </tbody>
   </table>
 </template>
 

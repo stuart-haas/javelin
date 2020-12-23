@@ -1,10 +1,10 @@
 <template>
   <div class="fixed bottom-0 right-4">
-    <transition-group name="list">
+    <transition-group name="slideUp">
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        :class="`list p-2 mb-4 shadow-lg bg-${toast.type} text-white transition-all duration-500`"
+        :class="`slideUp p-2 mb-4 shadow-lg bg-${toast.type} text-white transition-all duration-500`"
       >
         {{ toast.message }}
       </div>
@@ -48,15 +48,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.list-enter-active,
-.list-leave-active {
-  transition: all 0.5s;
-}
-.list-enter,
-.list-leave-to {
-  opacity: 0;
-  transform: translate3d(0, 100%, 0);
-}
-</style>

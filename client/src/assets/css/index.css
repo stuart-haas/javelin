@@ -41,6 +41,26 @@ textarea:disabled {
   opacity: 0;
 }
 
+.slideUp-enter-active,
+.slideUp-leave-active {
+  transition: all 0.5s;
+}
+.slideUp-enter,
+.slideUp-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 100%, 0);
+}
+
+.slideDown-enter-active,
+.slideDown-leave-active {
+  transition: all 0.5s;
+}
+.slideDown-enter,
+.slideDown-leave-to {
+  opacity: 0;
+  transform: translate3d(0, -100%, 0);
+}
+
 .page-enter-active,
 .page-leave-active {
   transition-duration: 0.3s;

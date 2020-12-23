@@ -1,17 +1,19 @@
 <template>
   <Content title="Favorites">
-    <div
-      v-for="product in favorites"
-      :key="product._id"
-      class="flex items-center mb-6"
-    >
-      <router-link
-        :to="`/products/${product._id}`"
-        class="text-blue-500 mr-3"
-        >{{ product.name }}</router-link
+    <transition-group name="slideDown">
+      <div
+        v-for="product in favorites"
+        :key="product._id"
+        class="slideDown flex items-center mb-6"
       >
-      <CloseButton @click="removeFavorite(product._id)" />
-    </div>
+        <router-link
+          :to="`/products/${product._id}`"
+          class="text-blue-500 mr-3"
+          >{{ product.name }}</router-link
+        >
+        <CloseButton @click="removeFavorite(product._id)" />
+      </div>
+    </transition-group>
     <div v-if="!favorites.length">You don't have any favorites.</div>
   </Content>
 </template>

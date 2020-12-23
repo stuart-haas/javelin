@@ -17,6 +17,20 @@ module.exports = {
         .exec();
       res.json(orders);
     },
+    find: async (req, res) => {
+      const { id } = req.params;
+      const order = await Order.findById(id)
+        .populate({
+          path: 'items',
+          populate: {
+            path: 'product',
+            model: 'Product',
+          },
+        })
+        .populate('user')
+        .exec();
+      res.json(order);
+    },
   },
   findAll: async (req, res) => {
     const user = req.params.user;
@@ -42,7 +56,6 @@ module.exports = {
           model: 'Product',
         },
       })
-      .populate('user')
       .exec();
     res.json(order);
   },
@@ -70,18 +83,5 @@ module.exports = {
     const order = await Order.findById(id);
     await order.deleteOne();
     res.json({ success: true, message: 'Order deleted', order });
-  },
-  findMine: async (req, res) => {
-    const { id } = req.params;
-    const order = await Order.findById(id)
-      .populate({
-        path: 'items',
-        populate: {
-          path: 'product',
-          model: 'Product',
-        },
-      })
-      .exec();
-    res.json(order);
   },
 };

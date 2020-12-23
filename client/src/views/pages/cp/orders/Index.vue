@@ -1,9 +1,14 @@
 <template>
   <Content title="Orders">
     <template v-slot:header>
-      <Button theme="secondary" tag="router-link" to="/cp/orders/new"
-        >New Order</Button
-      >
+      <div class="flex items-center">
+        <Button theme="danger" class="mr-3" @click="deleteAll"
+          >Delete All</Button
+        >
+        <Button theme="secondary" tag="router-link" to="/cp/orders/new"
+          >New Order</Button
+        >
+      </div>
     </template>
     <Table :data="data" :fields="fields" v-if="data.length" />
     <div v-else>There aren't any orders.</div>
@@ -72,6 +77,16 @@ export default {
       if (orders) {
         this.orders = orders;
       }
+    },
+    async deleteAll() {
+      if (!window.confirm('Are you sure')) return;
+      await this.$store.dispatch('delete', { api: 'order/cp' });
+      this.orders = [];
+      this.$toast({
+        type: 'success',
+        message: 'Orders deleted',
+        duration: 2000,
+      });
     },
   },
 };

@@ -20,6 +20,7 @@ services:
       context: ./server
     depends_on:
       - database
+      - redis
     volumes:
       - ./server:/app/server
       - /app/server/node_modules
@@ -29,17 +30,30 @@ services:
       - backend
     
   database:
-    image: mongo:latest
+    image: mongo:4.4.2
     container_name: fullstack_database
+    depends_on:
+      - redis
     volumes:
       - mongo-data:/data/db
     environment:
       - MONGO_INITDB_DATABASE=fullstack
     networks: 
       - backend
+
+  redis:
+    image: redis:6.0.9
+    container_name: fullstack_redis
+    volumes:
+      - redis-data:/data/redis
+    ports:
+      - 6379:6379
+    networks:
+      - backend
       
 volumes:
   mongo-data:
+  redis-data:
 
 networks:
   frontend:
