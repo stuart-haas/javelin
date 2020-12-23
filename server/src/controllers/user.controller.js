@@ -118,7 +118,7 @@ module.exports = {
     }
   },
   delete: async (req, res) => {
-    const id = req.params.user;
+    const { id } = req.params;
     try {
       const user = await User.findById(id);
       if (req.user.role !== 'superadmin' && user.role === 'superadmin') {
