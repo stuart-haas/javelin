@@ -125,7 +125,9 @@ export default {
       this.$router.go();
     },
     success({ user, message }) {
-      this.$store.commit('user/setState', { name: 'user', value: user });
+      if (user._id === this.$store.state.user.user._id) {
+        this.$store.commit('user/setState', { name: 'user', value: user });
+      }
       this.$toast({ type: 'success', message, duration: 2000 });
       this.$router.push('/cp/users');
     },

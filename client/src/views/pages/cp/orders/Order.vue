@@ -2,8 +2,8 @@
   <Content>
     <template v-slot:header>
       <div>
-        <h1 class="h2 text-gray-600">{{ order.orderId }}</h1>
-        <p v-if="order.createdAt" class="text-gray-600 mt-2">
+        <p class="text-2xl text-gray-700 font-semibold">{{ order.orderId }}</p>
+        <p v-if="order.createdAt" class="text-gray-700 mt-2">
           {{ order.createdAt | date }} at {{ order.createdAt | time }}
         </p>
       </div>
@@ -12,18 +12,15 @@
       </Button>
     </template>
     <div class="grid grid-cols-12 gap-6">
-      <div class="col-span-8">
-        <Pane>
-          <p class="text-xl font-medium border-b border-gray-300 pb-2">
-            Order Details
-          </p>
-          <div class="space-y-4 mt-3">
+      <div class="col-span-8 space-y-6">
+        <Pane title="Order Items">
+          <div class="space-y-4 divide-y mt-3">
             <div
               v-for="(item, index) in items"
               :key="index"
               class="grid grid-cols-12 gap-6"
             >
-              <div class="col-span-8 flex flex items-center">
+              <div class="col-span-8 flex flex items-center py-1">
                 <div
                   class="w-16 h-16 bg-no-repeat bg-center bg-contain mr-4"
                   :style="{
@@ -48,36 +45,27 @@
                 <div class="w-full text-right">{{ item.total | currency }}</div>
               </div>
             </div>
-            <div class="grid grid-cols-12 gap-6">
-              <div class="col-span-8">
-                <textarea
-                  class="w-full border border-gray-300 resize-none rounded p-1"
-                  rows="1"
-                  placeholder="Note"
-                />
-              </div>
-              <div class="col-span-2 text-gray-500 space-y-4">
-                <div>Subtotal</div>
-                <div>Shipping</div>
-                <div class="text-black font-bold">Total</div>
-              </div>
-              <div class="col-span-2 text-right space-y-4">
-                <div>{{ order.subtotal | currency }}</div>
-                <div>{{ order.shipping | currency }}</div>
-                <div class="text-black font-bold">
-                  {{ order.total | currency }}
-                </div>
+          </div>
+        </Pane>
+        <Pane title="Order Summary">
+          <div class="grid grid-cols-12 gap-6 mt-6">
+            <div class="col-span-10 text-gray-500 space-y-4">
+              <div>Subtotal</div>
+              <div>Shipping</div>
+              <div class="text-black font-bold">Total</div>
+            </div>
+            <div class="col-span-2 text-right space-y-4">
+              <div>{{ order.subtotal | currency }}</div>
+              <div>{{ order.shipping | currency }}</div>
+              <div class="text-black font-bold">
+                {{ order.total | currency }}
               </div>
             </div>
           </div>
         </Pane>
       </div>
       <div class="col-span-4">
-        <Pane>
-          <p class="text-xl font-medium border-b border-gray-300 pb-2">
-            Customer Details
-          </p>
-        </Pane>
+        <Pane title="Customer Details"> </Pane>
       </div>
     </div>
   </Content>

@@ -32,6 +32,13 @@ const resolveValue = (item, field) => {
       field.format.pattern
     );
   }
+  if (field.concat) {
+    return field.concat.keys
+      .map((key) => {
+        return resolvePath(item, key);
+      })
+      .join(field.concat.join);
+  }
   return field.key ? resolvePath(item, field.key) : field.value;
 };
 

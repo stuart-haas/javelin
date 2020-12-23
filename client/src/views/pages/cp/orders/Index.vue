@@ -36,31 +36,23 @@ export default {
         {
           label: 'Order Id',
           key: 'orderId',
-        },
-        {
-          label: 'First Name',
-          key: 'user.firstName',
-        },
-        {
-          label: 'Last Name',
-          key: 'user.lastName',
-        },
-        {
-          label: 'Email',
-          key: 'user.email',
-        },
-        {
-          label: 'Status',
-          key: 'status',
-        },
-        {
-          value: 'View',
           tag: 'router-link',
           attrs: {
             class: 'text-blue-500',
             to: '/cp/orders/:param',
             param: '_id',
           },
+        },
+        {
+          label: 'Customer',
+          concat: {
+            keys: ['user.firstName', 'user.lastName'],
+            join: ' ',
+          },
+        },
+        {
+          label: 'Status',
+          key: 'status',
         },
       ],
     };

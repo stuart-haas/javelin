@@ -1,8 +1,8 @@
 <template>
   <div
-    class="flex items-center justify-between py-4 bg-white border border-gray-300 border-b"
+    class="flex items-center justify-between px-8 py-4 bg-white border border-gray-300 border-b"
   >
-    <div class="w-10/12 m-auto flex justify-between">
+    <div class="w-full flex justify-between">
       <slot name="left"></slot>
       <slot name="right"></slot>
     </div>
