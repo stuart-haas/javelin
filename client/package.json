@@ -21,6 +21,7 @@
     "fontsource-libre-baskerville": "^3.1.5",
     "fontsource-nunito": "^3.1.5",
     "object-resolve-path": "^1.1.1",
+    "pluralize": "^8.0.0",
     "tailwindcss": "^2.0.1-compat",
     "vue": "^2.6.11",
     "vue-click-outside": "^1.1.0",

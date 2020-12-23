@@ -35,16 +35,19 @@
     <transition name="page" mode="out-in">
       <router-view />
     </transition>
+    <Sidebar title="Your Cart" />
     <Toast />
   </div>
 </template>
 
 <script>
+import Sidebar from '@/components/Sidebar.vue';
 import Header from '@/components/Header.vue';
 import Avatar from '@/components/Avatar.vue';
 
 export default {
   components: {
+    Sidebar,
     Header,
     Avatar,
   },

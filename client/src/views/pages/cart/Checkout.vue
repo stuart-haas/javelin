@@ -1,6 +1,9 @@
 <template>
   <Page>
     <template v-slot:sidebar>
+      <div class="border-b border-gray-300 mb-6 mr-6">
+        <p class="text-xl">Your Cart</p>
+      </div>
       <div class="space-y-6 pr-6">
         <div v-for="product in items" :key="product.id">
           <p class="font-medium">
@@ -13,17 +16,19 @@
             </p>
             <p class="flex items-center justify-between">
               <span class="text-gray-700">Price:</span
-              ><span class="text-black">{{ product.price }}</span>
+              ><span class="text-black text-sm">{{
+                product.price | currency
+              }}</span>
             </p>
             <p class="flex items-center justify-between">
               <span class="text-gray-700">Total:</span
-              ><span class="text-black">{{ product.total }}</span>
+              ><span class="text-black">{{ product.total | currency }}</span>
             </p>
           </div>
         </div>
         <div class="flex items-center justify-between text-xl">
           <span class="font-medium">Total:</span>
-          <span>{{ total }}</span>
+          <span>{{ total | currency }}</span>
         </div>
       </div>
     </template>

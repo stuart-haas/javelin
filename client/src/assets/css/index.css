@@ -61,6 +61,16 @@ textarea:disabled {
   transform: translate3d(0, -100%, 0);
 }
 
+.slideLeft-enter-active {
+  transition: all 0.3s ease;
+}
+.slideLeft-leave-active {
+  transition: all 0.3s ease;
+}
+.slideLeft-enter, .slideLeft-leave-to {
+  transform: translateX(100%);
+}
+
 .page-enter-active,
 .page-leave-active {
   transition-duration: 0.3s;

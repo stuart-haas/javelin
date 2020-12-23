@@ -281,4 +281,10 @@ router.beforeEach(async (to, from, next) => {
   }
 });
 
+router.afterEach(() => {
+  if (store.state.root.sidebarOpen) {
+    store.commit('setState', { name: 'sidebarOpen', value: false });
+  }
+});
+
 export default router;

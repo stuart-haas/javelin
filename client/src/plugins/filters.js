@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import pluralize from 'pluralize';
 
 Vue.filter('currency', function (value) {
   if (typeof value !== 'number') {
@@ -10,4 +11,8 @@ Vue.filter('currency', function (value) {
     minimumFractionDigits: 0,
   });
   return formatter.format(value);
+});
+
+Vue.filter('pluralize', function (value, number) {
+  return pluralize(value, number);
 });

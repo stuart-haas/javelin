@@ -1,13 +1,15 @@
 const returnData = ({ data }) => data;
 
 const state = () => {
-  return {};
+  return {
+    sidebarOpen: false,
+  };
 };
 
 const getters = {};
 
 const mutations = {
-  setState(state, { value, name }) {
+  setState(state, { name, value }) {
     state[name] = value;
   },
 };

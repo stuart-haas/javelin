@@ -99,6 +99,7 @@ export default {
       const formData = { id, quantity };
       this.quantity = 0;
       await this.$store.dispatch('cart/add', { formData });
+      this.$store.commit('setState', { name: 'sidebarOpen', value: true });
     },
     async toggleFavorite(favorite) {
       const isFavorite = this.checkFavorite(favorite);
