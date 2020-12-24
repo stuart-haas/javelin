@@ -1,7 +1,7 @@
 <template>
   <Content title="Edit User" class="w-1/2">
     <template v-slot:header>
-      <Dropdown :items="items" />
+      <Dropdown v-if="!currentUser" :items="items" />
     </template>
     <Panel>
       <Form
@@ -62,6 +62,9 @@ export default {
     };
   },
   computed: {
+    currentUser() {
+      return this.$store.state.user.user._id === this.$route.params.id;
+    },
     userId() {
       return this.$store.state.user.user._id;
     },
