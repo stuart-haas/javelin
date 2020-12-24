@@ -4,7 +4,7 @@
     v-bind="$attrs"
     v-on="$listeners"
     class="p-2 transition duration-300 text-white outline-none focus:outline-none rounded-sm shadow"
-    :class="[`bg-${theme}-${variant.base} hover:bg-${theme}-${variant.dark}`]"
+    :class="[`bg-${theme}-${variant.base} hover:bg-${theme}-${variant.hover}`]"
   >
     <slot></slot>
   </component>
@@ -24,8 +24,8 @@ export default {
     variant: {
       type: Object,
       default: () => ({
-        base: 'base',
-        dark: 'dark',
+        base: '500',
+        hover: '600',
       }),
     },
   },

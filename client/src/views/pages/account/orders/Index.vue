@@ -26,7 +26,7 @@ export default {
           value: 'View',
           tag: 'router-link',
           attrs: {
-            class: 'text-blue-500',
+            class: 'text-secondary-500',
             to: '/account/orders/:param',
             param: '_id',
           },

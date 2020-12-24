@@ -25,8 +25,8 @@ export default {
     },
     linkActiveClass() {
       return this.direction === 'vertical'
-        ? 'border-r-4 border-gray-700 text-blue-500'
-        : 'border-b-2 border-gray-700 text-blue-500';
+        ? 'border-r-4 border-gray-700 text-secondary-500'
+        : 'border-b-2 border-gray-700 text-secondary-500';
     },
     linkClass() {
       return this.direction === 'vertical'

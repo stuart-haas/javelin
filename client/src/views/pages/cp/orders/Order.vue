@@ -29,7 +29,7 @@
                 ></div>
                 <div>
                   <router-link
-                    class="block text-blue-500"
+                    class="block text-secondary-500"
                     :to="`/cp/products/${item.product._id}`"
                     >{{ item.product.name }}</router-link
                   >
@@ -87,7 +87,7 @@
         <Panel>
           <div class="flex justify-between">
             <div class="font-bold text-xl">Note</div>
-            <div class="text-blue-500 font-bold">Edit</div>
+            <div class="text-secondary-500 font-bold">Edit</div>
           </div>
         </Panel>
       </div>

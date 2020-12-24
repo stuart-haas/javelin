@@ -35,7 +35,7 @@ textarea:disabled {
 }
 
 .link {
-  @apply duration-300 transition hover:text-blue-500;
+  @apply duration-300 transition hover:text-secondary-500;
 }
 
 

@@ -36,7 +36,7 @@ export default {
           key: 'orderId',
           tag: 'router-link',
           attrs: {
-            class: 'text-blue-500',
+            class: 'text-secondary-500',
             to: '/cp/orders/:param',
             param: '_id',
           },

@@ -9,17 +9,17 @@ module.exports = {
     extend: {
       colors: {
         primary: {
-          base: '#ED8936',
-          dark: '#DD6B20',
+          500: '#ED8936',
+          600: '#DD6B20',
         },
         secondary: {
-          base: colors.blue['500'],
-          dark: colors.blue['600'],
-          darker: colors.blue['700'],
+          500: colors.blue['500'],
+          600: colors.blue['600'],
+          700: colors.blue['700'],
         },
         danger: {
-          base: colors.red['500'],
-          dark: colors.red['600'],
+          500: colors.red['500'],
+          600: colors.red['600'],
         },
         success: colors.green['500'],
         error: colors.red['500'],

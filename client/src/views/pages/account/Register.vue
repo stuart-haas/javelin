@@ -13,7 +13,7 @@
     >
       <router-link
         to="/login"
-        class="block mt-3 text-center duration-300 transition hover:text-blue-700"
+        class="block mt-3 text-center duration-300 transition hover:text-secondary-700"
         >Login</router-link
       >
     </Form>

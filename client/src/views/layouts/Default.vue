@@ -5,7 +5,7 @@
         <div class="flex justify-between items-center">
           <router-link
             to="/products"
-            active-class="text-blue-500"
+            active-class="text-secondary-500"
             class="link uppercase"
           >
             Products

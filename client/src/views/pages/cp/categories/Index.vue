@@ -24,7 +24,7 @@ export default {
           key: 'name',
           tag: 'router-link',
           attrs: {
-            class: 'text-blue-500',
+            class: 'text-secondary-500',
             to: '/cp/categories/:param',
             param: '_id',
           },

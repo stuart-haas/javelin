@@ -8,7 +8,7 @@
       >
         <router-link
           :to="`/products/${product._id}`"
-          class="text-blue-500 mr-3"
+          class="text-secondary-500 mr-3"
           >{{ product.name }}</router-link
         >
         <CloseButton @click="removeFavorite(product._id)" />

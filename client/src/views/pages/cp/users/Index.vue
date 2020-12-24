@@ -59,7 +59,7 @@ export default {
             and: this.$store.state.user.user.role === 'admin',
           },
           attrs: {
-            class: 'text-blue-500',
+            class: 'text-secondary-500',
             to: '/cp/users/:param',
             param: '_id',
           },
