@@ -18,28 +18,24 @@ export default {
       items: [
         {
           label: 'Orders',
-          icon: 'shopping-cart',
           attrs: {
             to: '/cp/orders',
           },
         },
         {
           label: 'Products',
-          icon: 'boxes',
           attrs: {
             to: '/cp/products',
           },
         },
         {
           label: 'Categories',
-          icon: 'th',
           attrs: {
             to: '/cp/categories',
           },
         },
         {
           label: 'Users',
-          icon: 'user',
           attrs: {
             to: '/cp/users',
           },

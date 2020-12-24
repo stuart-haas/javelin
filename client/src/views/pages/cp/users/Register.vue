@@ -1,13 +1,11 @@
 <template>
-  <Content title="Register User" class="w-1/2">
-    <Pane>
-      <Form
-        :fields="fields"
-        api="user/cp/register"
-        submitLabel="Register"
-        @success="success"
-      />
-    </Pane>
+  <Content title="Register User">
+    <Form
+      :fields="fields"
+      api="user/cp/register"
+      submitLabel="Register"
+      @success="success"
+    />
   </Content>
 </template>
 

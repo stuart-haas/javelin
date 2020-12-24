@@ -1,23 +1,20 @@
 <template>
-  <Content :title="id ? 'Edit Category' : 'New Category'" class="w-1/2">
+  <Content :title="id ? 'Edit Category' : 'New Category'">
     <template v-slot:header>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
       </Button>
     </template>
-    <Pane>
-      <Upload :field="image" @change="change" />
-
-      <Form
-        :fields="fields"
-        :append="append"
-        :dispatch="id ? 'put' : 'post'"
-        api="category"
-        :param="id"
-        :submitLabel="id ? 'Update' : 'Create'"
-        @success="success"
-      />
-    </Pane>
+    <Upload :field="image" @change="change" />
+    <Form
+      :fields="fields"
+      :append="append"
+      :dispatch="id ? 'put' : 'post'"
+      api="category"
+      :param="id"
+      :submitLabel="id ? 'Update' : 'Create'"
+      @success="success"
+    />
   </Content>
 </template>
 

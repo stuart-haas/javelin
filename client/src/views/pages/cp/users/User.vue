@@ -1,5 +1,5 @@
 <template>
-  <Content title="Edit User" class="w-1/2">
+  <Content title="Edit User">
     <template v-slot:header>
       <div>
         <Button
@@ -19,16 +19,14 @@
         </Button>
       </div>
     </template>
-    <Pane>
-      <Form
-        :fields="fields"
-        dispatch="put"
-        api="user/cp"
-        :param="id"
-        submitLabel="Update"
-        @success="success"
-      />
-    </Pane>
+    <Form
+      :fields="fields"
+      dispatch="put"
+      api="user/cp"
+      :param="id"
+      submitLabel="Update"
+      @success="success"
+    />
   </Content>
 </template>
 
