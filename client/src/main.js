@@ -11,6 +11,10 @@ import './plugins/icons';
 import './plugins/layouts';
 import './plugins/api';
 import './plugins/filters';
+import 'fontsource-libre-baskerville';
+import 'fontsource-nunito';
+import 'fontsource-nunito/600.css';
+import 'fontsource-nunito/700.css';
 import './assets/css/index.css';
 
 new Vue({

@@ -1,23 +1,7 @@
 <template>
   <Content title="Edit User" class="w-1/2">
     <template v-slot:header>
-      <div>
-        <Button
-          v-if="id && user._id !== userId"
-          theme="secondary"
-          class="mr-3"
-          @click="impersonate"
-        >
-          Impersonate
-        </Button>
-        <Button
-          v-if="id && user._id !== userId"
-          theme="danger"
-          @click="deleteThis"
-        >
-          Delete
-        </Button>
-      </div>
+      <Dropdown :items="items" />
     </template>
     <Panel>
       <Form
@@ -54,6 +38,25 @@ export default {
           label: 'Role',
           name: 'role',
           items: [],
+        },
+      ],
+      items: [
+        {
+          label: 'Impersonate',
+          icon: 'mask',
+          listeners: {
+            click: this.impersonate,
+          },
+        },
+        {
+          label: 'Delete',
+          icon: 'trash-alt',
+          attrs: {
+            class: 'bg-danger-500 text-white hover:bg-danger-600',
+          },
+          listeners: {
+            click: this.deleteThis,
+          },
         },
       ],
     };

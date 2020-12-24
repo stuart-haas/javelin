@@ -11,12 +11,12 @@ import {
   faBoxes,
   faTh,
   faUser,
+  faAngleDown,
+  faCaretUp,
+  faTrashAlt,
+  faMask,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
-import 'fontsource-libre-baskerville';
-import 'fontsource-nunito';
-import 'fontsource-nunito/600.css';
-import 'fontsource-nunito/700.css';
 
 library.add(
   faStar,
@@ -28,7 +28,11 @@ library.add(
   faShoppingCart,
   faBoxes,
   faTh,
-  faUser
+  faUser,
+  faAngleDown,
+  faCaretUp,
+  faTrashAlt,
+  faMask
 );
 
 Vue.component('Icon', FontAwesomeIcon);

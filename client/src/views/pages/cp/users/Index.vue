@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {

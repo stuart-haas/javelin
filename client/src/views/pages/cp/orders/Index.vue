@@ -2,12 +2,7 @@
   <Content title="Orders">
     <template v-slot:header>
       <div class="flex items-center">
-        <Button theme="danger" class="mr-3" @click="deleteAll"
-          >Delete All</Button
-        >
-        <Button theme="secondary" tag="router-link" to="/cp/orders/new"
-          >New Order</Button
-        >
+        <Dropdown :items="items" />
       </div>
     </template>
     <Panel>
@@ -56,6 +51,26 @@ export default {
           label: 'Total',
           key: 'total',
           filter: 'currency',
+        },
+      ],
+      items: [
+        {
+          label: 'New Order',
+          icon: 'plus',
+          tag: 'router-link',
+          attrs: {
+            to: '/cp/orders/new',
+          },
+        },
+        {
+          label: 'Delete All',
+          icon: 'trash-alt',
+          attrs: {
+            class: 'bg-danger-500 text-white hover:bg-danger-600',
+          },
+          listeners: {
+            click: this.deleteAll,
+          },
         },
       ],
     };
