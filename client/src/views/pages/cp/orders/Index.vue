@@ -20,6 +20,7 @@ export default {
       fields: [
         {
           label: 'Date',
+          key: 'date',
           concat: {
             keys: ['createdAt', 'createdAt'],
             filters: ['date', 'time'],
@@ -38,6 +39,7 @@ export default {
         },
         {
           label: 'Customer',
+          key: 'customer',
           concat: {
             keys: ['user.firstName', 'user.lastName'],
             join: ' ',
@@ -50,6 +52,7 @@ export default {
         {
           label: 'Total',
           key: 'total',
+          filter: 'currency',
         },
       ],
       items: [
@@ -76,7 +79,12 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.orders, this.fields);
+      return this.mapTableData(this.orders, this.fields, {
+        sort: {
+          key: 'total',
+          direction: 'asc',
+        },
+      });
     },
   },
   mounted() {

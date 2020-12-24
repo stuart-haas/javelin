@@ -2,38 +2,39 @@ import Vue from 'vue';
 import Table from './Table.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumnAttributes = (item, field, colAttrs) => {
-  let attrs = { ...colAttrs };
+const resolveColumns = (item, field, colConfig) => {
+  let config = { ...colConfig };
   if (field.tag === 'router-link') {
-    attrs.to = attrs.to.replace(':param', item[attrs.param]);
+    config.to = config.to.replace(':param', item[config.param]);
   }
   if (field.tag === 'img') {
-    attrs.src = item[attrs.src];
+    config.src = item[config.src];
   }
   if (field.hideOn) {
-    attrs.hidden =
+    config.hidden =
       field.hideOn.value === item[field.hideOn.key] && field.hideOn.and;
   }
-  return attrs;
+  return config;
 };
 
-const resolveRowAttributes = (item, fields, rowAttrs) => {
-  let attrs = { ...rowAttrs };
-  if (attrs.active) {
-    attrs.active = attrs.active.value === item[attrs.active.key];
-  }
+const resolveRows = (item, fields, rowConfig) => {
+  let config = { ...rowConfig };
   fields.forEach((field) => {
-    if (field.key && item[field.key]) {
-      attrs[field.key] = item[field.key];
-    }
+    config[field.key] = resolveValue(item, field);
   });
-  return attrs;
+  if (config.active) {
+    config.active = config.active.value === item[config.active.key];
+  }
+  return config;
 };
 
 const resolveValue = (item, field) => {
-  const val = field.key ? resolvePath(item, field.key) : field.value;
+  const resolvedValue = field.key ? resolvePath(item, field.key) : field.value;
   if (field.format) {
-    return field.format.function(Date.parse(val), field.format.pattern);
+    return field.format.function(
+      Date.parse(resolvedValue),
+      field.format.pattern
+    );
   }
   if (field.concat) {
     return field.concat.keys
@@ -48,33 +49,38 @@ const resolveValue = (item, field) => {
       .join(field.concat.join);
   }
   if (field.filter) {
-    return Vue.filter(field.filter)(val);
+    return Vue.filter(field.filter)(resolvedValue);
   }
-  return val;
+  return resolvedValue;
+};
+
+const mapColumns = (item, fields) => {
+  return fields.map((field) => {
+    let { tag = '', hidden = false, hideOn = {}, attrs = {} } = field;
+    attrs = resolveColumns(item, field, attrs);
+    const value = resolveValue(item, field);
+    return {
+      tag,
+      hidden,
+      hideOn,
+      value,
+      attrs: { ...attrs },
+    };
+  });
 };
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, rowAttrs = {}) {
+    mapTableData(data, fields, rowConfig = {}) {
       let rows = [];
       data.map((item) => {
-        const colData = fields.map((field) => {
-          let { tag = '', hidden = false, hideOn = {}, attrs = {} } = field;
-          attrs = resolveColumnAttributes(item, field, attrs);
-          const value = resolveValue(item, field);
-          return {
-            tag,
-            hidden,
-            hideOn,
-            value,
-            attrs: { ...attrs },
-          };
-        });
-        const rowData = resolveRowAttributes(item, fields, rowAttrs);
+        const colData = mapColumns(item, fields);
+        const rowData = resolveRows(item, fields, rowConfig);
         rows.push({ rowData, colData });
       });
       return rows;
     },
+    sortTableData(rows, options) {},
   },
 };
 
