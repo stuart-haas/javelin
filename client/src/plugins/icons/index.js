@@ -13,6 +13,7 @@ import {
   faUser,
   faAngleDown,
   faCaretUp,
+  faCaretDown,
   faTrashAlt,
   faMask,
 } from '@fortawesome/free-solid-svg-icons';
@@ -31,6 +32,7 @@ library.add(
   faUser,
   faAngleDown,
   faCaretUp,
+  faCaretDown,
   faTrashAlt,
   faMask
 );

@@ -19,8 +19,13 @@ const resolveColumns = (item, field, colConfig) => {
 
 const resolveRows = (item, fields, rowConfig) => {
   let config = { ...rowConfig };
+  config['original'] = {};
+  config['modified'] = {};
   fields.forEach((field) => {
-    config[field.key] = resolveValue(item, field);
+    config.modified[field.key] = resolveValue(item, field);
+    config.original[field.key] = field.key
+      ? resolvePath(item, field.key)
+      : field.value;
   });
   if (config.active) {
     config.active = config.active.value === item[config.active.key];
@@ -80,7 +85,18 @@ const TableMixin = {
       });
       return rows;
     },
-    sortTableData(rows, options) {},
+    sortTableData(rows, options) {
+      const { key, direction } = options;
+      const operators = { asc: '<', desc: '>' };
+      const operator = operators[direction];
+      return rows.sort((a, b) => {
+        return eval(
+          'a.rowData.original[key]' +
+            operator +
+            'b.rowData.original[key] ? 1 : -1'
+        );
+      });
+    },
   },
 };
 

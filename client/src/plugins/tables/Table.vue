@@ -8,8 +8,12 @@
     <table class="w-full table-auto text-left">
       <thead>
         <tr class="font-bold border-b border-gray-300">
-          <th v-for="(field, index) in filteredFields" :key="index">
-            {{ field.label }}
+          <th
+            v-for="(field, index) in filteredFields"
+            :key="index"
+            @click="sort(field)"
+          >
+            {{ field.label }}<Icon icon="caret-down" />
           </th>
         </tr>
       </thead>
@@ -21,7 +25,6 @@
             active === i ? 'font-bold' : '',
             i % 2 === 0 ? 'bg-gray-100' : '',
           ]"
-          class="slideUp"
         >
           <td v-for="(item, j) in getRow(row)" :key="j">
             <component v-if="item.tag" :is="item.tag" v-bind="item.attrs">
@@ -43,6 +46,12 @@ export default {
     data: Array,
     fields: Array,
   },
+  data() {
+    return {
+      sortKey: '',
+      sortDirection: 'asc',
+    };
+  },
   computed: {
     active() {
       const index = this.data.findIndex((item) => {
@@ -56,18 +65,28 @@ export default {
       });
     },
     filteredData() {
-      return this.data.map((item) => {
-        return item.colData.filter((item) => {
+      let rows = this.data.map((item) => {
+        const { rowData } = item;
+        const colData = item.colData.filter((item) => {
           return !item.hidden;
         });
+        return { rowData, colData };
       });
+      rows = this.sortTableData(rows, {
+        key: this.sortKey,
+        direction: this.sortDirection,
+      });
+      return rows;
     },
   },
   methods: {
     getRow(row) {
-      return row.filter((item) => {
+      return row.colData.filter((item) => {
         return !item.hidden;
       });
+    },
+    sort(field) {
+      this.sortKey = field.key;
     },
   },
 };

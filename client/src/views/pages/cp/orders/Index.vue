@@ -79,12 +79,7 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.orders, this.fields, {
-        sort: {
-          key: 'total',
-          direction: 'asc',
-        },
-      });
+      return this.mapTableData(this.orders, this.fields);
     },
   },
   mounted() {
