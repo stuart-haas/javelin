@@ -1,5 +1,5 @@
 <template>
-  <table class="w-full table-auto text-left mt-6">
+  <table class="w-full table-auto text-left">
     <thead>
       <tr class="font-bold border-b border-gray-300">
         <th v-for="(field, index) in filteredFields" :key="index">

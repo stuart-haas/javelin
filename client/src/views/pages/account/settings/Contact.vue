@@ -1,12 +1,14 @@
 <template>
-  <Form
-    :fields="fields"
-    dispatch="put"
-    api="user"
-    :param="id"
-    submitLabel="Update"
-    @success="success"
-  />
+  <Panel>
+    <Form
+      :fields="fields"
+      dispatch="put"
+      api="user"
+      :param="id"
+      submitLabel="Update"
+      @success="success"
+    />
+  </Panel>
 </template>
 
 <script>

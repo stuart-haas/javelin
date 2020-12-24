@@ -19,7 +19,7 @@
         </Button>
       </div>
     </template>
-    <Pane>
+    <Panel>
       <Form
         :fields="fields"
         dispatch="put"
@@ -28,7 +28,7 @@
         submitLabel="Update"
         @success="success"
       />
-    </Pane>
+    </Panel>
   </Content>
 </template>
 

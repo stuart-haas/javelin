@@ -10,10 +10,10 @@
         >
       </div>
     </template>
-    <Pane>
+    <Panel>
       <Table :data="data" :fields="fields" v-if="data.length" />
       <div v-else>There aren't any orders.</div>
-    </Pane>
+    </Panel>
   </Content>
 </template>
 

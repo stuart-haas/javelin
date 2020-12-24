@@ -1,13 +1,13 @@
 <template>
   <Content title="Register User" class="w-1/2">
-    <Pane>
+    <Panel>
       <Form
         :fields="fields"
         api="user/cp/register"
         submitLabel="Register"
         @success="success"
       />
-    </Pane>
+    </Panel>
   </Content>
 </template>
 

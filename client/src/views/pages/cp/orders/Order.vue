@@ -13,7 +13,7 @@
     </template>
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-8 space-y-6">
-        <Pane title="Order Items">
+        <Panel title="Order Items">
           <div class="space-y-4 divide-y mt-3">
             <div
               v-for="(item, index) in items"
@@ -46,17 +46,17 @@
               </div>
             </div>
           </div>
-        </Pane>
-        <Pane title="Order Summary">
+        </Panel>
+        <Panel title="Order Summary">
           <div class="grid grid-cols-12 gap-6 mt-6">
-            <div class="col-span-10 text-gray-500 space-y-4">
+            <div class="col-span-8 text-gray-500 space-y-4">
               <div>Shipping Provider</div>
               <div>Shipping Option</div>
               <div>Subtotal</div>
               <div>Shipping</div>
               <div class="text-black font-bold">Total</div>
             </div>
-            <div class="col-span-2 text-right space-y-4">
+            <div class="col-span-4 text-right space-y-4">
               <div>{{ order.shippingProvider }}</div>
               <div>{{ order.shippingOption }}</div>
               <div>{{ order.subtotal | currency }}</div>
@@ -66,10 +66,10 @@
               </div>
             </div>
           </div>
-        </Pane>
+        </Panel>
       </div>
       <div class="col-span-4 space-y-6">
-        <Pane v-if="order.user" title="Customer Details">
+        <Panel v-if="order.user" title="Customer Details">
           <div class="mt-6 space-y-4">
             <img
               :src="order.user.avatar"
@@ -83,13 +83,13 @@
             </div>
             <div>{{ order.user.email }}</div>
           </div>
-        </Pane>
-        <Pane>
+        </Panel>
+        <Panel>
           <div class="flex justify-between">
             <div class="font-bold text-xl">Note</div>
             <div class="text-blue-500 font-bold">Edit</div>
           </div>
-        </Pane>
+        </Panel>
       </div>
     </div>
   </Content>

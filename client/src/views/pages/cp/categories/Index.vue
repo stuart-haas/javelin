@@ -5,9 +5,9 @@
         >New Category</Button
       >
     </template>
-    <Pane>
+    <Panel>
       <Table :data="data" :fields="fields" />
-    </Pane>
+    </Panel>
   </Content>
 </template>
 

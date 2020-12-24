@@ -1,13 +1,13 @@
 <template>
   <Content title="Your Orders">
-    <Table :data="data" :fields="fields" v-if="data.length" />
-    <div v-else>You haven't placed any orders.</div>
+    <Panel>
+      <Table :data="data" :fields="fields" v-if="data.length" />
+      <div v-else>You haven't placed any orders.</div>
+    </Panel>
   </Content>
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {

@@ -5,7 +5,7 @@
         Delete
       </Button>
     </template>
-    <Pane>
+    <Panel>
       <Upload :field="image" @change="change" />
 
       <Form
@@ -17,7 +17,7 @@
         :submitLabel="id ? 'Update' : 'Create'"
         @success="success"
       />
-    </Pane>
+    </Panel>
   </Content>
 </template>
 
