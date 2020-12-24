@@ -5,19 +5,19 @@ import TableColumn from './TableColumn.vue';
 import TableHeader from './TableHeader.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumns = (item, field, colConfig) => {
-  let config = { ...colConfig };
-  if (field.tag === 'router-link') {
-    config.to = config.to.replace(':param', item[config.param]);
+const resolveColumns = (item, field) => {
+  let attrs = { ...field };
+  if (attrs.tag === 'router-link') {
+    attrs.to = attrs.to.replace(':param', item[attrs.param]);
   }
-  if (field.tag === 'img') {
-    config.src = item[config.src];
+  if (attrs.tag === 'img') {
+    attrs.src = item[attrs.src];
   }
-  if (field.hideOn) {
-    config.hidden =
-      field.hideOn.value === item[field.hideOn.key] && field.hideOn.and;
+  if (attrs.hideOn) {
+    attrs.hideOn =
+      attrs.hideOn.value === item[attrs.hideOn.key] && attrs.hideOn.and;
   }
-  return config;
+  return attrs;
 };
 
 const resolveRows = (item, fields, rowConfig) => {
@@ -64,15 +64,11 @@ const resolveValue = (item, field) => {
 
 const mapColumns = (item, fields) => {
   return fields.map((field) => {
-    let { tag = '', hidden = false, hideOn = {}, attrs = {} } = field;
-    attrs = resolveColumns(item, field, attrs);
+    const attrs = resolveColumns(item, field);
     const value = resolveValue(item, field);
     return {
-      tag,
-      hidden,
-      hideOn,
       value,
-      attrs: { ...attrs },
+      field: { ...attrs },
     };
   });
 };
@@ -86,6 +82,7 @@ const TableMixin = {
         const rowData = resolveRows(item, fields, rowConfig);
         rows.push({ rowData, colData });
       });
+      console.log(rows);
       return rows;
     },
     sortTableData(rows, options) {

@@ -22,22 +22,6 @@ textarea:disabled {
   @apply disabled:opacity-50 disabled:bg-gray-200;
 }
 
-th,
-td {
-  @apply p-3;
-  @apply text-sm;
-}
-
-.th svg {
-  @apply transition;
-  @apply duration-300;
-  @apply opacity-0;
-}
-
-.th:hover svg, .th.active svg {
-  @apply opacity-100;
-}
-
 .h1 {
   @apply text-4xl;
 }

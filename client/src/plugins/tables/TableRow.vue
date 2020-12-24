@@ -19,3 +19,10 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+th {
+  @apply p-3;
+  @apply text-sm;
+}
+</style>

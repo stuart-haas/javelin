@@ -23,11 +23,9 @@ export default {
           label: 'Name',
           key: 'name',
           tag: 'router-link',
-          attrs: {
-            class: 'text-secondary-500',
-            to: '/cp/categories/:param',
-            param: '_id',
-          },
+          class: 'text-secondary-500',
+          to: '/cp/categories/:param',
+          param: '_id',
         },
         {
           label: 'Last Updated',

@@ -31,11 +31,9 @@ export default {
           label: 'Order Id',
           key: 'orderId',
           tag: 'router-link',
-          attrs: {
-            class: 'text-secondary-500',
-            to: '/cp/orders/:param',
-            param: '_id',
-          },
+          class: 'text-secondary-500',
+          param: '_id',
+          to: '/cp/orders/:param',
         },
         {
           label: 'Customer',

@@ -1,12 +1,8 @@
 <template>
-  <th @click="sort(field)" v-if="filter">
-    <span
-      class="th cursor-pointer"
-      :class="sortIndex > 0 && sortKey === field.key ? 'active' : ''"
+  <th @click="sort" v-if="filter">
+    <span class="cursor-pointer" :class="[active]"
       >{{ field.label
-      }}<transition name="fade"
-        ><Icon :icon="sortIcon" class="text-gray-500" />
-      </transition>
+      }}<transition name="fade"><Icon :icon="sortIcon" /> </transition>
     </span>
   </th>
 </template>
@@ -27,11 +23,45 @@ export default {
     filter() {
       return !this.field.hidden;
     },
+    active() {
+      return this.sortIndex > 0 && this.sortKey === this.field.key
+        ? 'active'
+        : '';
+    },
   },
   methods: {
-    sort(field) {
-      this.$emit('sort', field);
+    sort() {
+      this.$emit('sort', this.field);
     },
   },
 };
 </script>
+
+<style lang="postcss" scoped>
+th {
+  @apply p-3;
+  @apply text-sm;
+}
+
+th:last-of-type {
+  text-align: right;
+}
+
+th span {
+  @apply relative;
+}
+
+th span svg {
+  @apply absolute;
+  @apply top-0.5;
+  @apply text-gray-500;
+  @apply transition;
+  @apply duration-300;
+  @apply opacity-0;
+}
+
+th span:hover svg,
+th span.active svg {
+  @apply opacity-100;
+}
+</style>
