@@ -13,7 +13,14 @@
             :key="index"
             @click="sort(field)"
           >
-            {{ field.label }}<Icon icon="caret-down" />
+            {{ field.label
+            }}<transition name="fade"
+              ><Icon
+                v-if="sortKey === field.key && sortDirectionIndex !== 0"
+                :icon="sortIcon"
+                class="text-gray-500"
+              />
+            </transition>
           </th>
         </tr>
       </thead>
@@ -49,7 +56,9 @@ export default {
   data() {
     return {
       sortKey: '',
-      sortDirection: 'asc',
+      sortDirectionIndex: 0,
+      sortDirections: ['', 'asc', 'desc'],
+      sortIcons: ['', 'arrow-down', 'arrow-up'],
     };
   },
   computed: {
@@ -68,8 +77,9 @@ export default {
       });
       rows = this.sortTableData(rows, {
         key: this.sortKey,
-        direction: this.sortDirection,
+        direction: this.sortDirections[this.sortDirectionIndex],
       });
+      console.log(rows);
       return rows;
     },
     active() {
@@ -77,6 +87,9 @@ export default {
         return item.rowData.active;
       });
       return index;
+    },
+    sortIcon() {
+      return this.sortIcons[this.sortDirectionIndex];
     },
   },
   methods: {
@@ -87,6 +100,12 @@ export default {
     },
     sort(field) {
       this.sortKey = field.key;
+      this.sortDirectionIndex =
+        this.sortDirectionIndex === 0
+          ? 1
+          : this.sortDirectionIndex == 1
+          ? 2
+          : 0;
     },
   },
 };

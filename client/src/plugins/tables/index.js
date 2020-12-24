@@ -89,6 +89,7 @@ const TableMixin = {
       const { key, direction } = options;
       const operators = { asc: '<', desc: '>' };
       const operator = operators[direction];
+      if (!operators[direction]) return rows;
       return rows.sort((a, b) => {
         return eval(
           'a.rowData.original[key]' +

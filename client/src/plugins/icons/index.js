@@ -16,6 +16,8 @@ import {
   faCaretDown,
   faTrashAlt,
   faMask,
+  faArrowDown,
+  faArrowUp,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -31,10 +33,12 @@ library.add(
   faTh,
   faUser,
   faAngleDown,
+  faArrowUp,
   faCaretUp,
   faCaretDown,
   faTrashAlt,
-  faMask
+  faMask,
+  faArrowDown
 );
 
 Vue.component('Icon', FontAwesomeIcon);

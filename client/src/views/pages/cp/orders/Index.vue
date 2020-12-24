@@ -20,7 +20,7 @@ export default {
       fields: [
         {
           label: 'Date',
-          key: 'date',
+          key: 'createdAt',
           concat: {
             keys: ['createdAt', 'createdAt'],
             filters: ['date', 'time'],
@@ -39,7 +39,7 @@ export default {
         },
         {
           label: 'Customer',
-          key: 'customer',
+          key: 'user.firstName',
           concat: {
             keys: ['user.firstName', 'user.lastName'],
             join: ' ',
