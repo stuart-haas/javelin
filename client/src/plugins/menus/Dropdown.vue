@@ -1,7 +1,7 @@
 <template>
   <div v-click-outside="close" class="relative">
     <div
-      class="flex items-center text-gray-600 cursor-pointer p-2 bg-gray-200 rounded shadow text-sm"
+      class="flex items-center text-gray-600 cursor-pointer p-2 bg-gray-200 rounded shadow text-sm transition duration-300 hover:bg-gray-300"
       @click="open = !open"
     >
       <span>{{ title }}</span

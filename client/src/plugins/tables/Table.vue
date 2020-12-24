@@ -26,7 +26,7 @@
             i % 2 === 0 ? 'bg-gray-100' : '',
           ]"
         >
-          <td v-for="(item, j) in getRow(row)" :key="j">
+          <td v-for="(item, j) in filteredColumns(row)" :key="j">
             <component v-if="item.tag" :is="item.tag" v-bind="item.attrs">
               {{ item.value }}
             </component>
@@ -53,12 +53,6 @@ export default {
     };
   },
   computed: {
-    active() {
-      const index = this.data.findIndex((item) => {
-        return item.rowData.active;
-      });
-      return index;
-    },
     filteredFields() {
       return this.fields.filter((item) => {
         return !item.hidden;
@@ -78,9 +72,15 @@ export default {
       });
       return rows;
     },
+    active() {
+      const index = this.data.findIndex((item) => {
+        return item.rowData.active;
+      });
+      return index;
+    },
   },
   methods: {
-    getRow(row) {
+    filteredColumns(row) {
       return row.colData.filter((item) => {
         return !item.hidden;
       });
