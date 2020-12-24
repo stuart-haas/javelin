@@ -22,6 +22,11 @@ const resolveRowAttributes = (item, fields, rowAttrs) => {
   if (attrs.active) {
     attrs.active = attrs.active.value === item[attrs.active.key];
   }
+  fields.forEach((field) => {
+    if (field.key && item[field.key]) {
+      attrs[field.key] = item[field.key];
+    }
+  });
   return attrs;
 };
 
@@ -51,9 +56,9 @@ const resolveValue = (item, field) => {
 const TableMixin = {
   methods: {
     mapTableData(data, fields, rowAttrs = {}) {
-      const rows = [];
+      let rows = [];
       data.map((item) => {
-        let row = fields.map((field) => {
+        const colData = fields.map((field) => {
           let { tag = '', hidden = false, hideOn = {}, attrs = {} } = field;
           attrs = resolveColumnAttributes(item, field, attrs);
           const value = resolveValue(item, field);
@@ -65,9 +70,8 @@ const TableMixin = {
             attrs: { ...attrs },
           };
         });
-        const attrs = resolveRowAttributes(item, fields, rowAttrs);
-        Object.assign(row, attrs);
-        rows.push(row);
+        const rowData = resolveRowAttributes(item, fields, rowAttrs);
+        rows.push({ rowData, colData });
       });
       return rows;
     },
