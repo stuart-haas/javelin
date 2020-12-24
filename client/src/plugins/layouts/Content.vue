@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-bind="$attrs" v-on="$listeners">
     <div class="flex items-center justify-between">
       <h2 v-if="title" class="h2">{{ title }}</h2>
       <slot name="header"></slot>

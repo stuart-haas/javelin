@@ -1,10 +1,10 @@
 <template>
-  <div class="w-full">
+  <div class="w-full h-full">
     <slot name="hero"></slot>
     <div class="py-4" v-if="hasHeader">
       <slot name="header"></slot>
     </div>
-    <div class="flex h-screen">
+    <div class="flex h-full">
       <div class="border-r py-8 bg-gray-100" v-if="hasSidebar">
         <slot name="sidebar"></slot>
       </div>

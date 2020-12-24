@@ -6,7 +6,7 @@
     :active-class="linkActiveClass"
     :class="linkClass"
   >
-    {{ item.label }}
+    <slot></slot>
   </component>
 </template>
 
