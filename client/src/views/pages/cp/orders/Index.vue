@@ -18,8 +18,6 @@
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {
@@ -27,8 +25,11 @@ export default {
       fields: [
         {
           label: 'Date',
-          key: 'createdAt',
-          filter: 'dateTime',
+          concat: {
+            keys: ['createdAt', 'createdAt'],
+            filters: ['date', 'time'],
+            join: ' at ',
+          },
         },
         {
           label: 'Order Id',

@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="h-full">
     <Header>
       <template v-slot:left>
         <div class="flex justify-between items-center">

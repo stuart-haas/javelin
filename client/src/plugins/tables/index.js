@@ -32,7 +32,12 @@ const resolveValue = (item, field) => {
   }
   if (field.concat) {
     return field.concat.keys
-      .map((key) => {
+      .map((key, index) => {
+        if (field.concat.filters) {
+          return Vue.filter(field.concat.filters[index])(
+            resolvePath(item, key)
+          );
+        }
         return resolvePath(item, key);
       })
       .join(field.concat.join);
