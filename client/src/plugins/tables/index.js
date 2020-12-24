@@ -26,11 +26,9 @@ const resolveRowAttributes = (item, fields, rowAttrs) => {
 };
 
 const resolveValue = (item, field) => {
+  const val = field.key ? resolvePath(item, field.key) : field.value;
   if (field.format) {
-    return field.format.function(
-      Date.parse(item[field.key]),
-      field.format.pattern
-    );
+    return field.format.function(Date.parse(val), field.format.pattern);
   }
   if (field.concat) {
     return field.concat.keys
@@ -39,7 +37,10 @@ const resolveValue = (item, field) => {
       })
       .join(field.concat.join);
   }
-  return field.key ? resolvePath(item, field.key) : field.value;
+  if (field.filter) {
+    return Vue.filter(field.filter)(val);
+  }
+  return val;
 };
 
 const TableMixin = {

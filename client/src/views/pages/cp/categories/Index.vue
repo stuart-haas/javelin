@@ -32,10 +32,7 @@ export default {
         {
           label: 'Last Updated',
           key: 'updatedAt',
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy',
-          },
+          filter: 'date',
         },
       ],
     };

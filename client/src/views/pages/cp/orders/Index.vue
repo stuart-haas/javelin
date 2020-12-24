@@ -28,10 +28,7 @@ export default {
         {
           label: 'Date',
           key: 'createdAt',
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy h:mm:ss a',
-          },
+          filter: 'dateTime',
         },
         {
           label: 'Order Id',
@@ -53,6 +50,11 @@ export default {
         {
           label: 'Status',
           key: 'status',
+        },
+        {
+          label: 'Total',
+          key: 'total',
+          filter: 'currency',
         },
       ],
     };

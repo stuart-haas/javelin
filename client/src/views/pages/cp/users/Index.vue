@@ -48,10 +48,7 @@ export default {
         {
           label: 'Active Since',
           key: 'createdAt',
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy',
-          },
+          filter: 'date',
         },
         {
           value: 'Edit',

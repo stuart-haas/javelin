@@ -16,10 +16,7 @@ export default {
         {
           label: 'Date',
           key: 'createdAt',
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy h:mm:ss a',
-          },
+          filter: 'dateTime',
         },
         {
           label: 'Order Id',

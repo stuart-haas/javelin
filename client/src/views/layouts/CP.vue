@@ -1,9 +1,11 @@
 <template>
-  <div class="mb-20">
+  <div>
     <Header>
       <template v-slot:left>
         <div class="flex items-center justify-between">
-          <router-link to="/" class="link">Go to homepage</router-link>
+          <router-link to="/" class="link"
+            ><Icon icon="home" class="text-xl"
+          /></router-link>
         </div>
       </template>
       <template v-slot:right>

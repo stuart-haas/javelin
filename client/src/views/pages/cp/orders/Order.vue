@@ -50,11 +50,15 @@
         <Pane title="Order Summary">
           <div class="grid grid-cols-12 gap-6 mt-6">
             <div class="col-span-10 text-gray-500 space-y-4">
+              <div>Shipping Provider</div>
+              <div>Shipping Option</div>
               <div>Subtotal</div>
               <div>Shipping</div>
               <div class="text-black font-bold">Total</div>
             </div>
             <div class="col-span-2 text-right space-y-4">
+              <div>{{ order.shippingProvider }}</div>
+              <div>{{ order.shippingOption }}</div>
               <div>{{ order.subtotal | currency }}</div>
               <div>{{ order.shipping | currency }}</div>
               <div class="text-black font-bold">
@@ -64,60 +68,44 @@
           </div>
         </Pane>
       </div>
-      <div class="col-span-4">
-        <Pane title="Customer Details"> </Pane>
+      <div class="col-span-4 space-y-6">
+        <Pane v-if="order.user" title="Customer Details">
+          <div class="mt-6 space-y-4">
+            <img
+              :src="order.user.avatar"
+              class="rounded-full w-16 h-auto align-middle"
+            />
+            <div>{{ order.user.firstName }} {{ order.user.lastNae }}</div>
+            <div>{{ order.user.street }}</div>
+            <div>
+              {{ order.user.city }}, {{ order.user.state }}
+              {{ order.user.zipCode }}
+            </div>
+            <div>{{ order.user.email }}</div>
+          </div>
+        </Pane>
+        <Pane>
+          <div class="flex justify-between">
+            <div class="font-bold text-xl">Note</div>
+            <div class="text-blue-500 font-bold">Edit</div>
+          </div>
+        </Pane>
       </div>
     </div>
   </Content>
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {
       order: {},
       user: {},
-      formFields: [
-        {
-          label: 'Date',
-          name: 'createdAt',
-          disabled: true,
-          format: {
-            function: format,
-            pattern: 'MMMM d, yyyy h:mm:ss a',
-          },
-        },
-        {
-          label: 'Order Id',
-          name: 'orderId',
-          disabled: true,
-        },
-        {
-          label: 'First Name',
-          name: 'user.firstName',
-          disabled: true,
-        },
-        {
-          label: 'Last Name',
-          name: 'user.lastName',
-          disabled: true,
-        },
-        {
-          label: 'Email',
-          name: 'user.email',
-          disabled: true,
-        },
-      ],
     };
   },
   computed: {
     id() {
       return this.$route.params.id;
-    },
-    fields() {
-      return this.mapFieldData(this.order, this.formFields);
     },
     items() {
       return this.order.items;

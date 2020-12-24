@@ -22,6 +22,10 @@ Vue.filter('time', function (value) {
   return format(Date.parse(value), 'h:mm a');
 });
 
+Vue.filter('dateTime', function (value) {
+  return format(Date.parse(value), 'MMMM d, yyyy h:mm a');
+});
+
 Vue.filter('pluralize', function (value, number) {
   return pluralize(value, number);
 });
