@@ -1,5 +1,8 @@
 import Vue from 'vue';
 import Table from './Table.vue';
+import TableRow from './TableRow.vue';
+import TableColumn from './TableColumn.vue';
+import TableHeader from './TableHeader.vue';
 import resolvePath from 'object-resolve-path';
 
 const resolveColumns = (item, field, colConfig) => {
@@ -89,8 +92,7 @@ const TableMixin = {
       const { key, direction } = options;
       const operators = { asc: '<', desc: '>' };
       const operator = operators[direction];
-      if (!operators[direction]) return rows;
-      return rows.sort((a, b) => {
+      return [...rows].sort((a, b) => {
         return eval(
           'a.rowData.original[key]' +
             operator +
@@ -102,5 +104,8 @@ const TableMixin = {
 };
 
 Vue.component('Table', Table);
+Vue.component('TableRow', TableRow);
+Vue.component('TableColumn', TableColumn);
+Vue.component('TableHeader', TableHeader);
 
 Vue.mixin(TableMixin);
