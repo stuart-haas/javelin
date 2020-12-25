@@ -44,19 +44,13 @@ export default {
         {
           label: 'Impersonate',
           icon: 'mask',
-          listeners: {
-            click: this.impersonate,
-          },
+          click: this.impersonate,
         },
         {
           label: 'Delete',
           icon: 'trash-alt',
-          attrs: {
-            class: 'bg-danger-500 text-white hover:bg-danger-600',
-          },
-          listeners: {
-            click: this.deleteThis,
-          },
+          class: 'bg-danger-500 text-white hover:bg-danger-600',
+          click: this.deleteThis,
         },
       ],
     };

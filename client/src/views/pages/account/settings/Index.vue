@@ -16,15 +16,11 @@ export default {
       items: [
         {
           label: 'Contact Information',
-          attrs: {
-            to: '/account/settings/user',
-          },
+          to: '/account/settings/user',
         },
         {
           label: 'Shipping Address',
-          attrs: {
-            to: '/account/settings/shipping',
-          },
+          to: '/account/settings/shipping',
         },
       ],
     };

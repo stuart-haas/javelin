@@ -18,31 +18,21 @@ export default {
       items: [
         {
           label: 'Orders',
-          attrs: {
-            to: '/account/orders',
-          },
+          to: '/account/orders',
         },
         {
           label: 'Favorites',
-          attrs: {
-            to: '/account/favorites',
-          },
+          to: '/account/favorites',
         },
         {
           label: 'Settings',
-          attrs: {
-            to: '/account/settings',
-          },
+          to: '/account/settings',
         },
         {
           tag: 'Button',
           label: 'Logout',
-          attrs: {
-            theme: 'danger',
-          },
-          listeners: {
-            click: this.logout,
-          },
+          theme: 'danger',
+          click: this.logout,
         },
       ],
     };

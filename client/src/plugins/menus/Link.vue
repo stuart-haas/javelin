@@ -1,8 +1,8 @@
 <template>
   <component
     :is="tag"
-    v-bind="item.attrs"
-    v-on="item.listeners"
+    v-bind="attrs"
+    v-on="listeners"
     :active-class="linkActiveClass"
     :class="linkClass"
   >
@@ -32,6 +32,17 @@ export default {
       return this.direction === 'vertical'
         ? 'link block transition duration-300 px-2 py-1 border-r-4 border-transparent'
         : 'link block transition duration-300 text-center px-2 py-1 border-b-2 border-transparent';
+    },
+    attrs() {
+      /* eslint-disable */
+      const { tag, ...attrs } = this.item;
+
+      return attrs;
+    },
+    listeners() {
+      const { click, ...listeners } = this.$listeners;
+
+      return listeners;
     },
   },
 };

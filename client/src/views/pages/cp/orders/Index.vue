@@ -58,19 +58,13 @@ export default {
           label: 'New Order',
           icon: 'plus',
           tag: 'router-link',
-          attrs: {
-            to: '/cp/orders/new',
-          },
+          to: '/cp/orders/new',
         },
         {
           label: 'Delete All',
           icon: 'trash-alt',
-          attrs: {
-            class: 'bg-danger-500 text-white hover:bg-danger-600',
-          },
-          listeners: {
-            click: this.deleteAll,
-          },
+          class: 'bg-danger-500 text-white hover:bg-danger-600',
+          click: this.deleteAll,
         },
       ],
     };
