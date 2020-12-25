@@ -1,8 +1,10 @@
 <template>
-  <th @click="sort" v-if="filter">
-    <span :class="[active]"
+  <th @click="sort" v-if="show">
+    <span :class="[activeClass, sortableClass]"
       >{{ field.label
-      }}<transition name="fade"><Icon :icon="sortIcon" /> </transition>
+      }}<transition name="fade"
+        ><Icon v-if="sortable" :icon="icon" />
+      </transition>
     </span>
   </th>
 </template>
@@ -17,20 +19,30 @@ export default {
     sortIcons: Array,
   },
   computed: {
-    sortIcon() {
+    icon() {
       return this.sortIcons[this.sortIndex];
     },
-    filter() {
+    show() {
       return !this.field.hidden;
     },
-    active() {
+    sortable() {
+      if (typeof this.field.sortable === 'undefined') {
+        return true;
+      }
+      return this.field.sortable;
+    },
+    activeClass() {
       return this.sortIndex > 0 && this.sortKey === this.field.key
         ? 'active'
         : '';
     },
+    sortableClass() {
+      return this.sortable ? 'sortable' : '';
+    },
   },
   methods: {
     sort() {
+      if (!this.sortable) return;
       this.$emit('sort', this.field);
     },
   },
@@ -47,7 +59,7 @@ th:last-of-type {
   text-align: right;
 }
 
-th span {
+th span.sortable {
   @apply relative;
   @apply cursor-pointer;
 }

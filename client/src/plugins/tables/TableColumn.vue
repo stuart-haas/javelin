@@ -1,6 +1,6 @@
 <template>
-  <td v-if="hideColumn">
-    <component v-if="hideField" :is="tag" v-bind="attrs" v-on="listeners">
+  <td v-if="showColumn">
+    <component v-if="showField" :is="tag" v-bind="attrs" v-on="listeners">
       {{ column.value }}
     </component>
   </td>
@@ -15,10 +15,10 @@ export default {
     tag() {
       return this.column.tag || 'span';
     },
-    hideColumn() {
+    showColumn() {
       return !this.column.hidden;
     },
-    hideField() {
+    showField() {
       return !this.column.hideOn;
     },
     attrs() {

@@ -28,6 +28,7 @@ export default {
           tag: 'img',
           src: 'avatar',
           class: 'w-8 h-8 rounded-full',
+          sortable: false,
         },
         {
           label: 'Username',

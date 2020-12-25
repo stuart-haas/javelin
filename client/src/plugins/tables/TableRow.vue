@@ -1,5 +1,5 @@
 <template>
-  <tr :class="[active]">
+  <tr :class="[activeClass]">
     <TableColumn
       v-for="(column, index) in columns"
       :key="index"
@@ -14,7 +14,7 @@ export default {
     row: Object,
   },
   computed: {
-    active() {
+    activeClass() {
       return this.row.active ? 'font-bold' : '';
     },
     columns() {
