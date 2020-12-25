@@ -80,7 +80,6 @@ const TableMixin = {
         const merged = { ...row, columns };
         rows.push(merged);
       });
-      console.log(rows);
       return rows;
     },
     sortTableData(rows, options) {

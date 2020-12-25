@@ -58,6 +58,7 @@ export default {
   },
   methods: {
     sort(field) {
+      if (this.sortKey !== field.key) this.sortIndex = 0;
       this.sortKey = field.key;
       this.sortIndex = this.sortIndex === 0 ? 1 : this.sortIndex == 1 ? 2 : 0;
     },
