@@ -5,35 +5,35 @@ import TableColumn from './TableColumn.vue';
 import TableHeader from './TableHeader.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumns = (item, field) => {
-  let attrs = { ...field };
-  if (attrs.tag === 'router-link') {
-    attrs.to = attrs.to.replace(':param', item[attrs.param]);
+const resolveColumn = (item, field) => {
+  let column = { ...field };
+  if (column.tag === 'router-link') {
+    column.to = column.to.replace(':param', item[column.param]);
   }
-  if (attrs.tag === 'img') {
-    attrs.src = item[attrs.src];
+  if (column.tag === 'img') {
+    column.src = item[column.src];
   }
-  if (attrs.hideOn) {
-    attrs.hideOn =
-      attrs.hideOn.value === item[attrs.hideOn.key] && attrs.hideOn.and;
+  if (column.hideOn) {
+    column.hideOn =
+      column.hideOn.value === item[column.hideOn.key] && column.hideOn.and;
   }
-  return attrs;
+  return column;
 };
 
-const resolveRows = (item, fields, rowConfig) => {
-  let config = { ...rowConfig };
-  config['original'] = {};
-  config['modified'] = {};
+const resolveRow = (item, fields, rowOptions) => {
+  let row = { ...rowOptions };
+  row['original'] = {};
+  row['modified'] = {};
   fields.forEach((field) => {
-    config.modified[field.key] = resolveValue(item, field);
-    config.original[field.key] = field.key
+    row.modified[field.key] = resolveValue(item, field);
+    row.original[field.key] = field.key
       ? resolvePath(item, field.key)
       : field.value;
   });
-  if (config.active) {
-    config.active = config.active.value === item[config.active.key];
+  if (row.active) {
+    row.active = row.active.value === item[row.active.key];
   }
-  return config;
+  return row;
 };
 
 const resolveValue = (item, field) => {
@@ -64,23 +64,21 @@ const resolveValue = (item, field) => {
 
 const mapColumns = (item, fields) => {
   return fields.map((field) => {
-    const attrs = resolveColumns(item, field);
+    const attrs = resolveColumn(item, field);
     const value = resolveValue(item, field);
-    return {
-      value,
-      field: { ...attrs },
-    };
+    return { value, ...attrs };
   });
 };
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, rowConfig = {}) {
+    mapTableData(data, fields, rowOptions = {}) {
       let rows = [];
       data.map((item) => {
-        const colData = mapColumns(item, fields);
-        const rowData = resolveRows(item, fields, rowConfig);
-        rows.push({ rowData, colData });
+        const columns = mapColumns(item, fields);
+        const row = resolveRow(item, fields, rowOptions);
+        const merged = { ...row, columns };
+        rows.push(merged);
       });
       console.log(rows);
       return rows;
@@ -90,11 +88,7 @@ const TableMixin = {
       const operators = { asc: '<', desc: '>' };
       const operator = operators[direction];
       return [...rows].sort((a, b) => {
-        return eval(
-          'a.rowData.original[key]' +
-            operator +
-            'b.rowData.original[key] ? 1 : -1'
-        );
+        return eval('a.original[key]' + operator + 'b.original[key] ? 1 : -1');
       });
     },
   },

@@ -1,6 +1,10 @@
 <template>
-  <tr :class="active ? 'font-bold' : ''">
-    <TableColumn v-for="(column, j) in columns" :key="j" :column="column" />
+  <tr :class="[active]">
+    <TableColumn
+      v-for="(column, index) in columns"
+      :key="index"
+      :column="column"
+    />
   </tr>
 </template>
 
@@ -11,10 +15,10 @@ export default {
   },
   computed: {
     active() {
-      return this.row.rowData.active;
+      return this.row.active ? 'font-bold' : '';
     },
     columns() {
-      return this.row.colData;
+      return this.row.columns;
     },
   },
 };

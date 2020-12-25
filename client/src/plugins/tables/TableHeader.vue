@@ -1,6 +1,6 @@
 <template>
   <th @click="sort" v-if="filter">
-    <span class="cursor-pointer" :class="[active]"
+    <span :class="[active]"
       >{{ field.label
       }}<transition name="fade"><Icon :icon="sortIcon" /> </transition>
     </span>
@@ -49,10 +49,12 @@ th:last-of-type {
 
 th span {
   @apply relative;
+  @apply cursor-pointer;
 }
 
 th span svg {
   @apply absolute;
+  @apply ml-0.5;
   @apply top-0.5;
   @apply text-gray-500;
   @apply transition;

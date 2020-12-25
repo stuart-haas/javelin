@@ -13,17 +13,17 @@ export default {
   },
   computed: {
     tag() {
-      return this.column.field.tag || 'span';
+      return this.column.tag || 'span';
     },
     hideColumn() {
-      return !this.column.field.hidden;
+      return !this.column.hidden;
     },
     hideField() {
-      return !this.column.field.hideOn;
+      return !this.column.hideOn;
     },
     attrs() {
       /* eslint-disable */
-      const { tag, ...attrs } = this.column.field;
+      const { tag, ...attrs } = this.column;
 
       return attrs;
     },
