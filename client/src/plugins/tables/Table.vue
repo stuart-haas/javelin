@@ -4,6 +4,8 @@
       type="text"
       placeholder="Filter"
       class="p-1 text-sm block w-full border border-gray-300 rounded mb-2 bg-transparent"
+      v-model="search"
+      @input="input"
     />
     <table class="w-full table-auto text-left">
       <thead>
@@ -32,6 +34,8 @@
 </template>
 
 <script>
+import Fuse from 'fuse.js';
+
 export default {
   props: {
     data: Array,
@@ -39,6 +43,7 @@ export default {
   },
   data() {
     return {
+      search: '',
       sortKey: '',
       sortIndex: 0,
       sortDirections: ['unsorted', 'asc', 'desc'],
@@ -47,13 +52,14 @@ export default {
   },
   computed: {
     filteredData() {
+      let data = this.data;
       if (this.sortIndex > 0) {
-        return this.sortTableData(this.data, {
+        data = this.sortTableData(this.data, {
           key: this.sortKey,
           direction: this.sortDirections[this.sortIndex],
         });
       }
-      return this.data;
+      return data;
     },
   },
   methods: {
@@ -61,6 +67,10 @@ export default {
       if (this.sortKey !== field.key) this.sortIndex = 0;
       this.sortKey = field.key;
       this.sortIndex = this.sortIndex === 0 ? 1 : this.sortIndex == 1 ? 2 : 0;
+    },
+    input(e) {
+      const { value } = e.target;
+      this.search = value;
     },
   },
 };

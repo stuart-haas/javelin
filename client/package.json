@@ -20,6 +20,7 @@
     "date-fns": "^2.16.1",
     "fontsource-libre-baskerville": "^3.1.5",
     "fontsource-nunito": "^3.1.5",
+    "fuse.js": "^6.4.3",
     "object-resolve-path": "^1.1.1",
     "pluralize": "^8.0.0",
     "tailwindcss": "^2.0.1-compat",
