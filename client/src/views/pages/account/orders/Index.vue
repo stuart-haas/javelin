@@ -16,7 +16,9 @@ export default {
         {
           label: 'Date',
           name: 'createdAt',
-          filter: 'dateTime',
+          format: {
+            filter: 'dateTime',
+          },
         },
         {
           label: 'Order Id',

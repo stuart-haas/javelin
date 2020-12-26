@@ -40,7 +40,9 @@ export default {
         {
           label: 'Last Updated',
           name: 'updatedAt',
-          filter: 'date',
+          format: {
+            filter: 'date',
+          },
         },
       ],
     };

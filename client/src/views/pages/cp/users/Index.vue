@@ -29,6 +29,7 @@ export default {
           src: 'avatar',
           class: 'w-8 h-8 rounded-full',
           sortable: false,
+          filterable: false,
         },
         {
           label: 'Username',
@@ -45,7 +46,9 @@ export default {
         {
           label: 'Active Since',
           name: 'createdAt',
-          filter: 'date',
+          format: {
+            filter: 'date',
+          },
         },
         {
           value: 'Edit',

@@ -50,7 +50,9 @@ export default {
         {
           label: 'Total',
           name: 'total',
-          filter: 'currency',
+          format: {
+            filter: 'currency',
+          },
         },
       ],
       items: [

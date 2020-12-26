@@ -23,9 +23,17 @@ const resolveRow = (item, fields, options) => {
   let row = { ...options };
   row['values'] = {};
   fields.forEach((field) => {
+    let { sortable = true, filterable = true, hidden = false } = field;
+    if (hidden) {
+      sortable = false;
+      filterable = false;
+    }
     row.values[field.name] = {
       resolved: resolveValue(item, field),
       source: resolveValue(item, field, false),
+      hidden,
+      sortable,
+      filterable,
     };
   });
   if (row.active) {
@@ -42,10 +50,15 @@ const resolveValue = (item, field, resolve = true) => {
     return resolvedValue;
   }
   if (field.format) {
-    return field.format.function(
-      Date.parse(resolvedValue),
-      field.format.pattern
-    );
+    if (field.format.function) {
+      return field.format.function(
+        Date.parse(resolvedValue),
+        field.format.pattern
+      );
+    }
+    if (field.format.filter) {
+      return Vue.filter(field.format.filter)(resolvedValue);
+    }
   }
   if (field.concat) {
     return field.concat.keys
@@ -58,9 +71,6 @@ const resolveValue = (item, field, resolve = true) => {
         return resolvePath(item, key);
       })
       .join(field.concat.join);
-  }
-  if (field.filter) {
-    return Vue.filter(field.filter)(resolvedValue);
   }
   return resolvedValue;
 };
@@ -99,6 +109,9 @@ const TableMixin = {
       return [...rows].filter((item) => {
         return (
           Object.values(item.values).filter((value) => {
+            if (!value.filterable) {
+              return 0;
+            }
             return String(value.resolved).toLowerCase().indexOf(search) !== -1;
           }).length > 0
         );
