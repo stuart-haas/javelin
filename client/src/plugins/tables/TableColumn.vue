@@ -1,7 +1,7 @@
 <template>
   <td v-if="showColumn">
     <component v-if="showField" :is="tag" v-bind="attrs" v-on="listeners">
-      {{ column.value.modified }}
+      {{ column.value }}
     </component>
   </td>
 </template>
@@ -39,7 +39,6 @@ export default {
 <style scoped>
 td {
   @apply p-3;
-  @apply text-sm;
 }
 
 td:last-of-type {

@@ -6,8 +6,11 @@
       </div>
     </template>
     <Panel>
-      <Table :data="data" :fields="fields" v-if="data.length" />
-      <div v-else>There aren't any orders.</div>
+      <Table
+        :data="data"
+        :fields="fields"
+        :options="{ orderBy: 'createdAt', sort: 'asc' }"
+      />
     </Panel>
   </Content>
 </template>

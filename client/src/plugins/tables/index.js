@@ -9,27 +9,29 @@ const resolveRow = (item, fields, options) => {
   let row = { ...options };
   row['columns'] = {};
   fields.forEach((el) => {
-    const field = { ...el, filterable: true };
+    const field = {
+      ...el,
+      sortable: typeof el.sortable !== 'undefined' ? el.sortable : true,
+      filterable: typeof el.filterable !== 'undefined' ? el.filterable : true,
+    };
     if (field.hidden) {
+      field.sortable = false;
+      field.filterable = false;
+    }
+    if (field.tag === 'img') {
+      field.src = item[field.src];
       field.sortable = false;
       field.filterable = false;
     }
     if (field.tag === 'router-link') {
       field.to = field.to.replace(':param', item[field.param]);
-      field.filterable = false;
-    }
-    if (field.tag === 'img') {
-      field.src = item[field.src];
-      field.filterable = false;
     }
     if (field.boolQuery) {
       field.boolQuery = eval(field.boolQuery);
     }
     row.columns[field.name] = {
-      value: {
-        modified: resolveValue(item, field),
-        original: resolveValue(item, field, false),
-      },
+      value: resolveValue(item, field),
+      source: resolveValue(item, field, false),
       ...field,
     };
   });
@@ -83,16 +85,12 @@ const TableMixin = {
       return rows;
     },
     sortTable(rows, options) {
-      const { key, direction } = options;
+      const { orderBy, sort } = options;
       return [...rows].sort((a, b) => {
-        if (direction === 'asc') {
-          return a.columns[key].value.modified < b.columns[key].value.modified
-            ? 1
-            : -1;
+        if (sort === 'asc') {
+          return a.columns[orderBy].value < b.columns[orderBy].value ? 1 : -1;
         } else {
-          return a.columns[key].value.modified > b.columns[key].value.modified
-            ? 1
-            : -1;
+          return a.columns[orderBy].value > b.columns[orderBy].value ? 1 : -1;
         }
       });
     },
@@ -103,9 +101,7 @@ const TableMixin = {
             if (!column.filterable) {
               return 0;
             }
-            return (
-              String(column.value.modified).toLowerCase().indexOf(search) !== -1
-            );
+            return String(column.value).toLowerCase().indexOf(search) !== -1;
           }).length > 0
         );
       });

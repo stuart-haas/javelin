@@ -1,22 +1,16 @@
 <template>
   <div>
-    <input
-      type="text"
-      placeholder="Search"
-      class="p-1 text-sm block w-full border border-gray-300 rounded my-2 bg-transparent"
-      v-model="search"
-      @input="input"
-    />
-    <table class="w-full table-auto text-left">
+    <input type="text" placeholder="Search" v-model="search" @input="input" />
+    <table>
       <thead>
-        <tr class="font-bold border-b border-gray-300">
+        <tr>
           <TableHeader
             v-for="(field, index) in fields"
             :key="index"
             :field="field"
-            :sortName="sortName"
-            :sortIndex="sortIndex"
-            :sortDirections="sortDirections"
+            :orderBy="orderBy"
+            :orderByIndex="orderByIndex"
+            :sortOptions="sortOptions"
             :sortIcons="sortIcons"
             @sort="sort(field)"
           />
@@ -42,6 +36,15 @@ export default {
   props: {
     data: Array,
     fields: Array,
+    options: {
+      type: Object,
+      default() {
+        return {
+          orderBy: '',
+          sort: 'unsorted',
+        };
+      },
+    },
     debug: {
       type: Boolean,
       default: true,
@@ -50,19 +53,19 @@ export default {
   data() {
     return {
       search: '',
-      sortName: '',
-      sortIndex: 0,
-      sortDirections: ['unsorted', 'asc', 'desc'],
+      orderBy: '',
+      orderByIndex: 0,
+      sortOptions: ['unsorted', 'asc', 'desc'],
       sortIcons: ['arrow-down', 'arrow-down', 'arrow-up'],
     };
   },
   computed: {
     providedData() {
       let data = this.data;
-      if (this.sortIndex > 0) {
+      if (this.orderByIndex > 0) {
         data = this.sortTable(this.data, {
-          key: this.sortName,
-          direction: this.sortDirections[this.sortIndex],
+          orderBy: this.orderBy,
+          sort: this.sortOptions[this.orderByIndex],
         });
       }
       if (this.search) {
@@ -72,11 +75,18 @@ export default {
       return data;
     },
   },
+  mounted() {
+    this.orderBy = this.options.orderBy;
+    this.orderByIndex = this.sortOptions.findIndex(
+      (option) => option === this.options.sort
+    );
+  },
   methods: {
     sort(field) {
-      if (this.sortName !== field.name) this.sortIndex = 0;
-      this.sortName = field.name;
-      this.sortIndex = this.sortIndex === 0 ? 1 : this.sortIndex == 1 ? 2 : 0;
+      if (this.orderBy !== field.name) this.orderByIndex = 0;
+      this.orderBy = field.name;
+      this.orderByIndex =
+        this.orderByIndex === 0 ? 1 : this.orderByIndex == 1 ? 2 : 0;
     },
     input(e) {
       const { value } = e.target;
@@ -91,8 +101,18 @@ export default {
 };
 </script>
 
-<style scoped>
+<style lang="postcss" scoped>
+table {
+  @apply w-full table-auto text-left text-sm;
+}
+table thead tr {
+  @apply font-bold border-b border-gray-300;
+}
+input {
+  @apply p-1 text-sm block w-full border border-gray-300 rounded my-2 bg-transparent;
+}
 pre {
+  @apply mt-4;
   @apply p-2;
   @apply bg-gray-100;
   @apply text-xs;

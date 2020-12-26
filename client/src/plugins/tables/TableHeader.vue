@@ -13,14 +13,14 @@
 export default {
   props: {
     field: Object,
-    sortName: String,
-    sortIndex: Number,
-    sortDirections: Array,
+    orderBy: String,
+    orderByIndex: Number,
+    sortOptions: Array,
     sortIcons: Array,
   },
   computed: {
     icon() {
-      return this.sortIcons[this.sortIndex];
+      return this.sortIcons[this.orderByIndex];
     },
     show() {
       return !this.field.hidden;
@@ -32,7 +32,7 @@ export default {
       return this.field.sortable;
     },
     activeClass() {
-      return this.sortIndex > 0 && this.sortName === this.field.name
+      return this.orderByIndex > 0 && this.orderBy === this.field.name
         ? 'active'
         : '';
     },

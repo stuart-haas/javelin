@@ -18,18 +18,11 @@ export default {
       users: [],
       fields: [
         {
-          label: 'Id',
-          name: '_id',
-          hidden: true,
-        },
-        {
           label: 'Avatar',
           name: 'avatar',
           tag: 'img',
           src: 'avatar',
           class: 'w-8 h-8 rounded-full',
-          sortable: false,
-          filterable: false,
         },
         {
           label: 'Username',

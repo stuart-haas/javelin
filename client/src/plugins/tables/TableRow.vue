@@ -27,6 +27,9 @@ export default {
 <style scoped>
 th {
   @apply p-3;
-  @apply text-sm;
+}
+tr {
+  @apply border-b;
+  @apply border-gray-300;
 }
 </style>
