@@ -12,7 +12,9 @@ const resolveRow = (item, fields, options) => {
   }
   row['columns'] = {};
   fields.forEach((el) => {
-    const attrs = { ...el.attrs };
+    const attrs = Object.keys({ ...el.attrs }).length
+      ? { ...el.attrs }
+      : undefined;
     const field = {
       ...el,
       sortable: typeof el.sortable !== 'undefined' ? el.sortable : true,

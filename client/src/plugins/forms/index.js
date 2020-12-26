@@ -27,7 +27,7 @@ const FormMixin = {
         if (value) {
           // Resolve field value by the field value key
           if (typeof value === 'object') {
-            value = resolveValue(data, field, value.key);
+            value = resolveValue(data, field, value.name);
           }
           Object.assign(field, { value });
         } else {

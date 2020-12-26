@@ -23,12 +23,12 @@ export default {
     },
     attrs() {
       /* eslint-disable */
-      const { tag, ...attrs } = this.column.attrs;
+      const { ...attrs } = this.column.attrs;
 
       return attrs;
     },
     listeners() {
-      const { click, ...listeners } = this.$listeners;
+      const { ...listeners } = this.$listeners;
 
       return listeners;
     },
