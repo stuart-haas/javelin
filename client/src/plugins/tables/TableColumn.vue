@@ -1,7 +1,7 @@
 <template>
   <td v-if="showColumn">
     <component v-if="showField" :is="tag" v-bind="attrs" v-on="listeners">
-      {{ column.value }}
+      {{ column.value.modified }}
     </component>
   </td>
 </template>

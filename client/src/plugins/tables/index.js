@@ -7,7 +7,7 @@ import resolvePath from 'object-resolve-path';
 
 const resolveRow = (item, fields, options) => {
   let row = { ...options };
-  row['values'] = {};
+  row['columns'] = {};
   fields.forEach((el) => {
     const field = { ...el, filterable: true };
     if (field.hidden) {
@@ -25,9 +25,11 @@ const resolveRow = (item, fields, options) => {
     if (field.boolQuery) {
       field.boolQuery = eval(field.boolQuery);
     }
-    row.values[field.name] = {
-      value: resolveValue(item, field),
-      source: resolveValue(item, field, false),
+    row.columns[field.name] = {
+      value: {
+        modified: resolveValue(item, field),
+        original: resolveValue(item, field, false),
+      },
       ...field,
     };
   });
@@ -84,20 +86,26 @@ const TableMixin = {
       const { key, direction } = options;
       return [...rows].sort((a, b) => {
         if (direction === 'asc') {
-          return a.values[key].source < b.values[key].source ? 1 : -1;
+          return a.columns[key].value.modified < b.columns[key].value.modified
+            ? 1
+            : -1;
         } else {
-          return a.values[key].source > b.values[key].source ? 1 : -1;
+          return a.columns[key].value.modified > b.columns[key].value.modified
+            ? 1
+            : -1;
         }
       });
     },
     searchTable(rows, search) {
       return [...rows].filter((item) => {
         return (
-          Object.values(item.values).filter((value) => {
-            if (!value.filterable) {
+          Object.values(item.columns).filter((column) => {
+            if (!column.filterable) {
               return 0;
             }
-            return String(value.value).toLowerCase().indexOf(search) !== -1;
+            return (
+              String(column.value.modified).toLowerCase().indexOf(search) !== -1
+            );
           }).length > 0
         );
       });
