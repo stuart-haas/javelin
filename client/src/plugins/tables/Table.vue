@@ -83,13 +83,13 @@ export default {
       return data;
     },
   },
-  created() {
+  mounted() {
     if (this.options) {
       this.orderBy = this.options.orderBy || '';
       this.currentPage = this.options.currentPage || 1;
       this.perPage = this.options.perPage || 10;
       this.orderByIndex = this.sortOptions.findIndex(
-        (option) => option === this.options.sort || 'unsorted'
+        (option) => option === this.options.sort
       );
     }
   },
