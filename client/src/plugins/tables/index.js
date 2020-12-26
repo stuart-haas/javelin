@@ -5,35 +5,30 @@ import TableColumn from './TableColumn.vue';
 import TableHeader from './TableHeader.vue';
 import resolvePath from 'object-resolve-path';
 
-const resolveColumn = (item, field) => {
-  let column = { ...field };
-  if (column.tag === 'router-link') {
-    column.to = column.to.replace(':param', item[column.param]);
-  }
-  if (column.tag === 'img') {
-    column.src = item[column.src];
-  }
-  if (column.boolQuery) {
-    column.boolQuery = eval(column.boolQuery);
-  }
-  return column;
-};
-
 const resolveRow = (item, fields, options) => {
   let row = { ...options };
   row['values'] = {};
-  fields.forEach((field) => {
-    let { sortable = true, filterable = true, hidden = false } = field;
-    if (hidden) {
-      sortable = false;
-      filterable = false;
+  fields.forEach((el) => {
+    const field = { ...el, filterable: true };
+    if (field.hidden) {
+      field.sortable = false;
+      field.filterable = false;
+    }
+    if (field.tag === 'router-link') {
+      field.to = field.to.replace(':param', item[field.param]);
+      field.filterable = false;
+    }
+    if (field.tag === 'img') {
+      field.src = item[field.src];
+      field.filterable = false;
+    }
+    if (field.boolQuery) {
+      field.boolQuery = eval(field.boolQuery);
     }
     row.values[field.name] = {
-      resolved: resolveValue(item, field),
+      value: resolveValue(item, field),
       source: resolveValue(item, field, false),
-      hidden,
-      sortable,
-      filterable,
+      ...field,
     };
   });
   if (row.active) {
@@ -75,23 +70,13 @@ const resolveValue = (item, field, resolve = true) => {
   return resolvedValue;
 };
 
-const mapColumns = (item, fields) => {
-  return fields.map((field) => {
-    const attrs = resolveColumn(item, field);
-    const value = resolveValue(item, field);
-    return { value, ...attrs };
-  });
-};
-
 const TableMixin = {
   methods: {
     mapTable(data, fields, options = {}) {
       let rows = [];
       data.forEach((item) => {
-        const columns = mapColumns(item, fields);
         const row = resolveRow(item, fields, options);
-        const merged = { ...row, columns };
-        rows.push(merged);
+        rows.push(row);
       });
       return rows;
     },
@@ -112,7 +97,7 @@ const TableMixin = {
             if (!value.filterable) {
               return 0;
             }
-            return String(value.resolved).toLowerCase().indexOf(search) !== -1;
+            return String(value.value).toLowerCase().indexOf(search) !== -1;
           }).length > 0
         );
       });

@@ -18,7 +18,7 @@ export default {
       return this.row.active ? 'font-bold' : '';
     },
     columns() {
-      return this.row.columns;
+      return this.row.values;
     },
   },
 };
