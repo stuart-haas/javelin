@@ -37,7 +37,7 @@ export default {
         },
         {
           label: 'Customer',
-          key: 'user.firstName',
+          key: 'customer',
           concat: {
             keys: ['user.firstName', 'user.lastName'],
             join: ' ',
@@ -71,7 +71,7 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.orders, this.fields);
+      return this.mapTable(this.orders, this.fields);
     },
   },
   mounted() {

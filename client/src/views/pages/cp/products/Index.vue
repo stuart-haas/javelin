@@ -49,7 +49,7 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.products, this.fields);
+      return this.mapTable(this.products, this.fields);
     },
   },
   mounted() {

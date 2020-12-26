@@ -34,7 +34,7 @@ export default {
   },
   computed: {
     data() {
-      return this.mapTableData(this.orders, this.fields);
+      return this.mapTable(this.orders, this.fields);
     },
   },
   mounted() {

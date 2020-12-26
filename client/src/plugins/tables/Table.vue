@@ -2,8 +2,8 @@
   <div>
     <input
       type="text"
-      placeholder="Filter"
-      class="p-1 text-sm block w-full border border-gray-300 rounded mb-2 bg-transparent"
+      placeholder="Search"
+      class="p-1 text-sm block w-full border border-gray-300 rounded my-2 bg-transparent"
       v-model="search"
       @input="input"
     />
@@ -24,22 +24,28 @@
       </thead>
       <tbody>
         <TableRow
-          v-for="(row, index) in filteredData"
+          v-for="(row, index) in providedData"
           :key="index"
           :row="row"
         />
       </tbody>
     </table>
+    <div v-if="!providedData.length" class="mt-4 text-sm">
+      No results for that search.
+    </div>
+    <pre v-if="debug">{{ providedData | pretty }}</pre>
   </div>
 </template>
 
 <script>
-import Fuse from 'fuse.js';
-
 export default {
   props: {
     data: Array,
     fields: Array,
+    debug: {
+      type: Boolean,
+      default: true,
+    },
   },
   data() {
     return {
@@ -51,13 +57,17 @@ export default {
     };
   },
   computed: {
-    filteredData() {
+    providedData() {
       let data = this.data;
       if (this.sortIndex > 0) {
-        data = this.sortTableData(this.data, {
+        data = this.sortTable(this.data, {
           key: this.sortKey,
           direction: this.sortDirections[this.sortIndex],
         });
+      }
+      if (this.search) {
+        const search = this.search.toLowerCase();
+        data = this.searchTable(this.data, search);
       }
       return data;
     },
@@ -73,5 +83,18 @@ export default {
       this.search = value;
     },
   },
+  filters: {
+    pretty: function (value) {
+      return JSON.stringify(value, null, 2);
+    },
+  },
 };
 </script>
+
+<style scoped>
+pre {
+  @apply p-2;
+  @apply bg-gray-100;
+  @apply text-xs;
+}
+</style>

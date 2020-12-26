@@ -22,13 +22,12 @@ const resolveColumn = (item, field) => {
 
 const resolveRow = (item, fields, rowOptions) => {
   let row = { ...rowOptions };
-  row['original'] = {};
-  row['modified'] = {};
+  row['values'] = {};
   fields.forEach((field) => {
-    row.modified[field.key] = resolveValue(item, field);
-    row.original[field.key] = field.key
-      ? resolvePath(item, field.key)
-      : field.value;
+    row.values[field.key] = {
+      resolved: resolveValue(item, field),
+      source: resolveValue(item, field, false),
+    };
   });
   if (row.active) {
     row.active = row.active.value === item[row.active.key];
@@ -36,8 +35,11 @@ const resolveRow = (item, fields, rowOptions) => {
   return row;
 };
 
-const resolveValue = (item, field) => {
+const resolveValue = (item, field, resolve = true) => {
   const resolvedValue = field.key ? resolvePath(item, field.key) : field.value;
+  if (!resolve) {
+    return resolvedValue;
+  }
   if (field.format) {
     return field.format.function(
       Date.parse(resolvedValue),
@@ -72,7 +74,7 @@ const mapColumns = (item, fields) => {
 
 const TableMixin = {
   methods: {
-    mapTableData(data, fields, rowOptions = {}) {
+    mapTable(data, fields, rowOptions = {}) {
       let rows = [];
       data.map((item) => {
         const columns = mapColumns(item, fields);
@@ -80,15 +82,25 @@ const TableMixin = {
         const merged = { ...row, columns };
         rows.push(merged);
       });
-      console.log(rows);
       return rows;
     },
-    sortTableData(rows, options) {
+    sortTable(rows, options) {
       const { key, direction } = options;
-      const operators = { asc: '<', desc: '>' };
-      const operator = operators[direction];
       return [...rows].sort((a, b) => {
-        return eval('a.original[key]' + operator + 'b.original[key] ? 1 : -1');
+        if (direction === 'asc') {
+          return a.values[key].source < b.values[key].source ? 1 : -1;
+        } else {
+          return a.values[key].source > b.values[key].source ? 1 : -1;
+        }
+      });
+    },
+    searchTable(rows, search) {
+      return [...rows].filter((item) => {
+        return (
+          Object.values(item.values).filter((value) => {
+            return String(value.resolved).toLowerCase().indexOf(search) !== -1;
+          }).length > 0
+        );
       });
     },
   },
