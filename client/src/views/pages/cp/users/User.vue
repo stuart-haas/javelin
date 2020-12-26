@@ -1,5 +1,5 @@
 <template>
-  <Content title="Edit User" class="w-1/2">
+  <Content title="Edit User">
     <template v-slot:header>
       <Dropdown v-if="!currentUser" :items="items" />
     </template>

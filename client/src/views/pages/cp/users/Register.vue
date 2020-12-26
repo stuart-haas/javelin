@@ -1,5 +1,5 @@
 <template>
-  <Content title="Register User" class="w-1/2">
+  <Content title="Register User">
     <Panel>
       <Form
         :fields="fields"

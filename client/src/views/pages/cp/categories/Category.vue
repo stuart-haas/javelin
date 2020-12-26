@@ -1,5 +1,5 @@
 <template>
-  <Content :title="id ? 'Edit Category' : 'New Category'" class="w-1/2">
+  <Content :title="id ? 'Edit Category' : 'New Category'">
     <template v-slot:header>
       <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
         Delete
