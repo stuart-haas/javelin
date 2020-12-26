@@ -7,6 +7,9 @@ import resolvePath from 'object-resolve-path';
 
 const resolveRow = (item, fields, options) => {
   let row = { ...options };
+  if (row.active) {
+    row.active = row.active.value === item[row.active.name];
+  }
   row['columns'] = {};
   fields.forEach((el) => {
     const attrs = { ...el.attrs };
@@ -37,9 +40,6 @@ const resolveRow = (item, fields, options) => {
       attrs,
     };
   });
-  if (row.active) {
-    row.active = row.active.value === item[row.active.name];
-  }
   return row;
 };
 
