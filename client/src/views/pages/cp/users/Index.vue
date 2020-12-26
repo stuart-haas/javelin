@@ -55,7 +55,7 @@ export default {
           to: '/cp/users/:param',
           param: '_id',
           boolQuery: `item['role'] === 'superadmin' && ${
-            this.$store.state.user.user.role === 'admin'
+            this.$store.state.user.user.role !== 'superadmin'
           }`,
         },
       ],
