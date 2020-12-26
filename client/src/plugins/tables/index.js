@@ -76,7 +76,7 @@ const TableMixin = {
   methods: {
     mapTable(data, fields, rowOptions = {}) {
       let rows = [];
-      data.map((item) => {
+      data.forEach((item) => {
         const columns = mapColumns(item, fields);
         const row = resolveRow(item, fields, rowOptions);
         const merged = { ...row, columns };
