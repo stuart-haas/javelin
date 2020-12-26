@@ -19,8 +19,8 @@ const resolveColumn = (item, field) => {
   return column;
 };
 
-const resolveRow = (item, fields, rowOptions) => {
-  let row = { ...rowOptions };
+const resolveRow = (item, fields, options) => {
+  let row = { ...options };
   row['values'] = {};
   fields.forEach((field) => {
     row.values[field.name] = {
@@ -75,11 +75,11 @@ const mapColumns = (item, fields) => {
 
 const TableMixin = {
   methods: {
-    mapTable(data, fields, rowOptions = {}) {
+    mapTable(data, fields, options = {}) {
       let rows = [];
       data.forEach((item) => {
         const columns = mapColumns(item, fields);
-        const row = resolveRow(item, fields, rowOptions);
+        const row = resolveRow(item, fields, options);
         const merged = { ...row, columns };
         rows.push(merged);
       });
