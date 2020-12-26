@@ -27,7 +27,7 @@
     <div v-if="!providedData.length" class="mt-4 text-sm">
       No results for that search.
     </div>
-    <div class="text-center">
+    <div class="text-right">
       <Pagination
         v-if="data.length > perPage"
         :data="data"

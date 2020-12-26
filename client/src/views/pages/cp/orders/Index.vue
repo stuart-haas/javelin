@@ -9,7 +9,7 @@
       <Table
         :data="data"
         :fields="fields"
-        :options="{ orderBy: 'createdAt', sort: 'asc', perPage: 3 }"
+        :options="{ orderBy: 'createdAt', sort: 'asc' }"
       />
     </Panel>
   </Content>
