@@ -59,7 +59,7 @@ export default {
           label: 'Category',
           name: 'category',
           value: {
-            key: 'category._id',
+            name: 'category._id',
           },
           items: [],
         },

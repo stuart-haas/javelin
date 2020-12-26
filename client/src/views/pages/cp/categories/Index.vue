@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {
@@ -21,7 +19,7 @@ export default {
       fields: [
         {
           label: 'Name',
-          key: 'name',
+          name: 'name',
           tag: 'router-link',
           class: 'text-secondary-500',
           to: '/cp/categories/:param',
@@ -29,7 +27,7 @@ export default {
         },
         {
           label: 'Last Updated',
-          key: 'updatedAt',
+          name: 'updatedAt',
           filter: 'date',
         },
       ],

@@ -12,8 +12,6 @@
 </template>
 
 <script>
-import { format } from 'date-fns';
-
 export default {
   data() {
     return {
@@ -21,7 +19,7 @@ export default {
       fields: [
         {
           label: 'Name',
-          key: 'name',
+          name: 'name',
           tag: 'router-link',
           class: 'text-secondary-500',
           to: '/cp/products/:param',
@@ -29,19 +27,19 @@ export default {
         },
         {
           label: 'Category',
-          key: 'category.name',
+          name: 'category.name',
         },
         {
           label: 'Price',
-          key: 'price',
+          name: 'price',
         },
         {
           label: 'Inventory',
-          key: 'inventory',
+          name: 'inventory',
         },
         {
           label: 'Last Updated',
-          key: 'updatedAt',
+          name: 'updatedAt',
           filter: 'date',
         },
       ],

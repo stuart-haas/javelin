@@ -15,12 +15,12 @@ export default {
       fields: [
         {
           label: 'Date',
-          key: 'createdAt',
+          name: 'createdAt',
           filter: 'dateTime',
         },
         {
           label: 'Order Id',
-          key: 'orderId',
+          name: 'orderId',
         },
         {
           value: 'View',

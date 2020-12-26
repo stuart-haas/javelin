@@ -19,12 +19,12 @@ export default {
       fields: [
         {
           label: 'Id',
-          key: '_id',
+          name: '_id',
           hidden: true,
         },
         {
           label: 'Avatar',
-          key: 'avatar',
+          name: 'avatar',
           tag: 'img',
           src: 'avatar',
           class: 'w-8 h-8 rounded-full',
@@ -32,32 +32,31 @@ export default {
         },
         {
           label: 'Username',
-          key: 'username',
+          name: 'username',
         },
         {
           label: 'Email',
-          key: 'email',
+          name: 'email',
         },
         {
           label: 'Role',
-          key: 'role',
+          name: 'role',
         },
         {
           label: 'Active Since',
-          key: 'createdAt',
+          name: 'createdAt',
           filter: 'date',
         },
         {
           value: 'Edit',
+          name: 'edit',
           tag: 'router-link',
           class: 'text-secondary-500',
           to: '/cp/users/:param',
           param: '_id',
-          hideOn: {
-            key: 'role',
-            value: 'superadmin',
-            and: this.$store.state.user.user.role === 'admin',
-          },
+          boolQuery: `item['role'] === 'superadmin' && ${
+            this.$store.state.user.user.role === 'admin'
+          }`,
         },
       ],
     };
@@ -66,7 +65,7 @@ export default {
     data() {
       return this.mapTable(this.users, this.fields, {
         active: {
-          key: '_id',
+          name: '_id',
           value: this.$store.state.user.user && this.$store.state.user.user._id,
         },
       });

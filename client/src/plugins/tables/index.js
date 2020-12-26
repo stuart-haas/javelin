@@ -13,9 +13,8 @@ const resolveColumn = (item, field) => {
   if (column.tag === 'img') {
     column.src = item[column.src];
   }
-  if (column.hideOn) {
-    column.hideOn =
-      column.hideOn.value === item[column.hideOn.key] && column.hideOn.and;
+  if (column.boolQuery) {
+    column.boolQuery = eval(column.boolQuery);
   }
   return column;
 };
@@ -24,19 +23,21 @@ const resolveRow = (item, fields, rowOptions) => {
   let row = { ...rowOptions };
   row['values'] = {};
   fields.forEach((field) => {
-    row.values[field.key] = {
+    row.values[field.name] = {
       resolved: resolveValue(item, field),
       source: resolveValue(item, field, false),
     };
   });
   if (row.active) {
-    row.active = row.active.value === item[row.active.key];
+    row.active = row.active.value === item[row.active.name];
   }
   return row;
 };
 
 const resolveValue = (item, field, resolve = true) => {
-  const resolvedValue = field.key ? resolvePath(item, field.key) : field.value;
+  const resolvedValue = field.name
+    ? resolvePath(item, field.name)
+    : field.value;
   if (!resolve) {
     return resolvedValue;
   }

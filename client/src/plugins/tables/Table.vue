@@ -14,7 +14,7 @@
             v-for="(field, index) in fields"
             :key="index"
             :field="field"
-            :sortKey="sortKey"
+            :sortName="sortName"
             :sortIndex="sortIndex"
             :sortDirections="sortDirections"
             :sortIcons="sortIcons"
@@ -50,7 +50,7 @@ export default {
   data() {
     return {
       search: '',
-      sortKey: '',
+      sortName: '',
       sortIndex: 0,
       sortDirections: ['unsorted', 'asc', 'desc'],
       sortIcons: ['arrow-down', 'arrow-down', 'arrow-up'],
@@ -61,7 +61,7 @@ export default {
       let data = this.data;
       if (this.sortIndex > 0) {
         data = this.sortTable(this.data, {
-          key: this.sortKey,
+          key: this.sortName,
           direction: this.sortDirections[this.sortIndex],
         });
       }
@@ -74,8 +74,8 @@ export default {
   },
   methods: {
     sort(field) {
-      if (this.sortKey !== field.key) this.sortIndex = 0;
-      this.sortKey = field.key;
+      if (this.sortName !== field.name) this.sortIndex = 0;
+      this.sortName = field.name;
       this.sortIndex = this.sortIndex === 0 ? 1 : this.sortIndex == 1 ? 2 : 0;
     },
     input(e) {

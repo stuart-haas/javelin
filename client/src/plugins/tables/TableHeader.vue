@@ -13,7 +13,7 @@
 export default {
   props: {
     field: Object,
-    sortKey: String,
+    sortName: String,
     sortIndex: Number,
     sortDirections: Array,
     sortIcons: Array,
@@ -32,7 +32,7 @@ export default {
       return this.field.sortable;
     },
     activeClass() {
-      return this.sortIndex > 0 && this.sortKey === this.field.key
+      return this.sortIndex > 0 && this.sortName === this.field.name
         ? 'active'
         : '';
     },

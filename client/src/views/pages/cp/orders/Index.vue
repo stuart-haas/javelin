@@ -20,7 +20,7 @@ export default {
       fields: [
         {
           label: 'Date',
-          key: 'createdAt',
+          name: 'createdAt',
           concat: {
             keys: ['createdAt', 'createdAt'],
             filters: ['date', 'time'],
@@ -29,7 +29,7 @@ export default {
         },
         {
           label: 'Order Id',
-          key: 'orderId',
+          name: 'orderId',
           tag: 'router-link',
           class: 'text-secondary-500',
           param: '_id',
@@ -37,7 +37,7 @@ export default {
         },
         {
           label: 'Customer',
-          key: 'customer',
+          name: 'customer',
           concat: {
             keys: ['user.firstName', 'user.lastName'],
             join: ' ',
@@ -45,11 +45,11 @@ export default {
         },
         {
           label: 'Status',
-          key: 'status',
+          name: 'status',
         },
         {
           label: 'Total',
-          key: 'total',
+          name: 'total',
           filter: 'currency',
         },
       ],

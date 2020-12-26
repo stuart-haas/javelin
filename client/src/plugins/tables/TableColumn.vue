@@ -19,7 +19,7 @@ export default {
       return !this.column.hidden;
     },
     showField() {
-      return !this.column.hideOn;
+      return !this.column.boolQuery;
     },
     attrs() {
       /* eslint-disable */
