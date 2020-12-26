@@ -11,6 +11,7 @@ import './plugins/icons';
 import './plugins/layouts';
 import './plugins/api';
 import './plugins/filters';
+import './plugins/pagination';
 import 'fontsource-libre-baskerville';
 import 'fontsource-nunito';
 import 'fontsource-nunito/600.css';

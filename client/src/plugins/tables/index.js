@@ -88,6 +88,11 @@ const TableMixin = {
       });
       return rows;
     },
+    paginateTable(rows, options) {
+      const { currentPage, perPage } = options;
+      const offset = (currentPage - 1) * perPage;
+      return [...rows].slice(offset).slice(0, perPage);
+    },
     sortTable(rows, options) {
       const { orderBy, sort } = options;
       return [...rows].sort((a, b) => {

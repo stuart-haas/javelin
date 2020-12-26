@@ -27,6 +27,16 @@
     <div v-if="!providedData.length" class="mt-4 text-sm">
       No results for that search.
     </div>
+    <div class="text-center">
+      <Pagination
+        v-if="data.length > perPage"
+        :data="data"
+        :currentPage="currentPage"
+        :perPage="perPage"
+        @paginate="paginate"
+        class="mt-4"
+      />
+    </div>
     <pre v-if="debug">{{ providedData | pretty }}</pre>
   </div>
 </template>
@@ -36,15 +46,7 @@ export default {
   props: {
     data: Array,
     fields: Array,
-    options: {
-      type: Object,
-      default() {
-        return {
-          orderBy: '',
-          sort: 'unsorted',
-        };
-      },
-    },
+    options: Object,
     debug: {
       type: Boolean,
       default: true,
@@ -53,35 +55,48 @@ export default {
   data() {
     return {
       search: '',
-      orderBy: '',
       orderByIndex: 0,
+      orderBy: '',
       sortOptions: ['unsorted', 'asc', 'desc'],
       sortIcons: ['arrow-down', 'arrow-down', 'arrow-up'],
+      currentPage: 1,
+      perPage: 10,
     };
   },
   computed: {
     providedData() {
       let data = this.data;
+      data = this.paginateTable(data, {
+        currentPage: this.currentPage,
+        perPage: this.perPage,
+      });
       if (this.orderByIndex > 0) {
-        data = this.sortTable(this.data, {
+        data = this.sortTable(data, {
           orderBy: this.orderBy,
           sort: this.sortOptions[this.orderByIndex],
         });
       }
       if (this.search) {
         const search = this.search.toLowerCase();
-        data = this.searchTable(this.data, search);
+        data = this.searchTable(data, search);
       }
       return data;
     },
   },
-  mounted() {
-    this.orderBy = this.options.orderBy;
-    this.orderByIndex = this.sortOptions.findIndex(
-      (option) => option === this.options.sort
-    );
+  created() {
+    if (this.options) {
+      this.orderBy = this.options.orderBy || '';
+      this.currentPage = this.options.currentPage || 1;
+      this.perPage = this.options.perPage || 10;
+      this.orderByIndex = this.sortOptions.findIndex(
+        (option) => option === this.options.sort || 'unsorted'
+      );
+    }
   },
   methods: {
+    paginate(index) {
+      this.currentPage = index + 1;
+    },
     sort(field) {
       if (this.orderBy !== field.name) this.orderByIndex = 0;
       this.orderBy = field.name;
