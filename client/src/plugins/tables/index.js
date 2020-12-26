@@ -9,6 +9,7 @@ const resolveRow = (item, fields, options) => {
   let row = { ...options };
   row['columns'] = {};
   fields.forEach((el) => {
+    const attrs = { ...el.attrs };
     const field = {
       ...el,
       sortable: typeof el.sortable !== 'undefined' ? el.sortable : true,
@@ -19,12 +20,12 @@ const resolveRow = (item, fields, options) => {
       field.filterable = false;
     }
     if (field.tag === 'img') {
-      field.src = item[field.src];
+      attrs.src = item[field.attrs.src];
       field.sortable = false;
       field.filterable = false;
     }
     if (field.tag === 'router-link') {
-      field.to = field.to.replace(':param', item[field.param]);
+      attrs.to = field.attrs.to.replace(':param', item[field.param]);
     }
     if (field.boolQuery) {
       field.boolQuery = eval(field.boolQuery);
@@ -33,6 +34,7 @@ const resolveRow = (item, fields, options) => {
       value: resolveValue(item, field),
       source: resolveValue(item, field, false),
       ...field,
+      attrs,
     };
   });
   if (row.active) {
@@ -87,10 +89,14 @@ const TableMixin = {
     sortTable(rows, options) {
       const { orderBy, sort } = options;
       return [...rows].sort((a, b) => {
+        const aCol = a.columns[orderBy];
+        const bCol = b.columns[orderBy];
+        const aVal = aCol.type !== 'number' ? aCol.value : aCol.source;
+        const bVal = bCol.type !== 'number' ? bCol.value : bCol.source;
         if (sort === 'asc') {
-          return a.columns[orderBy].value < b.columns[orderBy].value ? 1 : -1;
+          return aVal < bVal ? 1 : -1;
         } else {
-          return a.columns[orderBy].value > b.columns[orderBy].value ? 1 : -1;
+          return aVal > bVal ? 1 : -1;
         }
       });
     },

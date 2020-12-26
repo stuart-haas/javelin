@@ -21,8 +21,10 @@ export default {
           label: 'Avatar',
           name: 'avatar',
           tag: 'img',
-          src: 'avatar',
-          class: 'w-8 h-8 rounded-full',
+          attrs: {
+            src: 'avatar',
+            class: 'w-8 h-8 rounded-full',
+          },
         },
         {
           label: 'Username',
@@ -47,12 +49,14 @@ export default {
           value: 'Edit',
           name: 'edit',
           tag: 'router-link',
-          class: 'text-secondary-500',
-          to: '/cp/users/:param',
           param: '_id',
           boolQuery: `item['role'] === 'superadmin' && ${
             this.$store.state.user.user.role !== 'superadmin'
           }`,
+          attrs: {
+            class: 'text-secondary-500',
+            to: '/cp/users/:param',
+          },
         },
       ],
     };

@@ -34,9 +34,11 @@ export default {
           label: 'Order Id',
           name: 'orderId',
           tag: 'router-link',
-          class: 'text-secondary-500',
           param: '_id',
-          to: '/cp/orders/:param',
+          attrs: {
+            class: 'text-secondary-500',
+            to: '/cp/orders/:param',
+          },
         },
         {
           label: 'Customer',
@@ -53,6 +55,7 @@ export default {
         {
           label: 'Total',
           name: 'total',
+          type: 'number',
           format: {
             filter: 'currency',
           },

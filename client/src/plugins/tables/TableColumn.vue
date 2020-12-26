@@ -23,7 +23,7 @@ export default {
     },
     attrs() {
       /* eslint-disable */
-      const { tag, ...attrs } = this.column;
+      const { tag, ...attrs } = this.column.attrs;
 
       return attrs;
     },
