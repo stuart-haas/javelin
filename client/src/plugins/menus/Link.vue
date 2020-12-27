@@ -40,9 +40,7 @@ export default {
       return attrs;
     },
     listeners() {
-      const { ...listeners } = this.item;
-
-      return listeners;
+      return this.item;
     },
   },
 };

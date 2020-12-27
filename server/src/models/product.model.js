@@ -42,4 +42,14 @@ Product.pre('save', function () {
   return this;
 });
 
+Product.methods.increaseInventory = function (quantity) {
+  this.inventory += quantity;
+  this.save();
+};
+
+Product.methods.decreaseInventory = function (quantity) {
+  this.inventory -= quantity;
+  this.save();
+};
+
 module.exports = model('Product', Product, 'product');

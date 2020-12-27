@@ -20,6 +20,9 @@ import {
   faArrowUp,
   faArrowRight,
   faArrowLeft,
+  faArchive,
+  faBan,
+  faUnlock,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -42,7 +45,10 @@ library.add(
   faMask,
   faArrowDown,
   faArrowRight,
-  faArrowLeft
+  faArrowLeft,
+  faArchive,
+  faBan,
+  faUnlock
 );
 
 Vue.component('Icon', FontAwesomeIcon);

@@ -2,14 +2,15 @@
   <Content>
     <template v-slot:header>
       <div>
-        <p class="text-2xl text-gray-700 font-semibold">{{ order.orderId }}</p>
+        <p class="text-2xl text-gray-700 font-semibold">
+          {{ order.orderId }}
+        </p>
+        <p>{{ order.status }}</p>
         <p v-if="order.createdAt" class="text-gray-700 mt-2">
           {{ order.createdAt | date }} at {{ order.createdAt | time }}
         </p>
       </div>
-      <Button v-if="id" class="mt-3" theme="danger" @click="deleteThis">
-        Delete
-      </Button>
+      <Dropdown :items="menuItems" />
     </template>
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-8 space-y-6">
@@ -87,8 +88,31 @@
         <Panel>
           <div class="flex justify-between">
             <div class="font-bold text-xl">Note</div>
-            <div class="text-secondary-500 font-bold">Edit</div>
+            <div class="space-x-3">
+              <button
+                class="text-secondary-500 font-bold"
+                @click="editNote = !editNote"
+              >
+                {{ editNote ? 'Cancel' : 'Edit' }}
+              </button>
+              <button
+                v-if="editNote"
+                class="text-secondary-500 font-bold"
+                @click="saveNote"
+              >
+                Save
+              </button>
+            </div>
           </div>
+          <div v-if="!editNote" class="mt-2 p-1 border border-transparent">
+            {{ order.note }}
+          </div>
+          <textarea
+            v-if="editNote"
+            v-model="order.note"
+            @input="noteInput"
+            class="border border-gray-300 resize-none w-full mt-2 p-1"
+          />
         </Panel>
       </div>
     </div>
@@ -101,9 +125,34 @@ export default {
     return {
       order: {},
       user: {},
+      editNote: false,
     };
   },
   computed: {
+    menuItems() {
+      return [
+        {
+          label: 'Archive',
+          icon: 'archive',
+          boolQuery: this.order.status === 'cancelled',
+          click: this.archiveThis,
+        },
+        {
+          label: 'Cancel',
+          class: 'bg-yellow-500 text-white hover:bg-yellow-600',
+          icon: 'ban',
+          click: this.cancelThis,
+          boolQuery: this.order.status !== 'cancelled',
+        },
+        {
+          label: 'Delete',
+          icon: 'trash-alt',
+          class: 'bg-danger-500 text-white hover:bg-danger-600',
+          click: this.deleteThis,
+          boolQuery: this.order.status === 'cancelled',
+        },
+      ];
+    },
     id() {
       return this.$route.params.id;
     },
@@ -141,10 +190,57 @@ export default {
         this.$router.push('/cp/orders');
       }
     },
+    async cancelThis() {
+      if (!window.confirm('Are you sure?')) return;
+      const param = this.$route.params.id;
+      const formData = { status: 'cancelled' };
+      const { order, message } = await this.$store.dispatch('put', {
+        api: 'order/cp',
+        param,
+        formData,
+      });
+      if (order) {
+        this.order = order;
+        this.$toast({ type: 'success', message, duration: 2000 });
+        this.editNote = false;
+      }
+    },
+    async archiveThis() {
+      if (!window.confirm('Are you sure?')) return;
+      const param = this.$route.params.id;
+      const formData = { archived: true };
+      const { order, message } = await this.$store.dispatch('put', {
+        api: 'order/cp',
+        param,
+        formData,
+      });
+      if (order) {
+        this.order = order;
+        this.$toast({ type: 'success', message, duration: 2000 });
+        this.editNote = false;
+      }
+    },
     success(response) {
       const { message } = response;
       this.$toast({ type: 'success', message, duration: 2000 });
       this.$router.push('/cp/orders');
+    },
+    noteInput(e) {
+      const { value } = e.target;
+      this.order.note = value;
+    },
+    async saveNote() {
+      const param = this.$route.params.id;
+      const formData = { note: this.order.note };
+      const { order, message } = await this.$store.dispatch('put', {
+        api: 'order/cp',
+        param,
+        formData,
+      });
+      if (order) {
+        this.$toast({ type: 'success', message, duration: 2000 });
+        this.editNote = false;
+      }
     },
   },
 };

@@ -1,6 +1,5 @@
 const { Schema, model } = require('mongoose');
 const orderid = require('order-id')(process.env.ORDER_ID_SECRET);
-const Product = require('../models/product.model');
 
 const fields = {
   orderId: {
@@ -43,10 +42,11 @@ const fields = {
   },
   status: {
     type: String,
-    enum: ['authorized', 'shipped', 'completed', 'canceled', 'refunded'],
+    enum: ['authorized', 'shipped', 'completed', 'cancelled', 'refunded'],
     default: 'authorized',
   },
   note: String,
+  archived: Boolean,
 };
 
 const Order = new Schema(fields, {
@@ -61,20 +61,33 @@ Order.pre('save', async function () {
     const id = orderid.generate();
     this.orderId = id;
   }
+  return this;
+});
 
-  const order = await this.populate({
-    path: 'items',
-    populate: {
-      path: 'product',
-      model: 'Product',
-    },
-  }).execPopulate();
-
-  const items = order.items.map(async (item) => {
+Order.methods.decreaseInventory = async function () {
+  const order = await this.populateItems();
+  order.items = order.items.map((item) => {
     const { product, quantity } = item;
-    let updateProduct = await Product.findById(product._id);
-    updateProduct.inventory -= quantity;
-    await updateProduct.save();
+    product.decreaseInventory(quantity);
+    return item;
+  });
+  return order;
+};
+
+Order.methods.increaseInventory = async function () {
+  const order = await this.populateItems();
+  order.items = order.items.map((item) => {
+    const { product, quantity } = item;
+    product.increaseInventory(quantity);
+    return item;
+  });
+  return order;
+};
+
+Order.methods.calculateTotals = async function () {
+  const order = await this.populateItems();
+  order.items = order.items.map((item) => {
+    const { product, quantity } = item;
     const total = product.price * quantity;
     item.price = product.price;
     item.total = total;
@@ -82,9 +95,17 @@ Order.pre('save', async function () {
     this.total = this.subtotal + this.shipping;
     return item;
   });
-  this.items = items;
+  return order;
+};
 
-  return this;
-});
+Order.methods.populateItems = async function () {
+  return await this.populate({
+    path: 'items',
+    populate: {
+      path: 'product',
+      model: 'Product',
+    },
+  }).execPopulate();
+};
 
 module.exports = model('Order', Order, 'order');
