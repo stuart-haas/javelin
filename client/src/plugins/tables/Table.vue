@@ -1,6 +1,12 @@
 <template>
   <div>
-    <input type="text" placeholder="Search" v-model="search" @input="input" />
+    <input
+      :disabled="!data.length"
+      type="text"
+      placeholder="Search"
+      v-model="search"
+      @input="input"
+    />
     <div class="text-right">
       <Pagination
         v-if="filteredData.length > perPage"
@@ -33,8 +39,8 @@
         />
       </tbody>
     </table>
-    <div v-if="!filteredData.length" class="mt-4 text-sm">
-      No results for that search.
+    <div v-if="!filteredData.length" class="mt-4 text-sm divide-x-4font-bold">
+      Sorry, no results could be found.
     </div>
     <div class="mt-4 text-sm text-gray-500">
       <div class="space-y-1">
