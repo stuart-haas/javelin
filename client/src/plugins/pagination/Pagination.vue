@@ -1,30 +1,28 @@
 <template>
   <div v-bind="$attrs" v-on="$listeners">
-    <div
-      v-if="arrows"
+    <button
+      :disabled="currentPage === 1"
       class="button bg-gray-200 text-gray-600 hover:bg-gray-300 mr-2"
+      @click="goToPrevious"
     >
-      <span class="inline-block align-middle"
-        ><Icon icon="arrow-left" class="inline-block align-middle"
-      /></span>
-    </div>
-    <div
+      <Icon icon="arrow-left" class="inline-block align-middle" />
+    </button>
+    <button
       v-for="(page, index) in pages"
       :key="index"
       class="button"
       :class="[getActive(index)]"
-      @click="handlePaginate(index)"
+      @click="goToSelected(index)"
     >
       <span class="inline-block align-middle">{{ page }}</span>
-    </div>
-    <div
-      v-if="arrows"
+    </button>
+    <button
+      :disabled="currentPage === pages"
       class="button bg-gray-200 text-gray-600 hover:bg-gray-300 ml-2"
+      @click="goToNext"
     >
-      <span class="inline-block align-middle"
-        ><Icon icon="arrow-right" class="inline-block align-middle"
-      /></span>
-    </div>
+      <Icon icon="arrow-right" class="inline-block align-middle" />
+    </button>
   </div>
 </template>
 
@@ -34,7 +32,7 @@ export default {
     data: Array,
     arrows: {
       type: Boolean,
-      default: false,
+      default: true,
     },
     currentPage: {
       type: Number,
@@ -57,7 +55,18 @@ export default {
         ? 'bg-secondary-500 text-white hover:bg-secondary-600'
         : 'bg-gray-200 text-gray-600 hover:bg-gray-300';
     },
-    handlePaginate(index) {
+    goToPrevious() {
+      let index = this.currentPage - 1;
+      this.paginate(index);
+    },
+    goToNext() {
+      let index = this.currentPage + 1;
+      this.paginate(index);
+    },
+    goToSelected(index) {
+      this.paginate(index + 1);
+    },
+    paginate(index) {
       this.$emit('paginate', index);
     },
   },
@@ -66,6 +75,6 @@ export default {
 
 <style lang="postcss" scoped>
 .button {
-  @apply text-sm inline-block px-2.5 py-1 cursor-pointer transition duration-300;
+  @apply text-xs inline-block px-2 py-1 transition duration-300;
 }
 </style>

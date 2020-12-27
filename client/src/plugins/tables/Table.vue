@@ -1,6 +1,15 @@
 <template>
   <div>
     <input type="text" placeholder="Search" v-model="search" @input="input" />
+    <div class="text-right">
+      <Pagination
+        v-if="filteredData.length > perPage"
+        :data="filteredData"
+        :currentPage="currentPage"
+        :perPage="perPage"
+        @paginate="paginate"
+      />
+    </div>
     <table>
       <thead>
         <tr>
@@ -27,23 +36,17 @@
     <div v-if="!filteredData.length" class="mt-4 text-sm">
       No results for that search.
     </div>
-    <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
-      <div class="space-y-2">
+    <div class="mt-4 text-sm text-gray-500">
+      <div class="space-y-1">
         <div>Total Results: {{ data.length }}</div>
         <div>Filtered Results: {{ filteredData.length }}</div>
         <div>Paginated Results: {{ paginatedData.length }}</div>
       </div>
-      <div>
-        <Pagination
-          v-if="filteredData.length > perPage"
-          :data="filteredData"
-          :currentPage="currentPage"
-          :perPage="perPage"
-          @paginate="paginate"
-        />
-      </div>
     </div>
-    <pre v-if="debug">{{ filteredData | pretty }}</pre>
+    <pre v-if="debug">
+      {{ filteredData | pretty }}
+      </pre
+    >
   </div>
 </template>
 
@@ -106,7 +109,7 @@ export default {
   },
   methods: {
     paginate(index) {
-      this.currentPage = index + 1;
+      this.currentPage = index;
     },
     sort(field) {
       if (this.orderBy !== field.name) this.orderByIndex = 0;
@@ -137,7 +140,8 @@ table thead tr {
 input {
   @apply p-1 text-sm block w-full border border-gray-300 rounded my-2 bg-transparent;
 }
-pre {
+pre,
+code {
   @apply mt-4;
   @apply p-2;
   @apply bg-gray-100;
