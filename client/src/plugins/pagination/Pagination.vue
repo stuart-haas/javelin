@@ -12,13 +12,13 @@
       v-for="(page, index) in pages"
       :key="index"
       class="button"
-      :class="[active(index)]"
-      @click="paginate(index)"
+      :class="[getActive(index)]"
+      @click="handlePaginate(index)"
     >
       <span class="inline-block align-middle">{{ page }}</span>
     </div>
     <div
-      v-if="arrow"
+      v-if="arrows"
       class="button bg-gray-200 text-gray-600 hover:bg-gray-300 ml-2"
     >
       <span class="inline-block align-middle"
@@ -52,12 +52,12 @@ export default {
     },
   },
   methods: {
-    active(index) {
+    getActive(index) {
       return this.currentPage === index + 1
         ? 'bg-secondary-500 text-white hover:bg-secondary-600'
         : 'bg-gray-200 text-gray-600 hover:bg-gray-300';
     },
-    paginate(index) {
+    handlePaginate(index) {
       this.$emit('paginate', index);
     },
   },

@@ -9,7 +9,7 @@
       <Table
         :data="data"
         :fields="fields"
-        :options="{ orderBy: 'createdAt', sort: 'asc' }"
+        :options="{ orderBy: 'createdAt', sort: 'asc', perPage: 5 }"
       />
     </Panel>
   </Content>
@@ -25,7 +25,7 @@ export default {
           label: 'Date',
           name: 'createdAt',
           concat: {
-            keys: ['createdAt', 'createdAt'],
+            names: ['createdAt', 'createdAt'],
             filters: ['date', 'time'],
             join: ' at ',
           },
@@ -44,7 +44,7 @@ export default {
           label: 'Customer',
           name: 'customer',
           concat: {
-            keys: ['user.firstName', 'user.lastName'],
+            names: ['user.firstName', 'user.lastName'],
             join: ' ',
           },
         },

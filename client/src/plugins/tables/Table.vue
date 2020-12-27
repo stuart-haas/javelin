@@ -18,26 +18,32 @@
       </thead>
       <tbody>
         <TableRow
-          v-for="(row, index) in providedData"
+          v-for="(row, index) in paginatedData"
           :key="index"
           :row="row"
         />
       </tbody>
     </table>
-    <div v-if="!providedData.length" class="mt-4 text-sm">
+    <div v-if="!filteredData.length" class="mt-4 text-sm">
       No results for that search.
     </div>
-    <div class="text-right">
-      <Pagination
-        v-if="data.length > perPage"
-        :data="data"
-        :currentPage="currentPage"
-        :perPage="perPage"
-        @paginate="paginate"
-        class="mt-4"
-      />
+    <div class="flex items-center justify-between mt-4 text-sm text-gray-500">
+      <div class="space-y-2">
+        <div>Total Results: {{ data.length }}</div>
+        <div>Filtered Results: {{ filteredData.length }}</div>
+        <div>Paginated Results: {{ paginatedData.length }}</div>
+      </div>
+      <div>
+        <Pagination
+          v-if="filteredData.length > perPage"
+          :data="filteredData"
+          :currentPage="currentPage"
+          :perPage="perPage"
+          @paginate="paginate"
+        />
+      </div>
     </div>
-    <pre v-if="debug">{{ providedData | pretty }}</pre>
+    <pre v-if="debug">{{ filteredData | pretty }}</pre>
   </div>
 </template>
 
@@ -64,23 +70,28 @@ export default {
     };
   },
   computed: {
-    providedData() {
-      let data = this.data;
-      data = this.paginateTable(data, {
-        currentPage: this.currentPage,
-        perPage: this.perPage,
-      });
+    sortedData() {
       if (this.orderByIndex > 0) {
-        data = this.sortTable(data, {
+        return this.sortTable(this.data, {
           orderBy: this.orderBy,
           sort: this.sortOptions[this.orderByIndex],
         });
       }
+      return this.data;
+    },
+    filteredData() {
       if (this.search) {
         const search = this.search.toLowerCase();
-        data = this.searchTable(data, search);
+        return this.searchTable(this.sortedData, search);
       }
-      return data;
+      return this.sortedData;
+    },
+    paginatedData() {
+      if (this.filteredData.length <= this.perPage) return this.filteredData;
+      return this.paginateTable(this.filteredData, {
+        currentPage: this.currentPage,
+        perPage: this.perPage,
+      });
     },
   },
   mounted() {

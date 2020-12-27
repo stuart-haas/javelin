@@ -64,7 +64,7 @@ const resolveValue = (item, field, resolve = true) => {
     }
   }
   if (field.concat) {
-    return field.concat.keys
+    return field.concat.names
       .map((key, index) => {
         if (field.concat.filters) {
           return Vue.filter(field.concat.filters[index])(
