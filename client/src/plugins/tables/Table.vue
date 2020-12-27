@@ -58,7 +58,7 @@ export default {
     options: Object,
     debug: {
       type: Boolean,
-      default: true,
+      default: false,
     },
   },
   data() {

@@ -6,7 +6,11 @@
       >
     </template>
     <Panel>
-      <Table :data="data" :fields="fields" />
+      <Table
+        :data="data"
+        :fields="fields"
+        :options="{ orderBy: 'username', sort: 'desc' }"
+      />
     </Panel>
   </Content>
 </template>
