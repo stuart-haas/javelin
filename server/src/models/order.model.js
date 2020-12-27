@@ -1,5 +1,6 @@
 const { Schema, model } = require('mongoose');
 const orderid = require('order-id')(process.env.ORDER_ID_SECRET);
+const Product = require('../models/product.model');
 
 const fields = {
   orderId: {
@@ -69,8 +70,11 @@ Order.pre('save', async function () {
     },
   }).execPopulate();
 
-  const items = order.items.map((item) => {
+  const items = order.items.map(async (item) => {
     const { product, quantity } = item;
+    let updateProduct = await Product.findById(product._id);
+    updateProduct.inventory -= quantity;
+    await updateProduct.save();
     const total = product.price * quantity;
     item.price = product.price;
     item.total = total;
