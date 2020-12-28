@@ -4,9 +4,9 @@
     :is="tag"
     v-bind="attrs"
     v-on="listeners"
-    class="flex p-2 hover:bg-gray-300 transition duration-300 cursor-pointer items-center justify-between"
+    class="flex px-2 py-2 bg-white transition duration-300 cursor-pointer items-center justify-between hover:bg-gray-100"
   >
-    <Icon v-if="item.icon" :icon="item.icon" class="mr-6" /><span>{{
+    <Icon v-if="item.icon" :icon="item.icon" class="mr-10" /><span>{{
       item.label
     }}</span>
   </component>

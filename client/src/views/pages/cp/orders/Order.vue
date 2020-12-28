@@ -10,7 +10,7 @@
           {{ order.createdAt | date }} at {{ order.createdAt | time }}
         </p>
       </div>
-      <Dropdown :items="menuItems" />
+      <Dropdown :items="menuItems" title="More Actions" />
     </template>
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-8 space-y-6">
@@ -132,15 +132,17 @@ export default {
     menuItems() {
       return [
         {
+          label: 'Duplicate',
+          icon: 'copy',
+        },
+        {
           label: 'Archive',
           icon: 'archive',
-          boolQuery: this.order.status === 'cancelled',
           click: this.archiveThis,
         },
         {
           label: 'Cancel',
-          class: 'bg-yellow-500 text-white hover:bg-yellow-600',
-          icon: 'ban',
+          icon: 'times',
           click: this.cancelThis,
           boolQuery: this.order.status !== 'cancelled',
         },
@@ -200,7 +202,7 @@ export default {
         formData,
       });
       if (order) {
-        this.order = order;
+        this.fetch();
         this.$toast({ type: 'success', message, duration: 2000 });
         this.editNote = false;
       }
@@ -215,7 +217,7 @@ export default {
         formData,
       });
       if (order) {
-        this.order = order;
+        this.fetch();
         this.$toast({ type: 'success', message, duration: 2000 });
         this.editNote = false;
       }

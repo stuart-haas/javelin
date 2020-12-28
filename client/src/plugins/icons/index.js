@@ -21,8 +21,8 @@ import {
   faArrowRight,
   faArrowLeft,
   faArchive,
-  faBan,
   faUnlock,
+  faCopy,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -47,8 +47,8 @@ library.add(
   faArrowRight,
   faArrowLeft,
   faArchive,
-  faBan,
-  faUnlock
+  faUnlock,
+  faCopy
 );
 
 Vue.component('Icon', FontAwesomeIcon);

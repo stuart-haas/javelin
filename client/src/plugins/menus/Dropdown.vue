@@ -7,14 +7,14 @@
       <span>{{ title }}</span
       ><Icon
         icon="angle-down"
-        class="ml-6 text-lg transform duration-300 transition-all"
+        class="ml-2 text-lg transform duration-300 transition-all"
         :class="open ? 'rotate-180' : ''"
       />
     </div>
     <transition name="fade">
       <div
         v-if="open"
-        class="absolute top-full mt-1 whitespace-nowrap text-sm z-10 right-0"
+        class="absolute top-full mt-1 whitespace-nowrap text-sm z-10 right-0 border border-gray-300"
       >
         <div class="bg-gray-200 rounded shadow text-gray-600 overflow-hidden">
           <DropdownItem
