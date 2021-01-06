@@ -1,26 +1,30 @@
 <template>
-  <div v-click-outside="close" class="relative">
+  <div v-click-outside="handleClose" class="dropdown relative inline-block">
     <div
-      class="w-full flex items-center text-gray-600 cursor-pointer p-2 bg-gray-200 rounded shadow text-sm transition duration-300 hover:bg-gray-300"
+      class="border border-gray-300 w-full flex items-center text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300"
+      :class="buttonClass"
       @click="open = !open"
     >
       <span>{{ title }}</span
       ><Icon
         icon="angle-down"
-        class="ml-2 text-lg transform duration-300 transition-all"
+        class="ml-4 text-lg transform duration-300 transition-all"
         :class="open ? 'rotate-180' : ''"
       />
     </div>
     <transition name="fade">
       <div
         v-if="open"
-        class="absolute top-full mt-1 whitespace-nowrap text-sm z-10 right-0 border border-gray-300"
+        class="absolute top-full mt-1 whitespace-nowrap text-sm z-10 border border-gray-300 rounded shadow"
+        :class="[`${hAlign}-0`]"
       >
         <div class="bg-gray-200 rounded shadow text-gray-600 overflow-hidden">
           <DropdownItem
             v-for="(item, index) in items"
             :key="index"
             :item="item"
+            :data="data"
+            @action="handleAction"
           />
         </div>
       </div>
@@ -44,7 +48,21 @@ export default {
       type: String,
       default: 'Actions',
     },
+    hAlign: {
+      type: String,
+      default: 'right',
+    },
+    buttonClass: {
+      type: String,
+      default: 'rounded',
+    },
     items: Array,
+    data: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   data() {
     return {
@@ -57,8 +75,11 @@ export default {
     },
   },
   methods: {
-    close() {
+    handleClose() {
       this.open = false;
+    },
+    handleAction({ item, data }) {
+      this.$emit('action', { item, data });
     },
   },
 };

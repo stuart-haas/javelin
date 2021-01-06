@@ -1,7 +1,7 @@
 <template>
   <tr :class="[activeClass]">
-    <td>
-      <input type="checkbox" :value="row.id" />
+    <td v-if="actions.length" class="action">
+      <input type="checkbox" :checked="selected" @change="handleSelect" />
     </td>
     <TableColumn
       v-for="(column, index) in columns"
@@ -15,6 +15,13 @@
 export default {
   props: {
     row: Object,
+    selected: Boolean,
+    actions: {
+      type: Array,
+      default() {
+        return [];
+      },
+    },
   },
   computed: {
     activeClass() {
@@ -22,6 +29,12 @@ export default {
     },
     columns() {
       return this.row.columns;
+    },
+  },
+  methods: {
+    handleSelect() {
+      const { id } = this.row;
+      this.$emit('select', { id });
     },
   },
 };
@@ -35,7 +48,10 @@ tr {
   @apply border-b;
   @apply border-gray-300;
 }
-td:first-of-type {
+td.action {
   @apply text-center;
+}
+td input[type='checkbox'] {
+  @apply cursor-pointer;
 }
 </style>

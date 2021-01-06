@@ -41,4 +41,13 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  deleteMany: async (req, res) => {
+    const { ids } = req.body;
+    try {
+      await Product.deleteMany({ _id: { $in: ids } });
+      res.json({ success: true, message: 'Products deleted' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
 };

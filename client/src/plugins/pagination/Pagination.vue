@@ -7,7 +7,7 @@
     >
       <Icon icon="arrow-left" class="inline-block align-middle" />
     </button>
-    <button
+    <!--button
       v-for="(page, index) in pageCount"
       :key="index"
       class="button"
@@ -15,7 +15,7 @@
       @click="goToSelected(index)"
     >
       <span class="inline-block align-middle">{{ page }}</span>
-    </button>
+    </button-->
     <button
       :disabled="currentPage === pageCount"
       class="button bg-gray-200 text-gray-600 hover:bg-gray-300 ml-2"
@@ -40,7 +40,7 @@ export default {
     },
     perPage: {
       type: Number,
-      default: 3,
+      default: 25,
     },
   },
   computed: {

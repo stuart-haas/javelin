@@ -1,9 +1,9 @@
 <template>
-  <th @click="sort" v-if="show">
+  <th @click="sort" v-if="isFieldVisible">
     <span :class="[activeClass, sortableClass]"
       >{{ field.label
       }}<transition name="fade"
-        ><Icon v-if="sortable" :icon="icon" />
+        ><Icon v-if="isFieldSortable" :icon="icon" />
       </transition>
     </span>
   </th>
@@ -14,35 +14,35 @@ export default {
   props: {
     field: Object,
     orderBy: String,
-    orderByIndex: Number,
+    orderIndex: Number,
     sortOptions: Array,
     sortIcons: Array,
   },
   computed: {
     icon() {
-      return this.sortIcons[this.orderByIndex];
+      return this.sortIcons[this.orderIndex];
     },
-    show() {
+    isFieldVisible() {
       return !this.field.hidden;
     },
-    sortable() {
+    isFieldSortable() {
       if (typeof this.field.sortable === 'undefined') {
         return true;
       }
       return this.field.sortable;
     },
     activeClass() {
-      return this.orderByIndex > 0 && this.orderBy === this.field.name
+      return this.orderIndex > 0 && this.orderBy === this.field.name
         ? 'active'
         : '';
     },
     sortableClass() {
-      return this.sortable ? 'sortable' : '';
+      return this.isFieldSortable ? 'sortable' : '';
     },
   },
   methods: {
     sort() {
-      if (!this.sortable) return;
+      if (!this.isFieldSortable) return;
       this.$emit('sort', this.field);
     },
   },
@@ -57,11 +57,11 @@ th {
 
 th:first-of-type {
   @apply pl-0;
-  text-align: left;
+  @apply text-left;
 }
 
 th:last-of-type {
-  text-align: right;
+  @apply text-right;
 }
 
 th span.sortable {

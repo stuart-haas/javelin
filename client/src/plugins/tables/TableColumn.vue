@@ -42,6 +42,6 @@ td {
 }
 
 td:last-of-type {
-  text-align: right;
+  @apply text-right;
 }
 </style>

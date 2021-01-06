@@ -3,8 +3,11 @@
     :is="tag"
     v-bind="$attrs"
     v-on="$listeners"
-    class="text-sm p-2 transition duration-300 text-white outline-none focus:outline-none rounded-sm shadow"
-    :class="[`bg-${theme}-${variant.base} hover:bg-${theme}-${variant.hover}`]"
+    class="text-sm p-2 transition duration-300 outline-none focus:outline-none rounded-sm shadow"
+    :class="[
+      `bg-${theme}-${variant.base} hover:bg-${theme}-${variant.hover}`,
+      textColor,
+    ]"
   >
     <slot></slot>
   </component>
@@ -27,6 +30,13 @@ export default {
         base: '500',
         hover: '600',
       }),
+    },
+  },
+  computed: {
+    textColor() {
+      return this.theme === 'default'
+        ? 'text-black border border-gray-300'
+        : 'text-white';
     },
   },
 };

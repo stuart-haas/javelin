@@ -19,7 +19,7 @@ module.exports = {
       return next();
     }
 
-    res.status(401).send({ error: true, message: 'You are not authorized' });
+    res.status(401).send({ error: true, message: 'You are not authenticated' });
   },
   isMe: (req, res, next) => {
     const isAuthenticated = req.isAuthenticated();

@@ -1,12 +1,13 @@
 <template>
   <component
-    v-if="show"
+    v-if="isVisible"
     :is="tag"
     v-bind="attrs"
     v-on="listeners"
     class="flex px-2 py-2 bg-white transition duration-300 cursor-pointer items-center justify-between hover:bg-gray-100"
+    @click="handleAction"
   >
-    <Icon v-if="item.icon" :icon="item.icon" class="mr-10" /><span>{{
+    <Icon v-if="item.icon" :icon="item.icon" class="mr-2" /><span>{{
       item.label
     }}</span>
   </component>
@@ -16,10 +17,15 @@
 export default {
   props: {
     item: Object,
+    data: {
+      type: Object,
+      default() {
+        return {};
+      },
+    },
   },
   computed: {
-    show() {
-      console.log(this.item.boolQuery);
+    isVisible() {
       if (typeof this.item.boolQuery !== 'undefined') {
         return this.item.boolQuery;
       }
@@ -38,5 +44,12 @@ export default {
       return this.item;
     },
   },
+  methods: {
+    handleAction() {
+      const { item, data } = this;
+      this.item.action && this.item.action({item, data});
+      this.$emit('action', {item, data });
+    }
+  }
 };
 </script>
