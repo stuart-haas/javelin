@@ -101,7 +101,13 @@ const TableMixin = {
         const bCol = b.columns[orderBy];
         const aVal = aCol.type !== 'number' ? aCol.value : aCol.source;
         const bVal = bCol.type !== 'number' ? bCol.value : bCol.source;
-        if (sort === 'asc') {
+        if (aVal === bVal) {
+          return 0;
+        } else if (aVal === null || typeof aVal === 'undefined') {
+          return 1;
+        } else if (bVal === null || typeof bVal === 'undefined') {
+          return -1;
+        } else if (sort === 'asc') {
           return aVal < bVal ? 1 : -1;
         } else {
           return aVal > bVal ? 1 : -1;

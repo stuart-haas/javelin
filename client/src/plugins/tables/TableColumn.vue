@@ -1,6 +1,6 @@
 <template>
-  <td v-if="showColumn">
-    <component v-if="showField" :is="tag" v-bind="attrs" v-on="listeners">
+  <td v-if="isColumnVisible">
+    <component v-if="isFieldVisible" :is="tag" v-bind="attrs" v-on="listeners">
       {{ column.value }}
     </component>
   </td>
@@ -12,14 +12,14 @@ export default {
     column: Object,
   },
   computed: {
-    tag() {
-      return this.column.tag || 'span';
-    },
-    showColumn() {
+    isColumnVisible() {
       return !this.column.hidden;
     },
-    showField() {
+    isFieldVisible() {
       return !this.column.boolQuery;
+    },
+    tag() {
+      return this.column.tag || 'span';
     },
     attrs() {
       /* eslint-disable */

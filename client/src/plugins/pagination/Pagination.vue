@@ -8,7 +8,7 @@
       <Icon icon="arrow-left" class="inline-block align-middle" />
     </button>
     <button
-      v-for="(page, index) in pages"
+      v-for="(page, index) in pageCount"
       :key="index"
       class="button"
       :class="[getActive(index)]"
@@ -17,7 +17,7 @@
       <span class="inline-block align-middle">{{ page }}</span>
     </button>
     <button
-      :disabled="currentPage === pages"
+      :disabled="currentPage === pageCount"
       class="button bg-gray-200 text-gray-600 hover:bg-gray-300 ml-2"
       @click="goToNext"
     >
@@ -44,7 +44,7 @@ export default {
     },
   },
   computed: {
-    pages() {
+    pageCount() {
       const { perPage, data } = this;
       return Math.ceil(data.length / perPage);
     },
