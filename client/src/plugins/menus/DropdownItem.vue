@@ -9,7 +9,7 @@
     @click="handleAction"
   >
     <Icon v-if="item.icon" :icon="item.icon" class="mr-2" /><span
-      v-if="tag !== 'hr'"
+      v-if="item.label"
       >{{ item.label }}</span
     >
   </component>

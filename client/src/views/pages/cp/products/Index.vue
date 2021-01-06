@@ -25,6 +25,15 @@ export default {
       products: [],
       fields: [
         {
+          label: 'Image',
+          name: 'image',
+          tag: 'img',
+          attrs: {
+            src: 'image',
+            class: 'h-16 w-auto',
+          },
+        },
+        {
           label: 'Name',
           name: 'name',
           tag: 'router-link',
@@ -105,15 +114,11 @@ export default {
       if (!window.confirm('Are you sure?')) return;
       const ids = selectedData;
       const formData = { ids };
-      const { success, message } = await this.$store.dispatch('post', {
+      const { message } = await this.$store.dispatch('post', {
         api: 'product/bulk/delete',
         formData,
       });
-      if (success) {
-        this.fetch();
-        this.$toast({ type: 'success', message, duration: 2000 });
-        this.$refs.table.resetBulkAction();
-      }
+      this.handleActionSuccess(message);
     },
     async handleSetStatus(selectedData, status) {
       if (!window.confirm('Are you sure?')) return;
@@ -123,6 +128,9 @@ export default {
         api: 'product/bulk/update',
         formData,
       });
+      this.handleActionSuccess(message);
+    },
+    handleActionSuccess(message) {
       this.fetch();
       this.$toast({ type: 'success', message, duration: 2000 });
       this.$refs.table.resetBulkAction();
