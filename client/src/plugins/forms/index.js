@@ -39,9 +39,9 @@ const FormMixin = {
       });
       return fieldData;
     },
-    mapFieldItemsData(data, fields, keys) {
+    mapFieldItemsData(data, fields, key, keys) {
       return copyFields(fields).map((field) => {
-        if (field.items) {
+        if (field.key === key && field.items) {
           field.items = data.map((item) => {
             item.label = item[keys.label];
             item.value = item[keys.value];

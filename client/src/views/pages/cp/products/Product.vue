@@ -55,6 +55,7 @@ export default {
           name: 'description',
         },
         {
+          key: 'categories',
           tag: 'select',
           label: 'Category',
           name: 'category',
@@ -62,6 +63,24 @@ export default {
             name: 'category._id',
           },
           items: [],
+        },
+        {
+          tag: 'select',
+          label: 'Status',
+          name: 'status',
+          value: {
+            name: 'status',
+          },
+          items: [
+            {
+              label: 'Draft',
+              value: 'draft',
+            },
+            {
+              label: 'Active',
+              value: 'active',
+            },
+          ],
         },
       ],
     };
@@ -74,6 +93,7 @@ export default {
       const formFields = this.mapFieldItemsData(
         this.categories,
         this.formFields,
+        'categories',
         {
           label: 'name',
           value: '_id',

@@ -40,6 +40,7 @@ export default {
           required: true,
         },
         {
+          key: 'roles',
           tag: 'select',
           label: 'Role',
           name: 'role',
@@ -71,10 +72,15 @@ export default {
         }
         return role;
       });
-      const formFields = this.mapFieldItemsData(roles, this.formFields, {
-        label: 'label',
-        value: 'value',
-      });
+      const formFields = this.mapFieldItemsData(
+        roles,
+        this.formFields,
+        'roles',
+        {
+          label: 'label',
+          value: 'value',
+        }
+      );
       return this.mapFieldData({ role: 'member' }, formFields);
     },
   },
