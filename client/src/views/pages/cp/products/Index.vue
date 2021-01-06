@@ -121,7 +121,6 @@ export default {
       this.handleActionSuccess(message);
     },
     async handleSetStatus(selectedData, status) {
-      if (!window.confirm('Are you sure?')) return;
       const ids = selectedData;
       const formData = { ids, status };
       const { message } = await this.$store.dispatch('put', {
