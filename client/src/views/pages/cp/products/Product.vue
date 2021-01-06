@@ -6,7 +6,7 @@
       </Button>
     </template>
     <Panel>
-      <Upload :field="image" @change="change" />
+      <Upload v-if="image" :field="image" @change="change" />
       <Form
         :fields="fields"
         :append="append"
@@ -112,7 +112,7 @@ export default {
       });
       if (product) {
         this.$toast({ type: 'success', message, duration: 2000 });
-        this.$router.push('/cp/product');
+        this.$router.push('/cp/products');
       }
     },
     change({ field, value }) {

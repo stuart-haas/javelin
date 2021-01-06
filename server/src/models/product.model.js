@@ -11,7 +11,6 @@ const fields = {
   sku: {
     type: String,
     required: true,
-    unique: true,
   },
   description: String,
   image: String,

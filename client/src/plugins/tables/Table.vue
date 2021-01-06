@@ -7,7 +7,10 @@
       v-model="search"
       @input="input"
     />
-    <div class="text-right">
+    <div class="flex justify-between items-center">
+      <div>
+        <input v-model="perPage" placeholder="Number of Rows" />
+      </div>
       <Pagination
         v-if="filteredData.length > perPage"
         :data="filteredData"
@@ -19,6 +22,7 @@
     <table>
       <thead>
         <tr>
+          <th></th>
           <TableHeader
             v-for="(field, index) in fields"
             :key="index"

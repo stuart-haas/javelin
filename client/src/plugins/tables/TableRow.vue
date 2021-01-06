@@ -1,5 +1,8 @@
 <template>
   <tr :class="[activeClass]">
+    <td>
+      <input type="checkbox" :value="row.id" />
+    </td>
     <TableColumn
       v-for="(column, index) in columns"
       :key="index"
@@ -31,5 +34,8 @@ th {
 tr {
   @apply border-b;
   @apply border-gray-300;
+}
+td:first-of-type {
+  @apply text-center;
 }
 </style>

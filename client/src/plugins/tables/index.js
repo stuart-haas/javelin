@@ -7,6 +7,7 @@ import resolvePath from 'object-resolve-path';
 
 const resolveRow = (item, fields, options) => {
   let row = { ...options };
+  row.id = item._id;
   if (row.active) {
     row.active = row.active.value === item[row.active.name];
   }

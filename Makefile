@@ -7,6 +7,9 @@ start:
 setup:
 	 docker-compose exec server node ./scripts/setup.js
 
+seed:
+	 docker-compose exec server node ./scripts/seed.js
+
 login-client:
 	docker exec -it fullstack_client sh
 

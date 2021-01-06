@@ -55,6 +55,11 @@ th {
   @apply text-sm;
 }
 
+th:first-of-type {
+  @apply pl-0;
+  text-align: left;
+}
+
 th:last-of-type {
   text-align: right;
 }
