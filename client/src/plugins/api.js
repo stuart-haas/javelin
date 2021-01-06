@@ -30,7 +30,7 @@ api.interceptors.response.use(
       if (status === 401) {
         store.dispatch('user/logout');
       }
-      if ([403, 404, 500].includes(status)) {
+      if ([403, 404, 422, 500].includes(status)) {
         const options = {
           type: 'error',
           message,

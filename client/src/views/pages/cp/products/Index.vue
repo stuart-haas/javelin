@@ -47,6 +47,10 @@ export default {
           name: 'inventory',
         },
         {
+          label: 'Status',
+          name: 'status',
+        },
+        {
           label: 'Last Updated',
           name: 'updatedAt',
           format: {
@@ -55,6 +59,23 @@ export default {
         },
       ],
       actions: [
+        {
+          label: 'Set as active',
+          action: ({ data }) => {
+            const { selectedData } = data;
+            this.handleSetStatus(selectedData, 'active');
+          },
+        },
+        {
+          label: 'Set as draft',
+          action: ({ data }) => {
+            const { selectedData } = data;
+            this.handleSetStatus(selectedData, 'draft');
+          },
+        },
+        {
+          tag: 'hr',
+        },
         {
           label: 'Delete Selected',
           action: ({ data }) => {
@@ -93,6 +114,18 @@ export default {
         this.$toast({ type: 'success', message, duration: 2000 });
         this.$refs.table.resetBulkAction();
       }
+    },
+    async handleSetStatus(selectedData, status) {
+      if (!window.confirm('Are you sure?')) return;
+      const ids = selectedData;
+      const formData = { ids, status };
+      const { message } = await this.$store.dispatch('put', {
+        api: 'product/bulk/update',
+        formData,
+      });
+      this.fetch();
+      this.$toast({ type: 'success', message, duration: 2000 });
+      this.$refs.table.resetBulkAction();
     },
   },
 };

@@ -27,6 +27,11 @@ const fields = {
     ref: 'Category',
     default: null,
   },
+  status: {
+    type: String,
+    enum: ['draft', 'active'],
+    default: 'draft',
+  },
 };
 
 const Product = new Schema(fields, {

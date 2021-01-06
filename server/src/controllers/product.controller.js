@@ -32,6 +32,19 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  updateMany: async (req, res) => {
+    const { ids, status } = req.body;
+    try {
+      await Product.updateMany(
+        { _id: { $in: ids } },
+        { $set: { status: status } },
+        { multi: true }
+      );
+      res.json({ success: true, message: 'Products updated' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
   delete: async (req, res) => {
     const { id } = req.params;
     try {

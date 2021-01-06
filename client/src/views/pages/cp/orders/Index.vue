@@ -7,8 +7,10 @@
     </template>
     <Panel>
       <Table
+        ref="table"
         :data="data"
         :fields="fields"
+        :actions="actions"
         :options="{ orderBy: 'createdAt', sort: 'asc' }"
       />
     </Panel>
@@ -68,11 +70,14 @@ export default {
           tag: 'router-link',
           to: '/cp/orders/new',
         },
+      ],
+      actions: [
         {
-          label: 'Delete All',
-          icon: 'trash-alt',
-          class: 'bg-danger-500 text-white hover:bg-danger-600',
-          click: this.deleteAll,
+          label: 'Delete Selected',
+          action: ({ data }) => {
+            const { selectedData } = data;
+            this.handleDeleteMany(selectedData);
+          },
         },
       ],
     };
@@ -92,15 +97,19 @@ export default {
         this.orders = orders;
       }
     },
-    async deleteAll() {
-      if (!window.confirm('Are you sure')) return;
-      await this.$store.dispatch('delete', { api: 'order/cp' });
-      this.orders = [];
-      this.$toast({
-        type: 'success',
-        message: 'Orders deleted',
-        duration: 2000,
+    async handleDeleteMany(selectedData) {
+      if (!window.confirm('Are you sure?')) return;
+      const ids = selectedData;
+      const formData = { ids };
+      const { success, message } = await this.$store.dispatch('post', {
+        api: 'order/bulk/delete',
+        formData,
       });
+      if (success) {
+        this.fetch();
+        this.$toast({ type: 'success', message, duration: 2000 });
+        this.$refs.table.resetBulkAction();
+      }
     },
   },
 };

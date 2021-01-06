@@ -4,12 +4,14 @@
     :is="tag"
     v-bind="attrs"
     v-on="listeners"
-    class="flex px-2 py-2 bg-white transition duration-300 cursor-pointer items-center justify-between hover:bg-gray-100"
+    class="flex px-2 bg-white transition duration-300 cursor-pointer items-center justify-between hover:bg-gray-100"
+    :class="[tag !== 'hr' && 'py-2']"
     @click="handleAction"
   >
-    <Icon v-if="item.icon" :icon="item.icon" class="mr-2" /><span>{{
-      item.label
-    }}</span>
+    <Icon v-if="item.icon" :icon="item.icon" class="mr-2" /><span
+      v-if="tag !== 'hr'"
+      >{{ item.label }}</span
+    >
   </component>
 </template>
 

@@ -88,15 +88,20 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
-  deleteAll: async (req, res) => {
-    await Order.deleteMany();
-    res.json({ error: true, message: 'Orders deleted' });
-  },
   delete: async (req, res) => {
     const { id } = req.params;
     const order = await Order.findById(id);
     await order.increaseInventory();
     await order.deleteOne();
     res.json({ success: true, message: 'Order deleted', order });
+  },
+  deleteMany: async (req, res) => {
+    const { ids } = req.body;
+    try {
+      await Order.deleteMany({ _id: { $in: ids } });
+      res.json({ success: true, message: 'Orders deleted' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
   },
 };

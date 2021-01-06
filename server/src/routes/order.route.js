@@ -4,10 +4,9 @@ const auth = require('../utils/auth');
 
 router.route('/').post(controller.create);
 
-router
-  .route('/cp')
-  .get(auth.isAdmin, controller.admin.findAll)
-  .delete(auth.isAdmin, controller.deleteAll);
+router.post('/bulk/delete', auth.isAdmin, controller.deleteMany);
+
+router.route('/cp').get(auth.isAdmin, controller.admin.findAll);
 
 router
   .route('/cp/:id')
