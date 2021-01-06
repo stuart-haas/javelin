@@ -8,6 +8,15 @@
     >
       <Icon v-if="item.icon" :icon="item.icon" class="mr-4" />
       <span class="pr-2">{{ item.label }}</span>
+      <router-link
+        v-for="(item, index) in item.items"
+        :to="item.to"
+        :key="index"
+        class="block mt-4 text-right pr-4 text-gray-500"
+        :active-class="'text-blue-500'"
+      >
+        <span>{{ item.label }}</span>
+      </router-link>
     </Link>
   </nav>
 </template>
