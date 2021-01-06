@@ -13,7 +13,9 @@
           <div class="mr-10">
             <div class="flex items-center space-between space-x-4">
               <Avatar :src="user && user.avatar" />
-              <div>{{ user && user.username }}</div>
+              <router-link class="link" :to="`/cp/users/${user._id}`">{{
+                user && user.username
+              }}</router-link>
             </div>
           </div>
           <Button type="submit" theme="danger" @click="logout"> Logout </Button>
