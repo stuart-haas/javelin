@@ -16,20 +16,33 @@ export default {
         {
           label: 'Date',
           name: 'createdAt',
-          format: {
-            filter: 'dateTime',
+          concat: {
+            names: ['createdAt', 'createdAt'],
+            filters: ['date', 'time'],
+            join: ' at ',
           },
         },
         {
           label: 'Order Id',
           name: 'orderId',
+          tag: 'router-link',
+          param: '_id',
+          attrs: {
+            class: 'text-secondary-500',
+            to: '/cp/orders/:param',
+          },
         },
         {
-          value: 'View',
-          tag: 'router-link',
-          class: 'text-secondary-500',
-          to: '/account/orders/:param',
-          param: '_id',
+          label: 'Status',
+          name: 'status',
+        },
+        {
+          label: 'Total',
+          name: 'total',
+          type: 'number',
+          format: {
+            filter: 'currency',
+          },
         },
       ],
     };

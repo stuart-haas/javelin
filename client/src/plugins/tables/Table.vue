@@ -7,14 +7,9 @@
       v-model="search"
       @input="handleSearch"
     />
-    <div v-if="hasActionsAndSelections" class="button-group">
-      <div class="button-group-item">{{ selectedData.length }} selected</div>
-      <Dropdown
-        :items="actions"
-        :data="{ selectedData }"
-        hAlign="left"
-        buttonClass="rounded-r border-l-0"
-      />
+    <div v-if="hasActionsAndSelections" class="actions">
+      <div class="action">{{ selectedData.length }} selected</div>
+      <Dropdown :items="actions" :data="{ selectedData }" class="action" />
     </div>
     <table>
       <thead>
@@ -50,10 +45,10 @@
         />
       </tbody>
     </table>
-    <div v-if="!filteredData.length" class="mt-4 text-sm divide-x-4font-bold">
+    <div v-if="!filteredData.length" class="text-sm divide-x-4font-bold">
       {{ emptyResultsText }}
     </div>
-    <div class="text-right mt-4">
+    <div class="text-right" v-if="canPaginate">
       <Pagination
         :data="filteredData"
         :currentPage="currentPage"
@@ -118,6 +113,9 @@ export default {
     },
     hasNoFilteredData() {
       return !this.filteredData.length;
+    },
+    canPaginate() {
+      return this.filteredData.length > this.perPage;
     },
     selectionIsIndeterminate() {
       return (
@@ -226,26 +224,30 @@ export default {
 </script>
 
 <style lang="postcss" scoped>
-.button-group .button-group-item {
-  @apply border;
+.actions {
+  @apply mt-4 mb-2;
 }
-.button-group-item {
+.action {
+  @apply border;
   @apply inline-block;
   @apply p-2;
   @apply text-sm;
+  @apply shadow-none;
 }
-.button-group-item:first-of-type {
+.action:first-of-type {
   @apply rounded-l;
 }
-.button-group-item:last-of-type {
+.action:last-of-type {
+  @apply rounded-l-none;
   @apply rounded-r;
+  @apply border-l-0;
 }
-.button-group-item:not(:last-of-type) {
+.action:not(:last-of-type) {
   @apply border-r;
   @apply border-gray-300;
 }
 table {
-  @apply w-full table-auto text-left text-sm;
+  @apply w-full table-auto text-left text-sm mb-4;
 }
 table thead tr {
   @apply font-bold;

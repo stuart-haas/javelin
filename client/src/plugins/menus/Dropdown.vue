@@ -1,10 +1,10 @@
 <template>
-  <div v-click-outside="handleClose" class="dropdown relative inline-block">
-    <div
-      class="border border-gray-300 w-full flex items-center text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300"
-      :class="buttonClass"
-      @click="open = !open"
-    >
+  <div
+    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300"
+    @click="open = !open"
+    v-click-outside="handleClose"
+  >
+    <div class="flex items-center">
       <span>{{ title }}</span
       ><Icon
         icon="angle-down"
@@ -51,10 +51,6 @@ export default {
     hAlign: {
       type: String,
       default: 'right',
-    },
-    buttonClass: {
-      type: String,
-      default: 'rounded',
     },
     items: Array,
     data: {
