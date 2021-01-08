@@ -66,7 +66,7 @@ module.exports = {
     });
     try {
       let order = new Order({ user, items });
-      order = await order.decreaseInventory();
+      order = await order.decreaseProductInventory();
       await order.calculateTotals();
       await order.save();
       req.session.cart = new Cart();
@@ -91,7 +91,7 @@ module.exports = {
   delete: async (req, res) => {
     const { id } = req.params;
     const order = await Order.findById(id);
-    await order.increaseInventory();
+    await order.restoreProductInventory();
     await order.deleteOne();
     res.json({ success: true, message: 'Order deleted', order });
   },

@@ -5,7 +5,7 @@
       <slot name="header"></slot>
     </div>
     <div class="flex min-h-full">
-      <div class="border-r py-8 bg-gray-100 min-h-full" v-if="hasSidebar">
+      <div class="border-r py-8 bg-gray-100 min-h-full w-1/6" v-if="hasSidebar">
         <slot name="sidebar"></slot>
       </div>
       <div class="flex-1 py-8 bg-white">

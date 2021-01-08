@@ -1,6 +1,6 @@
 <template>
   <div
-    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300"
+    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300 rounded"
     @click="open = !open"
     v-click-outside="handleClose"
   >

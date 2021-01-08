@@ -1,34 +1,36 @@
 <template>
   <Page>
     <template v-slot:sidebar>
-      <div class="border-b border-gray-300 mb-6 mr-6">
-        <p class="text-xl">Your Cart</p>
-      </div>
-      <div class="space-y-6 pr-6">
-        <div v-for="product in items" :key="product.id">
-          <p class="font-medium">
-            {{ product.name }}
-          </p>
-          <div class="text-sm border-t border-gray-300 pt-1 pb-1 border-b">
-            <p class="flex items-center justify-between pt-1 pb-1">
-              <span class="text-gray-700">Quantity:</span
-              ><span class="text-black">{{ product.quantity }}</span>
-            </p>
-            <p class="flex items-center justify-between">
-              <span class="text-gray-700">Price:</span
-              ><span class="text-black text-sm">{{
-                product.price | currency
-              }}</span>
-            </p>
-            <p class="flex items-center justify-between">
-              <span class="text-gray-700">Total:</span
-              ><span class="text-black">{{ product.total | currency }}</span>
-            </p>
-          </div>
+      <div class="px-4">
+        <div class="border-b border-gray-300 mb-6">
+          <p class="text-xl">Your Cart</p>
         </div>
-        <div class="flex items-center justify-between text-xl">
-          <span class="font-medium">Total:</span>
-          <span>{{ total | currency }}</span>
+        <div class="space-y-6">
+          <div v-for="product in items" :key="product.id">
+            <p class="font-medium">
+              {{ product.name }}
+            </p>
+            <div class="text-sm border-t border-gray-300 pt-1 pb-1 border-b">
+              <p class="flex items-center justify-between pt-1 pb-1">
+                <span class="text-gray-700">Quantity:</span
+                ><span class="text-black">{{ product.quantity }}</span>
+              </p>
+              <p class="flex items-center justify-between">
+                <span class="text-gray-700">Price:</span
+                ><span class="text-black text-sm">{{
+                  product.price | currency
+                }}</span>
+              </p>
+              <p class="flex items-center justify-between">
+                <span class="text-gray-700">Total:</span
+                ><span class="text-black">{{ product.total | currency }}</span>
+              </p>
+            </div>
+          </div>
+          <div class="flex items-center justify-between text-xl">
+            <span class="font-medium">Total:</span>
+            <span>{{ total | currency }}</span>
+          </div>
         </div>
       </div>
     </template>

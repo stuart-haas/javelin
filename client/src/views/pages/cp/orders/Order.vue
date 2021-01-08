@@ -10,7 +10,7 @@
           {{ order.createdAt | date }} at {{ order.createdAt | time }}
         </p>
       </div>
-      <Dropdown :items="menuItems" title="More Actions" />
+      <Dropdown :items="menuItems" />
     </template>
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-8 space-y-6">
@@ -74,15 +74,17 @@
           <div class="mt-6 space-y-4">
             <img
               :src="order.user.avatar"
-              class="rounded-full w-16 h-auto align-middle"
+              class="rounded-full w-12 h-auto align-middle"
             />
-            <div>{{ order.user.firstName }} {{ order.user.lastNae }}</div>
-            <div>{{ order.user.street }}</div>
-            <div>
-              {{ order.user.city }}, {{ order.user.state }}
-              {{ order.user.zipCode }}
+            <div class="space-y-2">
+              <div>{{ order.user.firstName }} {{ order.user.lastName }}</div>
+              <div>{{ order.user.street }}</div>
+              <div>
+                {{ order.user.city }}, {{ order.user.state }}
+                {{ order.user.zipCode }}
+              </div>
+              <div>{{ order.user.email }}</div>
             </div>
-            <div>{{ order.user.email }}</div>
           </div>
         </Panel>
         <Panel>

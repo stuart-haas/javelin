@@ -64,7 +64,7 @@ Order.pre('save', async function () {
   return this;
 });
 
-Order.methods.decreaseInventory = async function () {
+Order.methods.decreaseProductInventory = async function () {
   const order = await this.populateItems();
   order.items = order.items.map((item) => {
     const { product, quantity } = item;
@@ -74,7 +74,7 @@ Order.methods.decreaseInventory = async function () {
   return order;
 };
 
-Order.methods.increaseInventory = async function () {
+Order.methods.restoreProductInventory = async function () {
   const order = await this.populateItems();
   order.items = order.items.map((item) => {
     const { product, quantity } = item;
