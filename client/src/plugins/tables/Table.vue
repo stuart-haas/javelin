@@ -50,7 +50,7 @@
         />
       </tbody>
     </table>
-    <div v-if="hasNoFilteredData" class="mt-4 text-sm divide-x-4font-bold">
+    <div v-if="!filteredData.length" class="mt-4 text-sm divide-x-4font-bold">
       {{ emptyResultsText }}
     </div>
     <div class="text-right mt-4">

@@ -46,9 +46,19 @@ textarea:disabled {
   opacity: 0;
 }
 
+.list-enter-active,
+.list-leave-active {
+  transition: all 0.3s;
+}
+.list-enter,
+.list-leave-to {
+  opacity: 0;
+  transform: translate3d(0, 50%, 0);
+}
+
 .slideUp-enter-active,
 .slideUp-leave-active {
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 .slideUp-enter,
 .slideUp-leave-to {
@@ -58,7 +68,7 @@ textarea:disabled {
 
 .slideDown-enter-active,
 .slideDown-leave-active {
-  transition: all 0.5s;
+  transition: all 0.3s;
 }
 .slideDown-enter,
 .slideDown-leave-to {
