@@ -12,7 +12,12 @@
 </template>
 
 <script>
+import TableColumn from './TableColumn';
+
 export default {
+  components: {
+    TableColumn,
+  },
   props: {
     row: Object,
     selected: Boolean,

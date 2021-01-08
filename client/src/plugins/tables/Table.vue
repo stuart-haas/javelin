@@ -7,7 +7,7 @@
       v-model="search"
       @input="handleSearch"
     />
-    <div v-if="selectedData.length && actions.length" class="button-group">
+    <div v-if="hasActionsAndSelections" class="button-group">
       <div class="button-group-item">{{ selectedData.length }} selected</div>
       <Dropdown
         :items="actions"
@@ -19,15 +19,11 @@
     <table>
       <thead>
         <tr>
-          <th v-if="filteredData.length && actions.length">
+          <th v-if="hasActions">
             <input
               type="checkbox"
               v-model="isBulkAction"
-              :indeterminate.prop="
-                !isBulkAction &&
-                selectedData.length &&
-                selectedData.length !== paginatedData.length
-              "
+              :indeterminate.prop="selectionIsIndeterminate"
               @change="handleBulkSelectRows"
             />
           </th>
@@ -54,8 +50,8 @@
         />
       </tbody>
     </table>
-    <div v-if="!filteredData.length" class="mt-4 text-sm divide-x-4font-bold">
-      Sorry, no results could be found.
+    <div v-if="hasNoFilteredData" class="mt-4 text-sm divide-x-4font-bold">
+      {{ emptyResultsText }}
     </div>
     <div class="text-right mt-4">
       <Pagination
@@ -73,7 +69,14 @@
 </template>
 
 <script>
+import TableHeader from './TableHeader';
+import TableRow from './TableRow';
+
 export default {
+  components: {
+    TableHeader,
+    TableRow,
+  },
   props: {
     data: Array,
     fields: Array,
@@ -87,6 +90,10 @@ export default {
     debug: {
       type: Boolean,
       default: false,
+    },
+    emptyResultsText: {
+      type: String,
+      default: 'Sorry, no results could be found.',
     },
   },
   data() {
@@ -103,6 +110,22 @@ export default {
     };
   },
   computed: {
+    hasActions() {
+      return this.filteredData.length && this.actions.length;
+    },
+    hasActionsAndSelections() {
+      return this.selectedData.length && this.actions.length;
+    },
+    hasNoFilteredData() {
+      return !this.filteredData.length;
+    },
+    selectionIsIndeterminate() {
+      return (
+        !this.isBulkAction &&
+        this.selectedData.length &&
+        this.selectedData.length !== this.paginatedData.length
+      );
+    },
     sortedData() {
       if (this.orderIndex > 0) {
         return this.sortTable(this.data, {
@@ -159,34 +182,39 @@ export default {
       } else {
         this.selectedData = [];
       }
-      const { selectedData } = this;
-      this.$emit('select', { selectedData });
+      this.$emit('select', { selectedData: this.selectedData });
     },
     handleSelectRow({ id }) {
+      this.toggleSelectRow(id);
+      this.toggleBulkAction();
+      this.$emit('select', { selectedData: this.selectedData });
+    },
+    toggleSelectRow(id) {
       if (!this.selectedData.includes(id)) {
-        this.selectedData.push(id);
+        this.selectRow(id);
       } else {
-        const index = this.selectedData.indexOf(id);
-        if (index !== -1) {
-          this.selectedData.splice(index, 1);
-        }
+        this.deselectRow(id);
       }
-      if (this.selectedData.length === this.paginatedData.length) {
-        this.isBulkAction = true;
-      } else {
-        this.isBulkAction = false;
-      }
-      const { selectedData } = this;
-      this.$emit('select', { selectedData });
+    },
+    selectRow(id) {
+      this.selectedData.push(id);
+    },
+    deselectRow(id) {
+      const index = this.selectedData.indexOf(id);
+      index !== -1 && this.selectedData.splice(index, 1);
+    },
+    toggleBulkAction() {
+      this.isBulkAction =
+        this.selectedData.length === this.paginatedData.length;
+    },
+    resetBulkAction() {
+      this.isBulkAction = false;
+      this.selectedData = [];
     },
     isRowSelected(row) {
       return !!this.selectedData.find((item) => {
         return item === row.id;
       });
-    },
-    resetBulkAction() {
-      this.isBulkAction = false;
-      this.selectedData = [];
     },
   },
   filters: {

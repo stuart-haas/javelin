@@ -1,8 +1,5 @@
 import Vue from 'vue';
 import Table from './Table.vue';
-import TableRow from './TableRow.vue';
-import TableColumn from './TableColumn.vue';
-import TableHeader from './TableHeader.vue';
 import resolvePath from 'object-resolve-path';
 
 const resolveRow = (item, fields, options) => {
@@ -130,8 +127,5 @@ const TableMixin = {
 };
 
 Vue.component('Table', Table);
-Vue.component('TableRow', TableRow);
-Vue.component('TableColumn', TableColumn);
-Vue.component('TableHeader', TableHeader);
 
 Vue.mixin(TableMixin);
