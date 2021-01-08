@@ -1,5 +1,5 @@
 <template>
-  <th @click="sort" v-if="isFieldVisible">
+  <th @click="handleSort" v-if="isFieldVisible">
     <span :class="[activeClass, sortableClass]"
       >{{ field.label
       }}<transition name="fade"
@@ -41,9 +41,10 @@ export default {
     },
   },
   methods: {
-    sort() {
-      if (!this.isFieldSortable) return;
-      this.$emit('sort', this.field);
+    handleSort() {
+      if (this.isFieldSortable) {
+        this.$emit('sort', this.field);
+      }
     },
   },
 };

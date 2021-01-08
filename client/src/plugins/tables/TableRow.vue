@@ -1,6 +1,6 @@
 <template>
   <tr :class="[activeClass]">
-    <td v-if="actions.length" class="action">
+    <td v-if="actions.length" class="text-center">
       <input type="checkbox" :checked="selected" @change="handleSelect" />
     </td>
     <TableColumn
@@ -52,9 +52,6 @@ th {
 tr {
   @apply border-b;
   @apply border-gray-300;
-}
-td.action {
-  @apply text-center;
 }
 td input[type='checkbox'] {
   @apply cursor-pointer;
