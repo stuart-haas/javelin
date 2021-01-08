@@ -21,20 +21,17 @@ export default {
   components: {
     Card,
   },
-  data() {
-    return {
-      products: [],
-    };
+  computed: {
+    products() {
+      return this.$store.state.product.products;
+    },
   },
   mounted() {
     this.fetch();
   },
   methods: {
-    async fetch() {
-      const products = await this.$store.dispatch('get', { api: 'product' });
-      if (products) {
-        this.products = products;
-      }
+    fetch() {
+      this.$store.dispatch('product/fetch');
     },
   },
 };

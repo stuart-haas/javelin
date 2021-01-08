@@ -28,7 +28,7 @@ mongoose
   .connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
-    useFindAndModify: false,
+    useFindAndModify: true,
   })
   .then(() => {
     console.log(`Database is connected to ${process.env.DATABASE_URL}`);

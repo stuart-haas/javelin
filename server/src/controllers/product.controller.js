@@ -32,7 +32,7 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
-  updateMany: async (req, res) => {
+  batchUpdateStatus: async (req, res) => {
     const { ids, status } = req.body;
     try {
       await Product.updateMany(
@@ -54,7 +54,7 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
-  deleteMany: async (req, res) => {
+  batchDelete: async (req, res) => {
     const { ids } = req.body;
     try {
       await Product.deleteMany({ _id: { $in: ids } });

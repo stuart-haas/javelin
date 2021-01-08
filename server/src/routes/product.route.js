@@ -4,8 +4,8 @@ const auth = require('../utils/auth');
 
 router.route('/').get(controller.findAll).post(auth.isAdmin, controller.create);
 
-router.post('/bulk/delete', auth.isAdmin, controller.deleteMany);
-router.put('/bulk/update', auth.isAdmin, controller.updateMany);
+router.put('/batch/delete', auth.isAdmin, controller.batchDelete);
+router.put('/batch/status', auth.isAdmin, controller.batchUpdateStatus);
 
 router
   .route('/:id')

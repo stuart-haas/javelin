@@ -37,6 +37,11 @@ const actions = {
   toast(ctx, { options }) {
     this._vm.$toast(options);
   },
+  confirmable({ dispatch }, { api, data }) {
+    if (window.confirm('Are you sure?')) {
+      return dispatch(api, data);
+    }
+  },
 };
 
 export default { state, getters, mutations, actions };

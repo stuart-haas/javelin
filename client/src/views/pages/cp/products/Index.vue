@@ -22,7 +22,6 @@
 export default {
   data() {
     return {
-      products: [],
       fields: [
         {
           label: 'Image',
@@ -71,15 +70,21 @@ export default {
         {
           label: 'Set as active',
           action: ({ data }) => {
-            const { selectedData } = data;
-            this.handleSetStatus(selectedData, 'active');
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'status',
+              formData: { ids, status: 'active' },
+            });
           },
         },
         {
           label: 'Set as draft',
           action: ({ data }) => {
-            const { selectedData } = data;
-            this.handleSetStatus(selectedData, 'draft');
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'status',
+              formData: { ids, status: 'draft' },
+            });
           },
         },
         {
@@ -88,14 +93,20 @@ export default {
         {
           label: 'Delete Selected',
           action: ({ data }) => {
-            const { selectedData } = data;
-            this.handleDeleteMany(selectedData);
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'delete',
+              formData: { ids, status: 'draft' },
+            });
           },
         },
       ],
     };
   },
   computed: {
+    products() {
+      return this.$store.state.product.products;
+    },
     data() {
       return this.mapTable(this.products, this.fields);
     },
@@ -104,33 +115,19 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch() {
-      const products = await this.$store.dispatch('get', { api: 'product' });
-      if (products) {
-        this.products = products;
+    fetch() {
+      this.$store.dispatch('product/fetch');
+    },
+    async handleBatchAction(data) {
+      const message = await this.$store.dispatch('confirmable', {
+        api: 'product/batch',
+        data,
+      });
+      if (message) {
+        this.handleActionSuccess(message);
       }
     },
-    async handleDeleteMany(selectedData) {
-      if (!window.confirm('Are you sure?')) return;
-      const ids = selectedData;
-      const formData = { ids };
-      const { message } = await this.$store.dispatch('post', {
-        api: 'product/bulk/delete',
-        formData,
-      });
-      this.handleActionSuccess(message);
-    },
-    async handleSetStatus(selectedData, status) {
-      const ids = selectedData;
-      const formData = { ids, status };
-      const { message } = await this.$store.dispatch('put', {
-        api: 'product/bulk/update',
-        formData,
-      });
-      this.handleActionSuccess(message);
-    },
     handleActionSuccess(message) {
-      this.fetch();
       this.$toast({ type: 'success', message, duration: 2000 });
       this.$refs.table.resetBulkAction();
     },

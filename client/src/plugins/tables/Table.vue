@@ -36,8 +36,8 @@
       </thead>
       <tbody>
         <TableRow
-          v-for="(row, index) in paginatedData"
-          :key="index"
+          v-for="row in paginatedData"
+          :key="row.id"
           :row="row"
           :actions="actions"
           :selected="isRowSelected(row)"
