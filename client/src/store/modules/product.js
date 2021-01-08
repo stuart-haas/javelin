@@ -13,25 +13,21 @@ const mutations = {
 };
 
 const actions = {
+  async send({ dispatch }, { method, options }) {
+    return await dispatch(method, options, { root: true });
+  },
   async fetch({ dispatch, commit }) {
-    const products = await dispatch(
-      'get',
-      {
-        api: 'product',
-      },
-      { root: true }
-    );
+    const products = await dispatch('send', {
+      method: 'get',
+      options: { api: 'product' },
+    });
     commit('setState', { name: 'products', value: products });
   },
   async batch({ dispatch }, { action, formData }) {
-    const { message } = await dispatch(
-      'put',
-      {
-        api: `product/batch/${action}`,
-        formData,
-      },
-      { root: true }
-    );
+    const { message } = await dispatch('send', {
+      method: 'put',
+      options: { api: `product/batch/${action}`, formData },
+    });
     dispatch('fetch');
     return message;
   },

@@ -18,21 +18,27 @@ const actions = {
   initialize({ dispatch }) {
     dispatch('cart/initialize');
   },
-  get(ctx, { api, param }) {
-    const route = param ? `${api}/${param}` : api;
-    return this._vm.$api.get(route).then(returnData);
+  send(ctx, { method, api, id, params, formData }) {
+    const route = id ? `${api}/${id}` : api;
+    const data = formData || { params: params };
+
+    return this._vm.$api[method](route, data).then(returnData);
   },
-  post(ctx, { api, param, formData }) {
-    const route = param ? `${api}/${param}` : api;
-    return this._vm.$api.post(route, formData).then(returnData);
+  get({ dispatch }, options) {
+    options.method = 'get';
+    return dispatch('send', options);
   },
-  put(ctx, { api, param, formData }) {
-    const route = param ? `${api}/${param}` : api;
-    return this._vm.$api.put(route, formData).then(returnData);
+  post({ dispatch }, options) {
+    options.method = 'post';
+    return dispatch('send', options);
   },
-  delete(ctx, { api, param }) {
-    const route = param ? `${api}/${param}` : api;
-    return this._vm.$api.delete(route).then(returnData);
+  put({ dispatch }, options) {
+    options.method = 'put';
+    return dispatch('send', options);
+  },
+  delete({ dispatch }, options) {
+    options.method = 'delete';
+    return dispatch('send', options);
   },
   toast(ctx, { options }) {
     this._vm.$toast(options);
