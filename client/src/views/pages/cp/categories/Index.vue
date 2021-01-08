@@ -1,10 +1,7 @@
 <template>
   <Content title="Categories">
     <template v-slot:header>
-      <Button
-        theme="secondary"
-        tag="router-link"
-        to="/cp/products/categories/new"
+      <Button theme="secondary" tag="router-link" to="/cp/categories/new"
         >New Category</Button
       >
     </template>
@@ -31,7 +28,7 @@ export default {
           param: '_id',
           attrs: {
             class: 'text-secondary-500',
-            to: '/cp/products/categories/:param',
+            to: '/cp/categories/:param',
           },
         },
         {
