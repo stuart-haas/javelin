@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <template v-slot:content>
+    <template #content>
       <h1 class="h1">Cart</h1>
       <div
         v-if="items.length"

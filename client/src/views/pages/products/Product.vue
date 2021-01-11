@@ -1,13 +1,13 @@
 <template>
   <Page>
-    <template v-slot:hero>
+    <template #hero>
       <Hero
         v-if="product.category"
         :image="product.category.image"
         :title="product.category.name"
       />
     </template>
-    <template v-slot:content>
+    <template #content>
       <div class="grid grid-cols-12 gap-20">
         <div class="col-span-4 mt-8">
           <img :src="product.image" class="h-auto w-full" />

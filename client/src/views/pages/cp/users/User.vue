@@ -1,6 +1,6 @@
 <template>
   <Content title="Edit User">
-    <template v-slot:header>
+    <template #header>
       <Dropdown v-if="!currentUser" :items="items" />
     </template>
     <Panel>

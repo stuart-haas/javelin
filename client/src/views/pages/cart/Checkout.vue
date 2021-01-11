@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <template v-slot:sidebar>
+    <template #sidebar>
       <div class="px-4">
         <div class="border-b border-gray-300 mb-6">
           <p class="text-xl">Your Cart</p>
@@ -34,7 +34,7 @@
         </div>
       </div>
     </template>
-    <template v-slot:content>
+    <template #content>
       <Content title="Checkout">
         <Button theme="secondary" @click="order">Place Order</Button>
       </Content>

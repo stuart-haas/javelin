@@ -1,6 +1,6 @@
 <template>
   <Content title="Your Order">
-    <template v-slot:header>
+    <template #header>
       <Button v-if="id" class="mt-3" theme="danger" @click="cancel">
         Cancel
       </Button>

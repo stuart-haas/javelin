@@ -1,6 +1,6 @@
 <template>
   <Page>
-    <template v-slot:content>
+    <template #content>
       <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-20">
         <div
           v-for="(product, index) in products"

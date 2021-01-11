@@ -1,6 +1,6 @@
 <template>
   <Content title="Categories">
-    <template v-slot:header>
+    <template #header>
       <Button theme="secondary" tag="router-link" to="/cp/categories/new"
         >New Category</Button
       >

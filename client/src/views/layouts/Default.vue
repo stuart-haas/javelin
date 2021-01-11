@@ -1,7 +1,7 @@
 <template>
   <div class="h-full">
     <Header>
-      <template v-slot:left>
+      <template #left>
         <div class="flex justify-between items-center">
           <router-link
             to="/products"
@@ -12,7 +12,7 @@
           </router-link>
         </div>
       </template>
-      <template v-slot:right>
+      <template #right>
         <div class="flex justify-between items-center space-x-4">
           <router-link
             to="/cart"

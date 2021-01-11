@@ -1,6 +1,6 @@
 <template>
   <Content title="Orders">
-    <template v-slot:header>
+    <template #header>
       <div class="flex items-center">
         <Dropdown :items="items" />
       </div>

@@ -1,9 +1,9 @@
 <template>
   <Page>
-    <template v-slot:sidebar>
+    <template #sidebar>
       <Menu :items="items" direction="vertical" />
     </template>
-    <template v-slot:content>
+    <template #content>
       <transition name="page" mode="out-in">
         <router-view />
       </transition>

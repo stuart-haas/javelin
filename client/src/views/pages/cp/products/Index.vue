@@ -1,6 +1,6 @@
 <template>
   <Content title="Products">
-    <template v-slot:header>
+    <template #header>
       <Button theme="secondary" tag="router-link" to="/cp/products/new"
         >New Product</Button
       >

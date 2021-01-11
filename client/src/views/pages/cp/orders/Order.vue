@@ -1,6 +1,6 @@
 <template>
   <Content>
-    <template v-slot:header>
+    <template #header>
       <div>
         <p class="text-2xl text-gray-700 font-semibold">
           {{ order.orderId }}

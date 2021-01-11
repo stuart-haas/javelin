@@ -1,14 +1,14 @@
 <template>
   <div class="h-full">
     <Header>
-      <template v-slot:left>
+      <template #left>
         <div class="flex items-center justify-between">
           <router-link to="/" class="link"
             ><Icon icon="home" class="text-xl"
           /></router-link>
         </div>
       </template>
-      <template v-slot:right>
+      <template #right>
         <div class="flex items-center justify-between">
           <div class="mr-10">
             <div class="flex items-center space-between space-x-4">

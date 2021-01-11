@@ -1,6 +1,6 @@
 <template>
-  <Content title="User">
-    <template v-slot:header>
+  <Content title="Users">
+    <template #header>
       <Button theme="secondary" tag="router-link" to="/cp/users/register"
         >Register User</Button
       >
