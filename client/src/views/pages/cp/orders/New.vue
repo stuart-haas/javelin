@@ -2,13 +2,7 @@
   <Content>
     <template #header>
       <div>
-        <p class="text-2xl text-gray-700 font-semibold">
-          {{ order.orderId }}
-        </p>
-        <p>{{ order.status }}</p>
-        <p v-if="order.createdAt" class="text-gray-700 mt-2">
-          {{ order.createdAt | date }} at {{ order.createdAt | time }}
-        </p>
+        <p class="text-2xl text-gray-700 font-semibold">New Order</p>
       </div>
       <Dropdown :items="menuItems" />
     </template>
@@ -70,8 +64,14 @@
         </Panel>
       </div>
       <div class="col-span-4 space-y-6">
-        <Panel v-if="order.user" title="Customer Details">
-          <div class="mt-6 space-y-4">
+        <Panel title="Customer">
+          <Search
+            name="profile"
+            :suggestions="users"
+            :value="order.user && order.user.name"
+            @change="updateFormData"
+          />
+          <div v-if="order.user" class="mt-6 space-y-4">
             <img
               :src="order.user.avatar"
               class="rounded-full w-12 h-auto align-middle"
@@ -126,41 +126,13 @@ export default {
   data() {
     return {
       order: {},
-      user: {},
+      users: [],
       editNote: false,
     };
   },
   computed: {
     menuItems() {
-      return [
-        {
-          label: 'Duplicate',
-          icon: 'copy',
-        },
-        {
-          label: 'Archive',
-          icon: 'archive',
-          boolQuery: this.order.status === 'canceled',
-          action: () => {
-            this.updateStatus('archived');
-          },
-        },
-        {
-          label: 'Cancel',
-          icon: 'times',
-          boolQuery: this.order.status !== 'archived',
-          action: () => {
-            this.updateStatus('canceled');
-          },
-        },
-        {
-          label: 'Delete',
-          icon: 'trash-alt',
-          class: 'bg-danger-500 text-white hover:bg-danger-600',
-          click: this.deleteThis,
-          boolQuery: this.order.status === 'canceled',
-        },
-      ];
+      return [];
     },
     id() {
       return this.$route.params.id;
@@ -174,45 +146,19 @@ export default {
   },
   methods: {
     async fetch() {
-      const param = this.$route.params.id;
-      if (param) {
-        const order = await this.$store.dispatch('get', {
-          api: 'order/cp',
-          param,
-        });
-        this.order = order;
-      }
-
-      await this.$store.dispatch('user/initialize');
-      const user = this.$store.state.user.user;
-      this.user = user;
-    },
-    async deleteThis() {
-      if (!window.confirm('Are you sure?')) return;
-      const param = this.$route.params.id;
-      const { order, message } = await this.$store.dispatch('delete', {
-        api: 'order/cp',
-        param,
+      const users = await this.$store.dispatch('get', {
+        api: 'user',
       });
-      if (order) {
-        this.$toast({ type: 'success', message, duration: 2000 });
-        this.$router.push('/cp/orders');
-      }
-    },
-    async updateStatus(status) {
-      if (!window.confirm('Are you sure?')) return;
-      const param = this.$route.params.id;
-      const formData = { status };
-      const { order, message } = await this.$store.dispatch('put', {
-        api: 'order/cp',
-        param,
-        formData,
+      this.users = users.map((user) => {
+        return { label: user.username, value: user._id };
       });
-      if (order) {
-        this.fetch();
-        this.$toast({ type: 'success', message, duration: 2000 });
-        this.editNote = false;
-      }
+    },
+    updateFormData(data) {
+      const {
+        selection: { value },
+        name,
+      } = data;
+      this.order[name] = value;
     },
     success(response) {
       const { message } = response;

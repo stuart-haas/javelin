@@ -3,6 +3,7 @@ import Form from './Form.vue';
 import Upload from './Upload.vue';
 import Field from './Field.vue';
 import Counter from './Counter.vue';
+import Search from './Search.vue';
 import resolvePath from 'object-resolve-path';
 
 const copyFields = (fields) => {
@@ -58,5 +59,6 @@ Vue.component('Upload', Upload);
 Vue.component('Form', Form);
 Vue.component('Field', Field);
 Vue.component('Counter', Counter);
+Vue.component('Search', Search);
 
 Vue.mixin(FormMixin);

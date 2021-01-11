@@ -42,7 +42,7 @@ const fields = {
   },
   status: {
     type: String,
-    enum: ['open', 'archived', 'canceled'],
+    enum: ['draft', 'open', 'archived', 'canceled'],
     default: 'authorized',
   },
   note: String,

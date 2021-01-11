@@ -80,6 +80,7 @@ module.exports = {
     try {
       const order = await Order.findById(id);
       const orderObject = order.toJSON();
+      orderObject.status = 'draft';
       delete orderObject._id;
       delete orderObject.orderId;
       const duplicateOrder = new Order(orderObject);
@@ -90,7 +91,6 @@ module.exports = {
         order: duplicateOrder,
       });
     } catch (error) {
-      console.log(error);
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
