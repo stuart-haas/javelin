@@ -7,9 +7,12 @@
     </template>
     <Panel>
       <Table
+        ref="table"
         :data="data"
         :fields="fields"
+        :actions="actions"
         :options="{ orderBy: 'name', sort: 'desc' }"
+        @refresh="fetch"
       />
     </Panel>
   </Content>
@@ -19,7 +22,6 @@
 export default {
   data() {
     return {
-      categories: [],
       fields: [
         {
           label: 'Name',
@@ -32,6 +34,10 @@ export default {
           },
         },
         {
+          label: 'Status',
+          name: 'status',
+        },
+        {
           label: 'Last Updated',
           name: 'updatedAt',
           format: {
@@ -39,9 +45,47 @@ export default {
           },
         },
       ],
+      actions: [
+        {
+          label: 'Set as active',
+          action: ({ data }) => {
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'status',
+              formData: { ids, status: 'active' },
+            });
+          },
+        },
+        {
+          label: 'Set as draft',
+          action: ({ data }) => {
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'status',
+              formData: { ids, status: 'draft' },
+            });
+          },
+        },
+        {
+          tag: 'hr',
+        },
+        {
+          label: 'Delete Selected',
+          action: ({ data }) => {
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'delete',
+              formData: { ids, status: 'draft' },
+            });
+          },
+        },
+      ],
     };
   },
   computed: {
+    categories() {
+      return this.$store.state.category.categories;
+    },
     data() {
       return this.mapTable(this.categories, this.fields);
     },
@@ -50,11 +94,21 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch() {
-      const categories = await this.$store.dispatch('get', { api: 'category' });
-      if (categories) {
-        this.categories = categories;
+    fetch() {
+      this.$store.dispatch('category/fetch');
+    },
+    async handleBatchAction(data) {
+      const message = await this.$store.dispatch('confirmable', {
+        api: 'category/batch',
+        data,
+      });
+      if (message) {
+        this.handleActionSuccess(message);
       }
+    },
+    handleActionSuccess(message) {
+      this.$toast({ type: 'success', message, duration: 2000 });
+      this.$refs.table.resetBulkAction();
     },
   },
 };

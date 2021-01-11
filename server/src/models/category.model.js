@@ -9,6 +9,11 @@ const fields = {
   },
   slug: String,
   image: String,
+  status: {
+    type: String,
+    enum: ['draft', 'active'],
+    default: 'draft',
+  },
 };
 
 const Category = new Schema(fields, {

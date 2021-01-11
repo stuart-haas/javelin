@@ -34,6 +34,24 @@ export default {
           required: true,
           focus: true,
         },
+        {
+          tag: 'select',
+          label: 'Status',
+          name: 'status',
+          value: {
+            name: 'status',
+          },
+          items: [
+            {
+              label: 'Draft',
+              value: 'draft',
+            },
+            {
+              label: 'Active',
+              value: 'active',
+            },
+          ],
+        },
       ],
     };
   },

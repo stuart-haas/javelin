@@ -4,6 +4,7 @@ import root from './root';
 import user from './modules/user';
 import cart from './modules/cart';
 import product from './modules/product';
+import category from './modules/category';
 
 Vue.use(Vuex);
 
@@ -13,6 +14,7 @@ const store = new Vuex.Store({
     user,
     cart,
     product,
+    category,
   },
 });
 

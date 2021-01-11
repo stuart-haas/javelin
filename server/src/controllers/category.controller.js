@@ -32,11 +32,33 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  batchUpdateStatus: async (req, res) => {
+    const { ids, status } = req.body;
+    try {
+      await Category.updateMany(
+        { _id: { $in: ids } },
+        { $set: { status: status } },
+        { multi: true }
+      );
+      res.json({ success: true, message: 'Categories updated' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
   delete: async (req, res) => {
     const { id } = req.params;
     try {
       const category = await Category.findByIdAndDelete(id);
       res.json({ success: true, message: 'Category deleted', category });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
+  batchDelete: async (req, res) => {
+    const { ids } = req.body;
+    try {
+      await Category.deleteMany({ _id: { $in: ids } });
+      res.json({ success: true, message: 'Categories deleted' });
     } catch (error) {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
