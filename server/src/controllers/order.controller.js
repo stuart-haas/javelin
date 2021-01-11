@@ -96,20 +96,7 @@ module.exports = {
         { $set: { status } },
         { multi: true }
       );
-      res.json({ success: true, message: 'Orders cancelled' });
-    } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
-    }
-  },
-  batchArchive: async (req, res) => {
-    const { ids } = req.body;
-    try {
-      await Order.updateMany(
-        { _id: { $in: ids } },
-        { $set: { archived: true } },
-        { multi: true }
-      );
-      res.json({ success: true, message: 'Orders archived' });
+      res.json({ success: true, message: 'Orders updated' });
     } catch (error) {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }

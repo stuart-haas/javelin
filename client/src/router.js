@@ -1,32 +1,6 @@
 import Vue from 'vue';
 import store from './store/store';
 import Router from 'vue-router';
-import Default from './views/layouts/Default.vue';
-import Login from './views/pages/account/Login.vue';
-import Register from './views/pages/account/Register.vue';
-import Account from './views/pages/account/Index.vue';
-import Orders from './views/pages/account/orders/Index.vue';
-import Order from './views/pages/account/orders/Order.vue';
-import Favorites from './views/pages/account/Favorites.vue';
-import Settings from './views/pages/account/settings/Index.vue';
-import UserContact from './views/pages/account/settings/Contact.vue';
-import UserShipping from './views/pages/account/settings/Shipping.vue';
-import Products from './views/pages/products/Index.vue';
-import Product from './views/pages/products/Product.vue';
-import Cart from './views/pages/cart/Index.vue';
-import Checkout from './views/pages/cart/Checkout.vue';
-import CP from './views/layouts/CP.vue';
-import CPLogin from './views/pages/cp/Login.vue';
-import CPIndex from './views/pages/cp/Index.vue';
-import CPOrders from './views/pages/cp/orders/Index.vue';
-import CPOrder from './views/pages/cp/orders/Order.vue';
-import CPProducts from './views/pages/cp/products/Index.vue';
-import CPProduct from './views/pages/cp/products/Product.vue';
-import CPCategories from './views/pages/cp/categories/Index.vue';
-import CPCategory from './views/pages/cp/categories/Category.vue';
-import CPUsers from './views/pages/cp/users/Index.vue';
-import CPRegisterUser from './views/pages/cp/users/Register.vue';
-import CPUser from './views/pages/cp/users/User.vue';
 
 Vue.use(Router);
 
@@ -35,7 +9,7 @@ const router = new Router({
   routes: [
     {
       path: '/',
-      component: Default,
+      component: () => import('@/views/layouts/Default.vue'),
       children: [
         {
           path: '',
@@ -47,7 +21,7 @@ const router = new Router({
         {
           path: 'login',
           name: 'login',
-          component: Login,
+          component: () => import('@/views/pages/account/Login.vue'),
           meta: { title: 'Login' },
           beforeEnter: (to, from, next) => {
             const user = store.state.user.user;
@@ -60,35 +34,35 @@ const router = new Router({
         {
           path: 'register',
           name: 'register',
-          component: Register,
+          component: () => import('@/views/pages/account/Register.vue'),
           meta: { title: 'Register' },
         },
         {
           path: 'cart',
           name: 'cart',
-          component: Cart,
+          component: () => import('@/views/pages/cart/Index.vue'),
         },
         {
           path: 'cart/checkout',
           name: 'cart-checkout',
-          component: Checkout,
+          component: () => import('@/views/pages/cart/Checkout.vue'),
         },
         {
           path: 'products',
           name: 'products',
-          component: Products,
+          component: () => import('@/views/pages/products/Index.vue'),
           meta: { title: 'Products' },
         },
         {
           path: 'products/:id',
           name: 'products-id',
-          component: Product,
+          component: () => import('@/views/pages/products/Product.vue'),
           meta: { title: 'Product' },
         },
         {
           path: 'account',
           name: 'account',
-          component: Account,
+          component: () => import('@/views/pages/account/Index.vue'),
           meta: { title: 'Account', requiresAuth: true },
           redirect: () => {
             return '/account/orders';
@@ -97,25 +71,26 @@ const router = new Router({
             {
               path: 'orders',
               name: 'account-orders',
-              component: Orders,
+              component: () => import('@/views/pages/account/orders/Index.vue'),
               meta: { title: 'Orders' },
             },
             {
               path: 'orders/:id',
               name: 'account-order-id',
-              component: Order,
+              component: () => import('@/views/pages/account/orders/Order.vue'),
               meta: { title: 'Order' },
             },
             {
               path: 'favorites',
               name: 'account-favorites',
-              component: Favorites,
+              component: () => import('@/views/pages/account/Favorites.vue'),
               meta: { title: 'Favorites' },
             },
             {
               path: 'settings',
               name: 'account-settings',
-              component: Settings,
+              component: () =>
+                import('@/views/pages/account/settings/Index.vue'),
               meta: { title: 'Settings' },
               redirect: () => {
                 return 'settings/user';
@@ -124,13 +99,15 @@ const router = new Router({
                 {
                   path: 'user',
                   name: 'account-settings-user',
-                  component: UserContact,
+                  component: () =>
+                    import('@/views/pages/account/settings/Contact.vue'),
                   meta: { title: 'User Settings' },
                 },
                 {
                   path: 'shipping',
                   name: 'account-settings-shipping',
-                  component: UserShipping,
+                  component: () =>
+                    import('@/views/pages/account/settings/Shipping.vue'),
                   meta: { title: 'User Shipping' },
                 },
               ],
@@ -141,13 +118,13 @@ const router = new Router({
     },
     {
       path: '/cp',
-      component: CP,
+      component: () => import('@/views/layouts/CP.vue'),
       meta: { requiresAdmin: true },
       children: [
         {
           path: '',
           name: 'cp',
-          component: CPIndex,
+          component: () => import('@/views/pages/cp/Index.vue'),
           meta: { title: 'Dashboard' },
           redirect: () => {
             return '/cp/orders';
@@ -156,73 +133,75 @@ const router = new Router({
             {
               path: 'orders',
               name: 'cp-order',
-              component: CPOrders,
+              component: () => import('@/views/pages/cp/orders/Index.vue'),
               meta: { title: 'Orders' },
             },
             {
               path: 'orders/new',
               name: 'cp-orders-new',
-              component: CPOrder,
+              component: () => import('@/views/pages/cp/orders/New.vue'),
               meta: { title: 'New Order' },
             },
             {
               path: 'orders/:id',
               name: 'cp-orders-id',
-              component: CPOrder,
+              component: () => import('@/views/pages/cp/orders/Order.vue'),
               meta: { title: 'Edit Order' },
             },
             {
               path: 'products',
               name: 'cp-products',
-              component: CPProducts,
+              component: () => import('@/views/pages/cp/products/Index.vue'),
               meta: { title: 'Products' },
             },
             {
               path: 'products/new',
               name: 'cp-products-new',
-              component: CPProduct,
+              component: () => import('@/views/pages/cp/products/Product.vue'),
               meta: { title: 'New Product' },
             },
             {
               path: 'products/:id',
               name: 'cp-products-id',
-              component: CPProduct,
+              component: () => import('@/views/pages/cp/products/Product.vue'),
               meta: { title: 'Edit Product' },
             },
             {
               path: 'categories',
               name: 'cp-categories',
-              component: CPCategories,
+              component: () => import('@/views/pages/cp/categories/Index.vue'),
               meta: { title: 'Categories' },
             },
             {
               path: 'categories/new',
               name: 'cp-categories-new',
-              component: CPCategory,
+              component: () =>
+                import('@/views/pages/cp/categories/Category.vue'),
               meta: { title: 'New Category' },
             },
             {
               path: 'categories/:id',
               name: 'cp-categories-id',
-              component: CPCategory,
+              component: () =>
+                import('@/views/pages/cp/categories/Category.vue'),
               meta: { title: 'Edit Category' },
             },
             {
               path: 'users',
               name: 'cp-users',
-              component: CPUsers,
+              component: () => import('@/views/pages/cp/users/Index.vue'),
               meta: { title: 'Users' },
             },
             {
               path: 'users/register',
               name: 'cp-users-register',
-              component: CPRegisterUser,
+              component: () => import('@/views/pages/cp/users/Register.vue'),
               meta: { title: 'Register User' },
             },
             {
               path: 'users/:id',
               name: 'cp-users-id',
-              component: CPUser,
+              component: () => import('@/views/pages/cp/users/User.vue'),
               meta: { title: 'Edit User' },
             },
           ],
@@ -232,7 +211,7 @@ const router = new Router({
     {
       path: '/cp/login',
       name: 'cp-login',
-      component: CPLogin,
+      component: () => import('@/views/pages/cp/Login.vue'),
       meta: { title: 'Login' },
       beforeEnter: (to, from, next) => {
         const user = store.state.user.user;

@@ -42,11 +42,10 @@ const fields = {
   },
   status: {
     type: String,
-    enum: ['authorized', 'shipped', 'completed', 'cancelled', 'refunded'],
+    enum: ['open', 'archived', 'canceled'],
     default: 'authorized',
   },
   note: String,
-  archived: Boolean,
 };
 
 const Order = new Schema(fields, {

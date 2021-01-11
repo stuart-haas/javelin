@@ -21,7 +21,6 @@
 export default {
   data() {
     return {
-      orders: [],
       fields: [
         {
           label: 'Date',
@@ -77,8 +76,8 @@ export default {
           action: ({ data }) => {
             const ids = data.selectedData;
             this.handleBatchAction({
-              action: 'archive',
-              formData: { ids },
+              action: 'status',
+              formData: { ids, status: 'archived' },
             });
           },
         },
@@ -88,7 +87,7 @@ export default {
             const ids = data.selectedData;
             this.handleBatchAction({
               action: 'status',
-              formData: { ids, status: 'cancelled' },
+              formData: { ids, status: 'canceled' },
             });
           },
         },
@@ -96,6 +95,9 @@ export default {
     };
   },
   computed: {
+    orders() {
+      return this.$store.state.order.orders;
+    },
     data() {
       return this.mapTable(this.orders, this.fields);
     },
@@ -104,11 +106,8 @@ export default {
     this.fetch();
   },
   methods: {
-    async fetch() {
-      const orders = await this.$store.dispatch('get', { api: 'order/cp' });
-      if (orders) {
-        this.orders = orders;
-      }
+    fetch() {
+      this.$store.dispatch('order/fetch');
     },
     async handleBatchAction(data) {
       const message = await this.$store.dispatch('confirmable', {
