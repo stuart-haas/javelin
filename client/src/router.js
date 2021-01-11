@@ -41,11 +41,13 @@ const router = new Router({
           path: 'cart',
           name: 'cart',
           component: () => import('@/views/pages/cart/Index.vue'),
+          meta: { title: 'Cart' },
         },
         {
           path: 'cart/checkout',
           name: 'cart-checkout',
           component: () => import('@/views/pages/cart/Checkout.vue'),
+          meta: { title: 'Checkout' },
         },
         {
           path: 'products',
@@ -101,14 +103,14 @@ const router = new Router({
                   name: 'account-settings-user',
                   component: () =>
                     import('@/views/pages/account/settings/Contact.vue'),
-                  meta: { title: 'User Settings' },
+                  meta: { title: 'Contact Information' },
                 },
                 {
                   path: 'shipping',
                   name: 'account-settings-shipping',
                   component: () =>
                     import('@/views/pages/account/settings/Shipping.vue'),
-                  meta: { title: 'User Shipping' },
+                  meta: { title: 'Shipping Address' },
                 },
               ],
             },
