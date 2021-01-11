@@ -4,7 +4,8 @@ const auth = require('../utils/auth');
 
 router.route('/').post(controller.create);
 
-router.post('/bulk/delete', auth.isAdmin, controller.deleteMany);
+router.put('/batch/status', auth.isAdmin, controller.batchUpdateStatus);
+router.put('/batch/archive', auth.isAdmin, controller.batchArchive);
 
 router.route('/cp').get(auth.isAdmin, controller.admin.findAll);
 

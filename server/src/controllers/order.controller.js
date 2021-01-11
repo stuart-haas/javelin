@@ -88,20 +88,37 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  batchUpdateStatus: async (req, res) => {
+    const { ids, status } = req.body;
+    try {
+      await Order.updateMany(
+        { _id: { $in: ids } },
+        { $set: { status } },
+        { multi: true }
+      );
+      res.json({ success: true, message: 'Orders cancelled' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
+  batchArchive: async (req, res) => {
+    const { ids } = req.body;
+    try {
+      await Order.updateMany(
+        { _id: { $in: ids } },
+        { $set: { archived: true } },
+        { multi: true }
+      );
+      res.json({ success: true, message: 'Orders archived' });
+    } catch (error) {
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
   delete: async (req, res) => {
     const { id } = req.params;
     const order = await Order.findById(id);
     await order.restoreProductInventory();
     await order.deleteOne();
     res.json({ success: true, message: 'Order deleted', order });
-  },
-  deleteMany: async (req, res) => {
-    const { ids } = req.body;
-    try {
-      await Order.deleteMany({ _id: { $in: ids } });
-      res.json({ success: true, message: 'Orders deleted' });
-    } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
-    }
   },
 };

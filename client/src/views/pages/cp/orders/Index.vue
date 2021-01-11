@@ -73,10 +73,23 @@ export default {
       ],
       actions: [
         {
-          label: 'Delete Selected',
+          label: 'Archive Selected',
           action: ({ data }) => {
-            const { selectedData } = data;
-            this.handleDeleteMany(selectedData);
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'archive',
+              formData: { ids },
+            });
+          },
+        },
+        {
+          label: 'Cancel Selected',
+          action: ({ data }) => {
+            const ids = data.selectedData;
+            this.handleBatchAction({
+              action: 'status',
+              formData: { ids, status: 'cancelled' },
+            });
           },
         },
       ],
@@ -97,19 +110,18 @@ export default {
         this.orders = orders;
       }
     },
-    async handleDeleteMany(selectedData) {
-      if (!window.confirm('Are you sure?')) return;
-      const ids = selectedData;
-      const formData = { ids };
-      const { success, message } = await this.$store.dispatch('post', {
-        api: 'order/bulk/delete',
-        formData,
+    async handleBatchAction(data) {
+      const message = await this.$store.dispatch('confirmable', {
+        api: 'order/batch',
+        data,
       });
-      if (success) {
-        this.fetch();
-        this.$toast({ type: 'success', message, duration: 2000 });
-        this.$refs.table.resetBulkAction();
+      if (message) {
+        this.handleActionSuccess(message);
       }
+    },
+    handleActionSuccess(message) {
+      this.$toast({ type: 'success', message, duration: 2000 });
+      this.$refs.table.resetBulkAction();
     },
   },
 };

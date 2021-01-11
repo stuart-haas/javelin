@@ -37,7 +37,7 @@ module.exports = {
     try {
       await Product.updateMany(
         { _id: { $in: ids } },
-        { $set: { status: status } },
+        { $set: { status } },
         { multi: true }
       );
       res.json({ success: true, message: 'Products updated' });
