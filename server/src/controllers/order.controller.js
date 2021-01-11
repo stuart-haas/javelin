@@ -75,6 +75,25 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
+  duplicate: async (req, res) => {
+    const { id } = req.body;
+    try {
+      const order = await Order.findById(id);
+      const orderObject = order.toJSON();
+      delete orderObject._id;
+      delete orderObject.orderId;
+      const duplicateOrder = new Order(orderObject);
+      await duplicateOrder.save();
+      res.json({
+        success: true,
+        message: 'Order duplicated',
+        order: duplicateOrder,
+      });
+    } catch (error) {
+      console.log(error);
+      res.status(422).json({ error: true, message: 'Something went wrong' });
+    }
+  },
   update: async (req, res) => {
     const { id } = req.params;
     try {

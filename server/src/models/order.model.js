@@ -63,6 +63,11 @@ Order.pre('save', async function () {
   return this;
 });
 
+Order.methods.toJSON = function () {
+  var obj = this.toObject();
+  return obj;
+};
+
 Order.methods.decreaseProductInventory = async function () {
   const order = await this.populateItems();
   order.items = order.items.map((item) => {

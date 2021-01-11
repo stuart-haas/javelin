@@ -136,6 +136,9 @@ export default {
         {
           label: 'Duplicate',
           icon: 'copy',
+          action: () => {
+            this.duplicate();
+          },
         },
         {
           label: 'Archive',
@@ -148,7 +151,7 @@ export default {
         {
           label: 'Cancel',
           icon: 'times',
-          boolQuery: this.order.status !== 'archived',
+          boolQuery: this.order.status !== 'canceled',
           action: () => {
             this.updateStatus('canceled');
           },
@@ -187,12 +190,13 @@ export default {
       const user = this.$store.state.user.user;
       this.user = user;
     },
-    async deleteThis() {
+    async duplicate() {
       if (!window.confirm('Are you sure?')) return;
-      const param = this.$route.params.id;
-      const { order, message } = await this.$store.dispatch('delete', {
-        api: 'order/cp',
-        param,
+      const { id } = this.$route.params;
+      const formData = { id };
+      const { order, message } = await this.$store.dispatch('post', {
+        api: 'order/duplicate',
+        formData,
       });
       if (order) {
         this.$toast({ type: 'success', message, duration: 2000 });
@@ -212,6 +216,18 @@ export default {
         this.fetch();
         this.$toast({ type: 'success', message, duration: 2000 });
         this.editNote = false;
+      }
+    },
+    async deleteThis() {
+      if (!window.confirm('Are you sure?')) return;
+      const param = this.$route.params.id;
+      const { order, message } = await this.$store.dispatch('delete', {
+        api: 'order/cp',
+        param,
+      });
+      if (order) {
+        this.$toast({ type: 'success', message, duration: 2000 });
+        this.$router.push('/cp/orders');
       }
     },
     success(response) {
