@@ -4,7 +4,6 @@
       <div>
         <p class="text-2xl text-gray-700 font-semibold">New Order</p>
       </div>
-      <Dropdown :items="menuItems" />
     </template>
     <div class="grid grid-cols-12 gap-6">
       <div class="col-span-8 space-y-6">
