@@ -49,8 +49,9 @@ export default {
   methods: {
     handleAction() {
       const { item, data } = this;
-      this.item.action && this.item.action({item, data});
-      this.$emit('action', {item, data });
+      if(this.item.action && this.item.action({item, data})) {
+        this.$emit('action', {item, data });
+      }
     }
   }
 };

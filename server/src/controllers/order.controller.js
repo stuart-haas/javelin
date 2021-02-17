@@ -84,6 +84,8 @@ module.exports = {
       delete orderObject._id;
       delete orderObject.orderId;
       const duplicateOrder = new Order(orderObject);
+      duplicateOrder.createdAt = new Date();
+      duplicateOrder.updatedAt = new Date();
       await duplicateOrder.save();
       res.json({
         success: true,
