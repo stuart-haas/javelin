@@ -10,8 +10,9 @@
           <Avatar :src="user && user.avatar" />
           <router-link v-if="!user" to="/login" class="link">Login</router-link>
           <router-link v-else to="/account" class="link"
-            >My Account</router-link
+            >Your Account</router-link
           >
+          <a v-if="user" @click.prevent="logout" class="link">Logout</a>
         </div>
       </template>
     </Header>
@@ -36,5 +37,13 @@ export default {
       return this.$store.state.user.user;
     },
   },
+  methods: {
+    async logout() {
+      const success = await this.$store.dispatch('user/logout');
+      if (success) {
+        this.$router.push('/login');
+      }
+    },
+  }
 };
 </script>

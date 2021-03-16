@@ -50,7 +50,7 @@ export default {
       if (query) {
         this.$router.replace(query);
       } else {
-        this.$router.replace('/products');
+        this.$router.replace('/');
       }
     },
   },
