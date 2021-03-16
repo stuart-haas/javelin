@@ -1,23 +1,19 @@
 <template>
-  <Splash :image="image">
-    <div class="py-4">
-      <h1 class="h1">Register</h1>
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <Form
+          :fields="fields"
+          dispatch="user/register"
+          @success="success"
+          submitLabel="Register"
+          submitClass="w-full"
+          class="box"
+        />
+        <router-link to="/login" class="mt-6">Login</router-link>
+      </div>
     </div>
-    <Form
-      :fields="fields"
-      dispatch="user/register"
-      @success="success"
-      submitLabel="Register"
-      submitClass="w-full"
-      class="shadow-lg px-4 py-8 rounded bg-gray-200 bg-opacity-75"
-    >
-      <router-link
-        to="/login"
-        class="block mt-3 text-center duration-300 transition hover:text-secondary-700"
-        >Login</router-link
-      >
-    </Form>
-  </Splash>
+  </section>
 </template>
 
 <script>

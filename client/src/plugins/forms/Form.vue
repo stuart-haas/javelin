@@ -1,10 +1,5 @@
 <template>
-  <form
-    class="relative"
-    v-bind="$attrs"
-    v-on="$listeners"
-    @submit.prevent="submit"
-  >
+  <form v-bind="$attrs" v-on="$listeners" @submit.prevent="submit">
     <Field
       v-for="(field, index) in fields"
       :key="field.label"
@@ -12,9 +7,11 @@
       :index="index"
       @update="update"
     />
-    <Button type="submit" theme="secondary" :class="submitClass">{{
-      submitLabel
-    }}</Button>
+    <div class="control">
+      <Button type="submit" class="button is-primary" :class="submitClass">{{
+        submitLabel
+      }}</Button>
+    </div>
     <slot></slot>
     <transition name="fade">
       <div

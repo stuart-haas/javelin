@@ -1,45 +1,45 @@
 <template>
-  <fieldset class="mb-6" :class="field.class">
-    <label :for="id" class="block text-sm font-medium text-gray-700">{{
-      field.label
-    }}</label>
-    <input
-      v-if="tag === 'input'"
-      :type="type"
-      :id="id"
-      ref="input"
-      v-bind="attrs"
-      v-model="value"
-      @input="input"
-      class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent"
-    />
-    <textarea
-      v-if="tag === 'textarea'"
-      :id="id"
-      ref="input"
-      v-bind="attrs"
-      v-model="value"
-      @input="input"
-      class="mt-1 p-1 text-sm block w-full border-b border-gray-500 bg-transparent resize-none"
-    />
-    <select
-      v-if="tag === 'select'"
-      :id="id"
-      ref="input"
-      v-bind="attrs"
-      v-model="value"
-      @change="input"
-      class="mt-1 border-b border-gray-500 w-full cursor-pointer"
-    >
-      <option
-        v-for="(item, index) in field.items"
-        :key="index"
-        :value="item.value"
-      >
-        {{ item.label }}
-      </option>
-    </select>
-  </fieldset>
+  <div class="field" :class="field.class">
+    <label :for="id" class="label">{{ field.label }}</label>
+    <div class="control">
+      <input
+        v-if="tag === 'input'"
+        :type="type"
+        :id="id"
+        ref="input"
+        v-bind="attrs"
+        v-model="value"
+        @input="input"
+        class="input"
+      />
+      <textarea
+        v-if="tag === 'textarea'"
+        :id="id"
+        ref="input"
+        v-bind="attrs"
+        v-model="value"
+        @input="input"
+        class="textarea"
+      />
+      <div class="select" v-if="tag === 'select'">
+        <select
+          :id="id"
+          ref="input"
+          v-bind="attrs"
+          v-model="value"
+          @change="input"
+        >
+          <option
+            v-for="(item, index) in field.items"
+            :key="index"
+            :value="item.value"
+          >
+            {{ item.label }}
+          </option>
+        </select>
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>

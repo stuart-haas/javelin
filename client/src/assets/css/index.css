@@ -1,43 +1,4 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
-html, body {
-  @apply min-h-full;
-  @apply h-full;
-}
-
-h1, h2, h3, h4, h5, h6 {
-  @apply font-serif;
-}
-
-input:disabled,
-button:disabled {
-  cursor: not-allowed;
-  opacity: 0.75;
-}
-
-input[type='text']:disabled,
-textarea:disabled {
-  @apply disabled:opacity-50 disabled:bg-gray-200;
-}
-
-.h1 {
-  @apply text-4xl;
-}
-
-.h2 {
-  @apply text-3xl;
-}
-
-.h3 {
-  @apply text-2xl;
-}
-
-.link {
-  @apply duration-300 transition hover:text-secondary-500 cursor-pointer;
-}
-
+@import "../../../node_modules/bulma/css/bulma.min.css";
 
 .fade-enter-active, .fade-leave-active {
   transition: opacity 0.3s ease;

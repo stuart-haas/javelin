@@ -1,27 +1,30 @@
 <template>
-  <div class="h-full">
-    <Header>
-      <template #left>
-        <div class="flex justify-between items-center">
+  <div class="container">
+    <nav
+      class="navbar is-spaced"
+      role="navigation"
+      aria-label="main navigation"
+    >
+      <div class="navbar-start">
+        <div class="field has-addons">
+          <div class="control">
+            <input class="input" type="text" placeholder="Search..." />
+          </div>
+          <div class="control">
+            <a class="button is-info">Search</a>
+          </div>
         </div>
-      </template>
-      <template #right>
-        <div class="flex justify-between items-center space-x-4">
-          <Dropdown v-if="user" :items="menuItems">
-            <template #title>
-              <span class="flex justify-between items-center space-x-4">
-                <Avatar :src="user && user.avatar" />
-                <span>Your Account</span>
-              </span>
-            </template>
-          </Dropdown>
-          <router-link v-else to="/login" class="link">Login</router-link>
-        </div>
-      </template>
-    </Header>
-    <transition name="page" mode="out-in">
-      <router-view />
-    </transition>
+      </div>
+      <div class="navbar-end">
+        <Avatar v-if="user" :src="user && user.avatar" />
+        <router-link v-else to="/login">Login</router-link>
+      </div>
+    </nav>
+    <div class="container">
+      <transition name="page" mode="out-in">
+        <router-view />
+      </transition>
+    </div>
     <Toast />
   </div>
 </template>
@@ -39,8 +42,14 @@ export default {
     user() {
       return this.$store.state.user.user;
     },
-     menuItems() {
+    menuItems() {
       return [
+        {
+          label: 'Settings',
+          icon: 'cog',
+          tag: 'router-link',
+          to: '/settings',
+        },
         {
           label: 'Logout',
           icon: 'sign-out-alt',
@@ -58,6 +67,6 @@ export default {
         this.$router.push('/login');
       }
     },
-  }
+  },
 };
 </script>

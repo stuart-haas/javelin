@@ -1,24 +1,19 @@
 <template>
-  <Splash :image="image">
-    <div class="py-4">
-      <h1 class="h1">Login</h1>
+  <section class="section">
+    <div class="columns is-centered">
+      <div class="column is-half">
+        <Form
+          :fields="fields"
+          dispatch="user/login"
+          api="user/login"
+          @success="success"
+          submitLabel="Login"
+          class="box"
+        />
+        <router-link to="/register" class="mt-6">Register</router-link>
+      </div>
     </div>
-    <Form
-      :fields="fields"
-      dispatch="user/login"
-      api="user/login"
-      @success="success"
-      submitLabel="Login"
-      submitClass="w-full"
-      class="shadow-lg px-4 py-8 rounded bg-gray-200 bg-opacity-75"
-    >
-      <router-link
-        to="/register"
-        class="block mt-3 text-center duration-300 transition hover:text-secondary-700"
-        >Register</router-link
-      >
-    </Form>
-  </Splash>
+  </section>
 </template>
 
 <script>
@@ -32,6 +27,7 @@ export default {
         {
           label: 'Username',
           name: 'username',
+          placeholder: 'Username',
           required: true,
           focus: true,
         },
@@ -39,6 +35,7 @@ export default {
           label: 'Password',
           name: 'password',
           type: 'password',
+          placeholder: 'Password',
           required: true,
         },
       ],

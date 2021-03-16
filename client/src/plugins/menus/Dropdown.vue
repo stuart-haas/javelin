@@ -15,7 +15,7 @@
     <transition name="fade">
       <div
         v-if="open"
-        class="absolute top-full mt-1 whitespace-nowrap text-sm z-10 border border-gray-300 rounded shadow"
+        class="absolute w-full top-full mt-1 whitespace-nowrap text-sm z-10 border border-gray-300 rounded shadow"
         :class="[`${hAlign}-0`]"
       >
         <div class="bg-gray-200 rounded shadow text-gray-600 overflow-hidden">

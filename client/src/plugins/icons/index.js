@@ -23,7 +23,8 @@ import {
   faUnlock,
   faCopy,
   faClipboardCheck,
-  faSignOutAlt
+  faSignOutAlt,
+  faCog,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -50,7 +51,8 @@ library.add(
   faUnlock,
   faCopy,
   faClipboardCheck,
-  faSignOutAlt
+  faSignOutAlt,
+  faCog,
 );
 
 Vue.component('Icon', FontAwesomeIcon);

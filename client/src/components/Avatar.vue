@@ -1,6 +1,6 @@
 <template>
-  <div class="w-8 h-8">
-    <img :src="src" class="rounded-full max-w-full h-auto align-middle" />
+  <div class="Avatar">
+    <img :src="src" />
   </div>
 </template>
 
@@ -11,3 +11,16 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.Avatar {
+  width: 40px;
+  height: 40px;
+}
+.Avatar img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 100%;
+  vertical-align: middle;
+}
+</style>

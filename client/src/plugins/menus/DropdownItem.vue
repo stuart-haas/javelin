@@ -8,7 +8,7 @@
     :class="[tag !== 'hr' && 'py-2']"
     @click="handleAction"
   >
-    <Icon v-if="item.icon" :icon="item.icon" class="mr-2" /><span
+    <Icon v-if="item.icon" :icon="item.icon" /><span
       v-if="item.label"
       >{{ item.label }}</span
     >
