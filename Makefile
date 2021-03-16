@@ -11,10 +11,10 @@ seed:
 	 docker-compose exec server node ./scripts/seed.js
 
 login-client:
-	docker exec -it fullstack_client sh
+	docker exec -it javelin_client sh
 
 login-server:
-	docker exec -it fullstack_server sh
+	docker exec -it javelin_server sh
 
 login-database:
-	docker exec -it fullstack_database mongo
+	docker exec -it javelin_database mongo

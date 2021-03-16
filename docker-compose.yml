@@ -1,7 +1,7 @@
 version: '3.4'
 services:
   client:
-    container_name: fullstack_client
+    container_name: javelin_client
     build: 
       context: ./client
     depends_on:
@@ -15,7 +15,7 @@ services:
       - frontend
 
   server:
-    container_name: fullstack_server
+    container_name: javelin_server
     build: 
       context: ./server
     depends_on:
@@ -31,19 +31,19 @@ services:
     
   database:
     image: mongo:4.4.2
-    container_name: fullstack_database
+    container_name: javelin_database
     depends_on:
       - redis
     volumes:
       - mongo-data:/data/db
     environment:
-      - MONGO_INITDB_DATABASE=fullstack
+      - MONGO_INITDB_DATABASE=javelin
     networks: 
       - backend
 
   redis:
     image: redis:6.0.9
-    container_name: fullstack_redis
+    container_name: javelin_redis
     volumes:
       - redis-data:/data/redis
     ports:
