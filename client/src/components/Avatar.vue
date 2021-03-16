@@ -1,7 +1,7 @@
 <template>
-  <div class="Avatar">
-    <img :src="src" />
-  </div>
+  <figure class="image is-48x48">
+    <img class="is-rounded" :src="src" />
+  </figure>
 </template>
 
 <script>

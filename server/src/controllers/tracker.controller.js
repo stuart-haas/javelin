@@ -3,7 +3,7 @@ const Tracker = require('../models/tracker.model');
 module.exports = {
   findAll: async (req, res) => {
     const user = req.user._id;
-    const trackers = await Tracker.find(user);
+    const trackers = await Tracker.find({user});
     res.json(trackers);
   },
   find: async (req, res) => {

@@ -30,15 +30,19 @@ const router = new Router({
           component: () => import('@/views/pages/account/Register.vue'),
           meta: { title: 'Register' },
         },
+        {
+          path: 'trackers',
+          name: 'trackers',
+          component: () => import('@/views/pages/trackers/Index.vue'),
+          meta: { title: 'Trackers' },
+        },
       ],
     },
   ],
 });
 
 router.beforeEach(async (to, from, next) => {
-  document.title = to.meta.title
-    ? `${to.meta.title} - Javelin`
-    : 'Javelin';
+  document.title = to.meta.title ? `${to.meta.title} - Javelin` : 'Javelin';
 
   if (!store.state.user.user) {
     await store.dispatch('user/initialize');

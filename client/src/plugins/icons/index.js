@@ -25,6 +25,8 @@ import {
   faClipboardCheck,
   faSignOutAlt,
   faCog,
+  faPen,
+  faCheck,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -53,6 +55,8 @@ library.add(
   faClipboardCheck,
   faSignOutAlt,
   faCog,
+  faPen,
+  faCheck
 );
 
 Vue.component('Icon', FontAwesomeIcon);

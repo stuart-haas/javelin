@@ -1,24 +1,25 @@
 <template>
   <div
-    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 text-sm transition duration-300 rounded"
+    class="dropdown is-right"
+    :class="{ 'is-active': open }"
     @click="open = !open"
     v-click-outside="handleClose"
   >
-    <div class="flex items-center">
-      <span v-if="hasTitle"><slot name="title" /></span
-      ><span v-else>{{ title }}</span><Icon
-        icon="angle-down"
-        class="ml-4 text-lg transform duration-300 transition-all"
-        :class="open ? 'rotate-180' : ''"
-      />
+    <div class="dropdown-trigger">
+      <slot v-if="hasTrigger" name="trigger" />
+      <button
+        v-else
+        class="button"
+        aria-haspopup="true"
+        aria-controls="dropdown-menu"
+      >
+        <span>Dropdown button</span
+        ><Icon icon="angle-down" aria-hidden="true" />
+      </button>
     </div>
     <transition name="fade">
-      <div
-        v-if="open"
-        class="absolute w-full top-full mt-1 whitespace-nowrap text-sm z-10 border border-gray-300 rounded shadow"
-        :class="[`${hAlign}-0`]"
-      >
-        <div class="bg-gray-200 rounded shadow text-gray-600 overflow-hidden">
+      <div v-if="open" class="dropdown-menu" role="menu">
+        <div class="dropdown-content">
           <DropdownItem
             v-for="(item, index) in items"
             :key="index"
@@ -69,8 +70,8 @@ export default {
     tag() {
       return this.item.tag || 'div';
     },
-    hasTitle() {
-      return !!this.$slots.title;
+    hasTrigger() {
+      return !!this.$slots.trigger;
     },
   },
   methods: {

@@ -14,14 +14,12 @@
     </div>
     <slot></slot>
     <transition name="fade">
-      <div
-        v-if="messages.length"
-        class="mt-3 absolute top-full w-full bg-white left-0 rounded shadow-lg px-4 py-2"
-      >
+      <div v-if="messages.length" class="tags">
         <div
           v-for="(message, index) in messages"
           :key="index"
-          :class="`text-${message.type}`"
+          class="tag"
+          :class="`${getType(message)}`"
         >
           {{ message.value }}
         </div>
@@ -115,6 +113,15 @@ export default {
     update({ field, value }) {
       this.formData[field.name] = value;
     },
+    getType(toast) {
+      return toast.type === 'success' ? 'is-success' : 'is-danger';
+    },
   },
 };
 </script>
+
+<style scoped>
+.tags {
+  margin-top: 1em;
+}
+</style>

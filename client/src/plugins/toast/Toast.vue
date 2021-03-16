@@ -1,10 +1,11 @@
 <template>
-  <div class="fixed bottom-0 right-4">
+  <div class="notifications">
     <transition-group name="slideUp">
       <div
         v-for="toast in toasts"
         :key="toast.id"
-        :class="`slideUp p-2 mb-4 shadow-lg bg-${toast.type} text-white transition-all duration-500`"
+        class="notification"
+        :class="`${getType(toast)}`"
       >
         {{ toast.message }}
       </div>
@@ -45,6 +46,17 @@ export default {
       const id = Date.now();
       this.add({ ...options, id });
     },
+    getType(toast) {
+      return toast.type === 'success' ? 'is-success' : 'is-danger';
+    },
   },
 };
 </script>
+
+<style scoped>
+.notifications {
+  position: fixed;
+  right: 1em;
+  bottom: 1em;
+}
+</style>

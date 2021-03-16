@@ -1,22 +1,23 @@
 <template>
-  <div class="container">
+  <div class="container is-fluid">
     <nav
-      class="navbar is-spaced"
+      class="navbar is-light is-spaced"
       role="navigation"
       aria-label="main navigation"
     >
       <div class="navbar-start">
-        <div class="field has-addons">
-          <div class="control">
-            <input class="input" type="text" placeholder="Search..." />
-          </div>
-          <div class="control">
-            <a class="button is-info">Search</a>
-          </div>
-        </div>
+        <h1 class="is-size-3">JAVELIN</h1>
       </div>
       <div class="navbar-end">
-        <Avatar v-if="user" :src="user && user.avatar" />
+        <Dropdown :items="menuItems" v-if="user">
+          <template #trigger>
+            <Avatar
+              v-if="user"
+              :src="user && user.avatar"
+              class="is-clickable"
+            />
+          </template>
+        </Dropdown>
         <router-link v-else to="/login">Login</router-link>
       </div>
     </nav>
@@ -30,12 +31,10 @@
 </template>
 
 <script>
-import Header from '@/components/Header.vue';
 import Avatar from '@/components/Avatar.vue';
 
 export default {
   components: {
-    Header,
     Avatar,
   },
   computed: {
@@ -52,6 +51,7 @@ export default {
         },
         {
           label: 'Logout',
+          class: 'is-clickable',
           icon: 'sign-out-alt',
           action: () => {
             this.logout();

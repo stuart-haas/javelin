@@ -4,14 +4,10 @@
     :is="tag"
     v-bind="attrs"
     v-on="listeners"
-    class="flex px-2 bg-white transition duration-300 cursor-pointer items-center justify-between hover:bg-gray-100"
-    :class="[tag !== 'hr' && 'py-2']"
+    class="dropdown-item"
     @click="handleAction"
   >
-    <Icon v-if="item.icon" :icon="item.icon" /><span
-      v-if="item.label"
-      >{{ item.label }}</span
-    >
+    <span v-if="item.label">{{ item.label }}</span>
   </component>
 </template>
 
