@@ -21,8 +21,5 @@ import './assets/css/index.css';
 new Vue({
   store,
   router,
-  beforeCreate() {
-    this.$store.dispatch('initialize');
-  },
   render: (h) => h(App),
 }).$mount('#app');

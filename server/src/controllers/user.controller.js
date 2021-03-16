@@ -184,40 +184,4 @@ module.exports = {
       res.status(422).json({ error: true, message: 'Something went wrong' });
     }
   },
-  addFavorite: async (req, res) => {
-    const id = req.params.user;
-    const { favorite } = req.body;
-    try {
-      const user = await User.findByIdAndUpdate(
-        id,
-        {
-          $addToSet: {
-            favorites: favorite,
-          },
-        },
-        { new: true }
-      ).populate('favorites', '_id name');
-      res.json({ success: true, message: 'Favorite added', user });
-    } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
-    }
-  },
-  removeFavorite: async (req, res) => {
-    const id = req.params.user;
-    const { favorite } = req.body;
-    try {
-      const user = await User.findByIdAndUpdate(
-        id,
-        {
-          $pull: {
-            favorites: favorite,
-          },
-        },
-        { new: true }
-      ).populate('favorites', '_id name');
-      res.json({ success: true, message: 'Favorite removed', user });
-    } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
-    }
-  },
 };

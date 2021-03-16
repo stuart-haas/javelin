@@ -52,9 +52,6 @@ router.post('/logout', controller.logout);
 
 router.get('/session', controller.session);
 
-router.post('/favorite/:user', auth.isMe, controller.addFavorite);
-router.put('/favorite/:user', auth.isMe, controller.removeFavorite);
-
 router
   .route('/:user')
   .get(auth.isMe, controller.findMine)

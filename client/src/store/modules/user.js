@@ -55,8 +55,6 @@ const actions = {
     );
     if (success || error) {
       commit('setState', { name: 'user', value: null });
-      commit('cart/setState', { name: 'items', value: [] }, { root: true });
-      commit('cart/setState', { name: 'total', value: 0 }, { root: true });
     }
     return success;
   },

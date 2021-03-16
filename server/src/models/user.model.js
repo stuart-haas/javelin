@@ -22,18 +22,6 @@ const fields = {
     default: false,
   },
   avatar: String,
-  firstName: String,
-  lastName: String,
-  street: String,
-  city: String,
-  state: String,
-  zipCode: String,
-  favorites: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: 'Product',
-    },
-  ],
 };
 
 const User = new Schema(fields, {

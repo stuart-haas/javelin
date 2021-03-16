@@ -15,9 +15,6 @@ const mutations = {
 };
 
 const actions = {
-  initialize({ dispatch }) {
-    dispatch('cart/initialize');
-  },
   send(ctx, { method, api, param, formData }) {
     const route = param ? `${api}/${param}` : api;
     return this._vm.$api[method](route, formData).then(returnData);
