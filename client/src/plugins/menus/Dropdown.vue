@@ -1,12 +1,12 @@
 <template>
   <div
-    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 bg-gray-200 text-sm transition duration-300 hover:bg-gray-300 rounded"
+    class="relative border border-gray-300 text-gray-600 cursor-pointer p-2 text-sm transition duration-300 rounded"
     @click="open = !open"
     v-click-outside="handleClose"
   >
     <div class="flex items-center">
-      <span>{{ title }}</span
-      ><Icon
+      <span v-if="hasTitle"><slot name="title" /></span
+      ><span v-else>{{ title }}</span><Icon
         icon="angle-down"
         class="ml-4 text-lg transform duration-300 transition-all"
         :class="open ? 'rotate-180' : ''"
@@ -68,6 +68,9 @@ export default {
   computed: {
     tag() {
       return this.item.tag || 'div';
+    },
+    hasTitle() {
+      return !!this.$slots.title;
     },
   },
   methods: {

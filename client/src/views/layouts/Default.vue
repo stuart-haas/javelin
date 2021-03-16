@@ -7,12 +7,15 @@
       </template>
       <template #right>
         <div class="flex justify-between items-center space-x-4">
-          <Avatar :src="user && user.avatar" />
-          <router-link v-if="!user" to="/login" class="link">Login</router-link>
-          <router-link v-else to="/account" class="link"
-            >Your Account</router-link
-          >
-          <a v-if="user" @click.prevent="logout" class="link">Logout</a>
+          <Dropdown v-if="user" :items="menuItems">
+            <template #title>
+              <span class="flex justify-between items-center space-x-4">
+                <Avatar :src="user && user.avatar" />
+                <span>Your Account</span>
+              </span>
+            </template>
+          </Dropdown>
+          <router-link v-else to="/login" class="link">Login</router-link>
         </div>
       </template>
     </Header>
@@ -35,6 +38,17 @@ export default {
   computed: {
     user() {
       return this.$store.state.user.user;
+    },
+     menuItems() {
+      return [
+        {
+          label: 'Logout',
+          icon: 'sign-out-alt',
+          action: () => {
+            this.logout();
+          },
+        },
+      ];
     },
   },
   methods: {

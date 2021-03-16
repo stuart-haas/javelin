@@ -1,6 +1,6 @@
 <template>
   <div
-    class="flex items-center justify-between px-8 py-2 bg-white border border-gray-300 border-b"
+    class="flex items-center justify-between px-2 py-2 bg-white"
   >
     <div class="w-full flex justify-between">
       <slot name="left"></slot>
