@@ -1,5 +1,5 @@
 <template>
-  <figure class="image is-48x48">
+  <figure class="image is-32x32">
     <img class="is-rounded" :src="src" />
   </figure>
 </template>

@@ -44,6 +44,16 @@ export default {
     menuItems() {
       return [
         {
+          label: this.user.username,
+        },
+        {
+          label: this.user.email,
+          class: 'has-text-grey-light is-size-7',
+        },
+        {
+          divider: true,
+        },
+        {
           label: 'Settings',
           icon: 'cog',
           tag: 'router-link',

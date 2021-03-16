@@ -4,7 +4,6 @@
     :is="tag"
     v-bind="attrs"
     v-on="listeners"
-    class="dropdown-item"
     @click="handleAction"
   >
     <span v-if="item.label">{{ item.label }}</span>
@@ -34,7 +33,11 @@ export default {
     },
     attrs() {
       /* eslint-disable */
-      const { tag, ...attrs } = this.item;
+      const { tag, label, ...attrs } = this.item;
+
+      attrs.class += this.item.divider ? ' dropdown-divider' : ' dropdown-item';
+
+      console.log(attrs.class);
 
       return attrs;
     },
