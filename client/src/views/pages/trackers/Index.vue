@@ -25,17 +25,29 @@
         </div>
       </div>
     </section>
-    <div v-if="trackers.length">
-      <Tracker
-        v-for="(tracker, index) in trackers"
-        :key="tracker._id"
-        :tracker="tracker"
-        :index="index"
-      />
-    </div>
-    <div v-else class="box has-text-centered">
-      You haven't added any trackers yet
-    </div>
+    <section class="section">
+      <div v-if="inProgressTrackers.length">
+        <Tracker
+          v-for="(tracker, index) in inProgressTrackers"
+          :key="tracker._id"
+          :tracker="tracker"
+          :index="index"
+          @complete="fetch"
+        />
+      </div>
+      <div v-else class="box has-text-centered">No in-progress trackers</div>
+    </section>
+    <section class="section">
+      <div v-if="completedTrackers.length">
+        <Tracker
+          v-for="(tracker, index) in completedTrackers"
+          :key="tracker._id"
+          :tracker="tracker"
+          :index="index"
+        />
+      </div>
+      <div v-else class="box has-text-centered">No completed trackers</div>
+    </section>
   </div>
 </template>
 
@@ -50,11 +62,20 @@ export default {
     trackers() {
       return this.$store.state.tracker.trackers;
     },
+    inProgressTrackers() {
+      return this.trackers.filter((item) => !item.complete);
+    },
+    completedTrackers() {
+      return this.trackers.filter((item) => item.complete);
+    },
   },
   mounted() {
-    this.$store.dispatch('tracker/fetch');
+    this.fetch();
   },
   methods: {
+    fetch() {
+      this.$store.dispatch('tracker/fetch');
+    },
     addTracker() {
       const formData = { name: 'New Tracker' };
       this.$store.dispatch('tracker/add', {

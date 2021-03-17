@@ -40,21 +40,21 @@
                 class="input"
                 placeholder="00:00:00"
                 v-model="formData.time"
-                @keydown.enter="handleUpdateTime"
+                @keydown.enter="handleSetTime"
                 @keydown.esc="handleCancel('time')"
               />
             </p>
           </div>
         </div>
-        <div class="level-item ml-4">
+        <div v-if="!tracker.complete" class="level-item ml-4">
           <span class="icon is-clickable">
             <Icon v-if="!running" icon="play" @click="resume" />
             <Icon v-else icon="pause" @click="pause" />
           </span>
         </div>
-        <div class="level-item ml-4">
+        <div v-if="!tracker.complete" class="level-item ml-4">
           <div class="buttons">
-            <div class="button is-primary">Log</div>
+            <div class="button is-primary" @click="handleComplete">Log</div>
           </div>
         </div>
         <div class="level-item ml-4">
@@ -117,7 +117,7 @@ export default {
 
     this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
 
-    if (this.running) {
+    if (this.running && !this.tracker.complete) {
       this.start();
     }
   },
@@ -126,6 +126,7 @@ export default {
       this.edit[key] = true;
       if (key === 'time') {
         this.formData.time = this.time;
+        this.pause();
       }
       this.$nextTick(() => {
         this.$refs[key].focus();
@@ -134,21 +135,39 @@ export default {
     handleCancel(key) {
       this.edit[key] = false;
       this.formData[key] = this.tracker[key];
+
+      if (key == 'time') {
+        this.resume();
+      }
     },
-    handleUpdateTime() {
+    handleSetTime() {
       this.time = this.formData.time;
       this.edit.time = false;
+      this.resume();
+
+      if (this.tracker.complete) {
+        this.handleUpdate('time');
+      }
     },
-    async handleUpdate(key) {
+    handleUpdate(key) {
+      this.handleSave();
+      this.edit[key] = false;
+    },
+    async handleComplete() {
+      this.formData.complete = true;
+      await this.handleSave();
+      this.$emit('complete');
+    },
+    async handleSave() {
       const param = this.tracker._id;
       const { formData } = this;
-      this.$store.dispatch('tracker/update', {
+      formData.complete = true;
+      await this.$store.dispatch('tracker/update', {
         formData,
         param,
       });
-      this.edit[key] = false;
     },
-    async handleRemove() {
+    handleRemove() {
       const param = this.tracker._id;
       const { index } = this;
       if (window.confirm('Are you sure?')) {
