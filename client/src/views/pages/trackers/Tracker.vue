@@ -6,89 +6,54 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div class="level-item is-clickable" @click.stop="handleEdit('name')">
-            <div>
-              <span v-show="!edit['name']">{{ tracker.name }}</span>
-              <div v-show="edit['name']" class="field">
-                <p class="control">
-                  <input
-                    ref="name"
-                    type="text"
-                    class="input"
-                    v-model="formData.name"
-                    :placeholder="tracker.name"
-                    @keydown.enter="handleUpdate('name')"
-                    @keyup.esc="handleCancel('name')"
-                    @blur="handleUpdate('name')"
-                    @keydown.tab.prevent="handleNext('name', 'project')"
-                  />
-                </p>
-              </div>
+          <div class="level-item is-clickable">
+            <div class="field">
+              <p class="control">
+                <input
+                  ref="name"
+                  type="text"
+                  class="input"
+                  v-model="formData.name"
+                  placeholder="Name"
+                  @keydown.enter="handleUpdate('name')"
+                  @keyup.esc="handleCancel('name')"
+                  @blur="handleUpdate('name')"
+                  @keydown.tab.prevent="handleNext('name', 'project')"
+                />
+              </p>
             </div>
           </div>
-          <div
-            class="level-item ml-6 is-clickable"
-            @click.stop="handleEdit('project')"
-          >
-            <div>
-              <span v-show="!edit['project']">{{ tracker.project }}</span>
-              <div v-show="edit['project']" class="field">
-                <p class="control">
-                  <input
-                    ref="project"
-                    type="text"
-                    class="input"
-                    v-model="formData.project"
-                    :placeholder="tracker.project"
-                    @keydown.enter="handleUpdate('project')"
-                    @keyup.esc="handleCancel('project')"
-                    @blur="handleUpdate('project')"
-                    @keydown.tab.prevent="handleNext('project', 'rate')"
-                  />
-                </p>
-              </div>
+          <div class="level-item ml-6 is-clickable">
+            <div class="field">
+              <p class="control">
+                <input
+                  ref="project"
+                  type="text"
+                  class="input"
+                  v-model="formData.project"
+                  :placeholder="tracker.project"
+                  @keydown.enter="handleUpdate('project')"
+                  @keyup.esc="handleCancel('project')"
+                  @blur="handleUpdate('project')"
+                  @keydown.tab.prevent="handleNext('project', 'time')"
+                />
+              </p>
             </div>
           </div>
         </div>
         <div class="level-right">
-          <div class="level-item is-clickable" @click.stop="handleEdit('rate')">
-            <div>
-              <span v-show="!edit['rate']">{{ tracker.rate }}</span>
-              <div v-show="edit['rate']" class="field">
-                <p class="control">
-                  <input
-                    ref="rate"
-                    type="text"
-                    class="input"
-                    v-model="formData.rate"
-                    :placeholder="tracker.rate"
-                    @keydown.enter="handleUpdate('rate')"
-                    @keyup.esc="handleCancel('rate')"
-                    @blur="handleUpdate('rate')"
-                    @keydown.tab.prevent="handleNext('rate', 'time')"
-                  />
-                </p>
-              </div>
-            </div>
-          </div>
-          <div
-            class="level-item is-clickable ml-4"
-            @click.stop="handleEdit('time')"
-          >
-            <span v-show="!edit['time'] && !tracker.complete">{{ time }}</span>
-            <span v-show="!edit['time'] && tracker.complete">{{
-              formData.time
-            }}</span>
-            <div v-show="edit['time']" class="field">
+          <div class="level-item is-clickable ml-4">
+            <div class="field">
               <p class="control">
                 <input
                   ref="time"
                   type="text"
                   class="input"
                   placeholder="00:00:00"
-                  v-model="formData.time"
+                  v-model="calculatedTime"
                   @keydown.enter="handleSetTime"
                   @keyup.esc="handleCancel('time')"
+                  @click.stop="handleEdit('time')"
                   @blur="handleCancel('time')"
                 />
               </p>
@@ -104,9 +69,6 @@
             <div class="buttons">
               <div class="button is-primary" @click="handleComplete">Log</div>
             </div>
-          </div>
-          <div v-if="tracker.complete" class="level-item ml-4">
-            <span>{{ total }}</span>
           </div>
           <div class="level-item ml-4">
             <button
@@ -129,7 +91,6 @@ import {
   timeToHumanReadable,
   humanReadableValue,
   formatTime,
-  humanReadableToHours,
 } from '../../../utils/time';
 
 export default {
@@ -164,24 +125,18 @@ export default {
       const monthName = months[date.getMonth()];
       return `${dayName}, ${monthName} ${date.getDay()}`;
     },
-    calculatedTime() {
-      return this.tracker.complete ? this.formData.time : this.time;
-    },
-    total() {
-      return `$${(this.formData.rate * this.timeAsHours).toFixed(2)}`;
-    },
     timeRange() {
-      const start = new Date(this.formData.createdAt);
+      const start = new Date(this.tracker.createdAt);
 
       const startHours = start.getHours();
       const startMinutes = start.getMinutes();
 
-      const endHours = this.formData.time
-        ? Number(humanReadableValue(this.formData.time, 0))
+      const endHours = this.tracker.time
+        ? Number(humanReadableValue(this.tracker.time, 0))
         : 0;
 
-      const endMinutes = this.formData.time
-        ? Number(humanReadableValue(this.formData.time, 1))
+      const endMinutes = this.tracker.time
+        ? Number(humanReadableValue(this.tracker.time, 1))
         : 0;
 
       var diffDate = new Date(start);
@@ -200,8 +155,13 @@ export default {
         ])
       );
     },
-    timeAsHours() {
-      return this.formData.time && humanReadableToHours(this.formData.time);
+    calculatedTime: {
+      get() {
+        return this.tracker.complete ? this.tracker.time : this.time;
+      },
+      set(newVal) {
+        this.formData.time = newVal;
+      },
     },
   },
   watch: {
