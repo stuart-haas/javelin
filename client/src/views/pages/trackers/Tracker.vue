@@ -10,7 +10,6 @@
         <div class="level-left">
           <div class="level-item is-clickable" @click.stop="handleEdit('name')">
             <div>
-              <p class="is-size-7 has-text-weight-bold">Name</p>
               <span v-show="!edit['name']">{{ tracker.name }}</span>
               <div v-show="edit['name']" class="field">
                 <p class="control">
@@ -34,7 +33,6 @@
             @click.stop="handleEdit('project')"
           >
             <div>
-              <p class="is-size-7 has-text-weight-bold">Project</p>
               <span v-show="!edit['project']">{{ tracker.project }}</span>
               <div v-show="edit['project']" class="field">
                 <p class="control">
@@ -57,7 +55,6 @@
         <div class="level-right">
           <div class="level-item is-clickable" @click.stop="handleEdit('rate')">
             <div>
-              <p class="is-size-7 has-text-weight-bold">Rate</p>
               <span v-show="!edit['rate']">{{ tracker.rate }}</span>
               <div v-show="edit['rate']" class="field">
                 <p class="control">
