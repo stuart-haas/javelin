@@ -63,10 +63,10 @@ export default {
       return this.$store.state.tracker.trackers;
     },
     inProgressTrackers() {
-      return this.trackers.filter((item) => !item.complete);
+      return this.$store.getters['tracker/progress'];
     },
     completedTrackers() {
-      return this.trackers.filter((item) => item.complete);
+      return this.$store.getters['tracker/complete'];
     },
   },
   mounted() {

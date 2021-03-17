@@ -27,10 +27,16 @@
       <div class="level-right">
         <div class="level-item" v-click-outside="() => handleCancel('time')">
           <span
-            v-show="!edit['time']"
+            v-show="!edit['time'] && !tracker.complete"
             class="is-clickable"
             @click.stop="handleEdit('time')"
             >{{ time }}</span
+          >
+          <span
+            v-show="!edit['time'] && tracker.complete"
+            class="is-clickable"
+            @click.stop="handleEdit('time')"
+            >{{ formData.time }}</span
           >
           <div v-show="edit['time']" class="field">
             <p class="control">
@@ -117,14 +123,18 @@ export default {
 
     this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
 
-    if (this.running && !this.tracker.complete) {
+    if (this.tracker.complete) {
+      this.running = false;
+    }
+
+    if (this.running) {
       this.start();
     }
   },
   methods: {
     handleEdit(key) {
       this.edit[key] = true;
-      if (key === 'time') {
+      if (key === 'time' && !this.tracker.complete) {
         this.pause();
         this.formData.time = this.time;
       }
@@ -136,17 +146,19 @@ export default {
       this.edit[key] = false;
       this.formData[key] = this.tracker[key];
 
-      if (key == 'time') {
+      if (key == 'time' && !this.tracker.complete) {
         this.resume();
       }
     },
     handleSetTime() {
       this.time = this.formData.time;
       this.edit.time = false;
-      this.resume();
 
       if (this.tracker.complete) {
+        this.formData.time = this.time;
         this.handleUpdate('time');
+      } else {
+        this.resume();
       }
     },
     handleUpdate(key) {
@@ -154,6 +166,9 @@ export default {
       this.edit[key] = false;
     },
     async handleComplete() {
+      localStorage.removeItem(this.runningId);
+      localStorage.removeItem(this.timeId);
+      this.formData.time = this.time;
       this.formData.complete = true;
       await this.handleSave();
       this.$emit('complete');
@@ -161,7 +176,6 @@ export default {
     async handleSave() {
       const param = this.tracker._id;
       const { formData } = this;
-      formData.complete = true;
       await this.$store.dispatch('tracker/update', {
         formData,
         param,

@@ -2,7 +2,14 @@ const state = {
   trackers: [],
 };
 
-const getters = {};
+const getters = {
+  progress(state) {
+    return state.trackers.filter((item) => !item.complete);
+  },
+  complete(state) {
+    return state.trackers.filter((item) => item.complete);
+  },
+};
 
 const mutations = {
   setState(state, { name, value }) {
