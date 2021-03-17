@@ -24,6 +24,7 @@
     "fuse.js": "^6.4.3",
     "object-resolve-path": "^1.1.1",
     "pluralize": "^8.0.0",
+    "tiny-timer": "^1.6.0",
     "vue": "^2.6.11",
     "vue-click-outside": "^1.1.0",
     "vue-router": "^3.4.9",

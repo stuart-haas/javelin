@@ -37,8 +37,6 @@ export default {
 
       attrs.class += this.item.divider ? ' dropdown-divider' : ' dropdown-item';
 
-      console.log(attrs.class);
-
       return attrs;
     },
     listeners() {

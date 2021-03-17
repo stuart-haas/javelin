@@ -27,6 +27,8 @@ import {
   faCog,
   faPen,
   faCheck,
+  faPlay,
+  faPause,
 } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome';
 
@@ -56,7 +58,9 @@ library.add(
   faSignOutAlt,
   faCog,
   faPen,
-  faCheck
+  faCheck,
+  faPlay,
+  faPause
 );
 
 Vue.component('Icon', FontAwesomeIcon);
