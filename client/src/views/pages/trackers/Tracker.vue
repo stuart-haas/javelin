@@ -39,7 +39,8 @@
                 type="text"
                 class="input"
                 placeholder="00:00:00"
-                v-model="time"
+                v-model="formData.time"
+                @keydown.enter="handleUpdateTime"
                 @keydown.esc="handleCancel('time')"
               />
             </p>
@@ -123,6 +124,9 @@ export default {
   methods: {
     handleEdit(key) {
       this.edit[key] = true;
+      if (key === 'time') {
+        this.formData.time = this.time;
+      }
       this.$nextTick(() => {
         this.$refs[key].focus();
       });
@@ -130,6 +134,10 @@ export default {
     handleCancel(key) {
       this.edit[key] = false;
       this.formData[key] = this.tracker[key];
+    },
+    handleUpdateTime() {
+      this.time = this.formData.time;
+      this.edit.time = false;
     },
     async handleUpdate(key) {
       const param = this.tracker._id;

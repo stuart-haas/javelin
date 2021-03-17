@@ -10,14 +10,25 @@ export const timerMixin = {
     };
   },
   computed: {
-    time() {
-      return (
-        this.formattedHours +
-        ':' +
-        this.formattedMinutes +
-        ':' +
-        this.formattedSeconds
-      );
+    time: {
+      get() {
+        return (
+          this.formattedHours +
+          ':' +
+          this.formattedMinutes +
+          ':' +
+          this.formattedSeconds
+        );
+      },
+      set(newVal) {
+        const time = isNaN(newVal)
+          ? Number(newVal.split(':')[0]) * 60000 * 60 +
+            Number(newVal.split(':')[1]) * 60000 +
+            Number(newVal.split(':')[2]) * 1000
+          : newVal;
+        this.currentTime = parseInt(time);
+        this.lastTime = parseInt(time);
+      },
     },
     formattedSeconds() {
       return this.seconds < 10 ? `0${this.seconds}` : this.seconds;
