@@ -2,42 +2,82 @@
   <div class="box">
     <div class="level">
       <div class="level-left">
-        <div class="level-item" v-click-outside="() => handleCancel('name')">
-          <span
-            v-show="!edit['name']"
-            class="is-clickable"
-            @click.stop="handleEdit('name')"
-            >{{ tracker.name }}</span
-          >
-          <div v-show="edit['name']" class="field">
-            <p class="control">
-              <input
-                ref="name"
-                type="text"
-                class="input"
-                v-model="formData.name"
-                :placeholder="tracker.name"
-                @keydown.enter="handleUpdate('name')"
-                @keydown.esc="handleCancel('name')"
-              />
-            </p>
+        <div class="level-item is-clickable" @click.stop="handleEdit('name')">
+          <div>
+            <p class="is-size-7 has-text-weight-bold">Name</p>
+            <span v-show="!edit['name']">{{ tracker.name }}</span>
+            <div v-show="edit['name']" class="field">
+              <p class="control">
+                <input
+                  ref="name"
+                  type="text"
+                  class="input"
+                  v-model="formData.name"
+                  :placeholder="tracker.name"
+                  @keydown.enter="handleUpdate('name')"
+                  @keyup.esc="handleCancel('name')"
+                  @blur="handleUpdate('name')"
+                  @keydown.tab.prevent="handleNext('name', 'project')"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="level-item ml-6 is-clickable"
+          @click.stop="handleEdit('project')"
+        >
+          <div>
+            <p class="is-size-7 has-text-weight-bold">Project</p>
+            <span v-show="!edit['project']">{{ tracker.project }}</span>
+            <div v-show="edit['project']" class="field">
+              <p class="control">
+                <input
+                  ref="project"
+                  type="text"
+                  class="input"
+                  v-model="formData.project"
+                  :placeholder="tracker.project"
+                  @keydown.enter="handleUpdate('project')"
+                  @keyup.esc="handleCancel('project')"
+                  @blur="handleUpdate('project')"
+                  @keydown.tab.prevent="handleNext('project', 'rate')"
+                />
+              </p>
+            </div>
+          </div>
+        </div>
+        <div
+          class="level-item ml-6 is-clickable"
+          @click.stop="handleEdit('rate')"
+        >
+          <div>
+            <p class="is-size-7 has-text-weight-bold">Rate</p>
+            <span v-show="!edit['rate']">{{ tracker.rate }}</span>
+            <div v-show="edit['rate']" class="field">
+              <p class="control">
+                <input
+                  ref="rate"
+                  type="text"
+                  class="input"
+                  v-model="formData.rate"
+                  :placeholder="tracker.rate"
+                  @keydown.enter="handleUpdate('rate')"
+                  @keyup.esc="handleCancel('rate')"
+                  @blur="handleUpdate('rate')"
+                  @keydown.tab.prevent="handleNext('rate', 'time')"
+                />
+              </p>
+            </div>
           </div>
         </div>
       </div>
       <div class="level-right">
-        <div class="level-item" v-click-outside="() => handleCancel('time')">
-          <span
-            v-show="!edit['time'] && !tracker.complete"
-            class="is-clickable"
-            @click.stop="handleEdit('time')"
-            >{{ time }}</span
-          >
-          <span
-            v-show="!edit['time'] && tracker.complete"
-            class="is-clickable"
-            @click.stop="handleEdit('time')"
-            >{{ formData.time }}</span
-          >
+        <div class="level-item is-clickable" @click.stop="handleEdit('time')">
+          <span v-show="!edit['time'] && !tracker.complete">{{ time }}</span>
+          <span v-show="!edit['time'] && tracker.complete">{{
+            formData.time
+          }}</span>
           <div v-show="edit['time']" class="field">
             <p class="control">
               <input
@@ -47,7 +87,8 @@
                 placeholder="00:00:00"
                 v-model="formData.time"
                 @keydown.enter="handleSetTime"
-                @keydown.esc="handleCancel('time')"
+                @keyup.esc="handleCancel('time')"
+                @blur="handleCancel('time')"
               />
             </p>
           </div>
@@ -62,6 +103,9 @@
           <div class="buttons">
             <div class="button is-primary" @click="handleComplete">Log</div>
           </div>
+        </div>
+        <div v-if="tracker.complete" class="level-item ml-4">
+          <span>{{ total }}</span>
         </div>
         <div class="level-item ml-4">
           <button
@@ -92,6 +136,8 @@ export default {
       edit: {
         name: false,
         time: false,
+        project: false,
+        rate: false,
       },
       formData: {},
     };
@@ -102,6 +148,19 @@ export default {
     },
     runningId() {
       return `${this.tracker._id}-running`;
+    },
+    total() {
+      return this.formData.rate * this.timeAsHours;
+    },
+    timeAsHours() {
+      const milliseconds =
+        Number(this.formData.time && this.formData.time.split(':')[0]) *
+          60000 *
+          60 +
+        Number(this.formData.time && this.formData.time.split(':')[1]) * 60000 +
+        Number(this.formData.time && this.formData.time.split(':')[2]) * 1000;
+
+      return Math.ceil((milliseconds / (1000 * 60 * 60)) % 60);
     },
   },
   watch: {
@@ -132,6 +191,10 @@ export default {
     }
   },
   methods: {
+    handleNext(current, next) {
+      this.handleCancel(current);
+      this.handleEdit(next);
+    },
     handleEdit(key) {
       this.edit[key] = true;
       if (key === 'time' && !this.tracker.complete) {

@@ -77,7 +77,12 @@ export default {
       this.$store.dispatch('tracker/fetch');
     },
     addTracker() {
-      const formData = { name: 'New Tracker' };
+      const formData = {
+        name: 'New Tracker',
+        project: 'New Project',
+        rate: 60,
+      };
+      console.log(formData);
       this.$store.dispatch('tracker/add', {
         formData,
       });

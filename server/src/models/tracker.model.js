@@ -3,11 +3,9 @@ const { Schema, model } = require('mongoose');
 const fields = {
   name: String,
   time: String,
+  rate: Number,
   complete: Boolean,
-  project: {
-    type: Schema.Types.ObjectId,
-    ref: 'Project',
-  }, 
+  project: String,
   user: {
     type: Schema.Types.ObjectId,
     ref: 'User',
