@@ -15,7 +15,12 @@
           <div class="level-item">
             <div class="field has-addons">
               <div class="control">
-                <input class="input" type="text" placeholder="Search..." />
+                <input
+                  class="input"
+                  type="text"
+                  placeholder="Search..."
+                  v-model="search"
+                />
               </div>
               <div class="control">
                 <a class="button is-info">Search</a>
@@ -28,10 +33,9 @@
     <section class="section">
       <div v-if="inProgressTrackers.length">
         <Tracker
-          v-for="(tracker, index) in inProgressTrackers"
+          v-for="tracker in inProgressTrackers"
           :key="tracker._id"
           :tracker="tracker"
-          :index="index"
           @complete="fetch"
         />
       </div>
@@ -40,10 +44,9 @@
     <section class="section">
       <div v-if="completedTrackers.length">
         <Tracker
-          v-for="(tracker, index) in completedTrackers"
+          v-for="tracker in completedTrackers"
           :key="tracker._id"
           :tracker="tracker"
-          :index="index"
         />
       </div>
       <div v-else class="box has-text-centered">No completed trackers</div>
@@ -58,15 +61,27 @@ export default {
   components: {
     Tracker,
   },
+  data() {
+    return {
+      search: '',
+    };
+  },
   computed: {
     trackers() {
       return this.$store.state.tracker.trackers;
     },
+    filteredTrackers() {
+      return this.trackers.filter((item) => {
+        return [item.name, item.project].some((value) => {
+          return value.toLowerCase().indexOf(this.search.toLowerCase()) >= 0;
+        });
+      });
+    },
     inProgressTrackers() {
-      return this.$store.getters['tracker/progress'];
+      return this.filteredTrackers.filter((item) => !item.complete);
     },
     completedTrackers() {
-      return this.$store.getters['tracker/complete'];
+      return this.filteredTrackers.filter((item) => item.complete);
     },
   },
   mounted() {
@@ -82,7 +97,6 @@ export default {
         project: 'New Project',
         rate: 60,
       };
-      console.log(formData);
       this.$store.dispatch('tracker/add', {
         formData,
       });

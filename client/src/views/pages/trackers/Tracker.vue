@@ -129,7 +129,6 @@ export default {
   },
   props: {
     tracker: Object,
-    index: Number,
   },
   data() {
     return {
@@ -150,7 +149,7 @@ export default {
       return `${this.tracker._id}-running`;
     },
     total() {
-      return this.formData.rate * this.timeAsHours;
+      return `$${this.formData.rate * this.timeAsHours}`;
     },
     timeAsHours() {
       const milliseconds =
@@ -246,11 +245,9 @@ export default {
     },
     handleRemove() {
       const param = this.tracker._id;
-      const { index } = this;
       if (window.confirm('Are you sure?')) {
         this.$store.dispatch('tracker/remove', {
           param,
-          index,
         });
       }
     },

@@ -18,8 +18,8 @@ const mutations = {
   push(state, { name, value }) {
     state[name].push(value);
   },
-  splice(state, { name, index }) {
-    state[name].splice(index, 1);
+  splice(state, { name, param }) {
+    state[name] = state[name].filter((item) => item._id !== param);
   },
 };
 
@@ -50,7 +50,7 @@ const actions = {
       { root: true }
     );
   },
-  async remove({ dispatch, commit }, { param, index }) {
+  async remove({ dispatch, commit }, { param }) {
     await dispatch(
       'delete',
       {
@@ -59,7 +59,7 @@ const actions = {
       },
       { root: true }
     );
-    commit('splice', { name: 'trackers', index });
+    commit('splice', { name: 'trackers', param });
   },
 };
 
