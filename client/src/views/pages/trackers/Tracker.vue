@@ -100,9 +100,9 @@
             </div>
           </div>
           <div v-if="!tracker.complete" class="level-item ml-4">
-            <span class="icon is-clickable">
-              <Icon v-if="!running" icon="play" @click="resume" />
-              <Icon v-else icon="pause" @click="pause" />
+            <span class="icon is-clickable" @click="toggle">
+              <Icon v-if="!running" icon="play" />
+              <Icon v-else icon="pause" />
             </span>
           </div>
           <div v-if="!tracker.complete" class="level-item ml-4">
@@ -232,6 +232,9 @@ export default {
     }
   },
   methods: {
+    toggle() {
+      this.running ? this.pause() : this.resume();
+    },
     handleNext(current, next) {
       this.handleCancel(current);
       this.handleEdit(next);

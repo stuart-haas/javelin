@@ -32,6 +32,7 @@
     </section>
     <section class="section">
       <div v-if="inProgressTrackers.length">
+        <h2 class="is-size-4 mb-4">In-Progress</h2>
         <Tracker
           v-for="tracker in inProgressTrackers"
           :key="tracker._id"
@@ -43,6 +44,7 @@
     </section>
     <section class="section">
       <div v-if="completedTrackers.length">
+        <h2 class="is-size-4 mb-4">Completed</h2>
         <Tracker
           v-for="tracker in completedTrackers"
           :key="tracker._id"
