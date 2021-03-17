@@ -47,10 +47,9 @@
             </div>
           </div>
         </div>
-        <div
-          class="level-item ml-6 is-clickable"
-          @click.stop="handleEdit('rate')"
-        >
+      </div>
+      <div class="level-right">
+        <div class="level-item is-clickable" @click.stop="handleEdit('rate')">
           <div>
             <p class="is-size-7 has-text-weight-bold">Rate</p>
             <span v-show="!edit['rate']">{{ tracker.rate }}</span>
@@ -71,9 +70,10 @@
             </div>
           </div>
         </div>
-      </div>
-      <div class="level-right">
-        <div class="level-item is-clickable" @click.stop="handleEdit('time')">
+        <div
+          class="level-item is-clickable ml-4"
+          @click.stop="handleEdit('time')"
+        >
           <span v-show="!edit['time'] && !tracker.complete">{{ time }}</span>
           <span v-show="!edit['time'] && tracker.complete">{{
             formData.time
