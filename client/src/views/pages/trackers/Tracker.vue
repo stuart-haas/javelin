@@ -125,8 +125,8 @@ export default {
     handleEdit(key) {
       this.edit[key] = true;
       if (key === 'time') {
-        this.formData.time = this.time;
         this.pause();
+        this.formData.time = this.time;
       }
       this.$nextTick(() => {
         this.$refs[key].focus();
