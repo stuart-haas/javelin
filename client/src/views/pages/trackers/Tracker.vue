@@ -1,9 +1,7 @@
 <template>
   <div class="card mb-5">
-    <header class="card-header">
-      <p class="card-header-title">
-        {{ date }} {{ tracker.complete && `&vert; ${timeRange}` }}
-      </p>
+    <header v-if="tracker.complete" class="card-header">
+      <p class="card-header-title">{{ createdAt }} &vert; {{ timeRange }}</p>
     </header>
     <div class="card-content">
       <div class="level">
@@ -125,7 +123,14 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import { timerMixin } from '../../../mixins/timer-mixin';
-import * as timeago from 'timeago.js';
+import {
+  days,
+  months,
+  timeToHumanReadable,
+  humanReadableValue,
+  formatTime,
+  humanReadableToHours,
+} from '../../../utils/time';
 
 export default {
   mixins: [timerMixin],
@@ -147,58 +152,56 @@ export default {
     };
   },
   computed: {
-    date() {
-      return timeago.format(this.formData.createdAt);
-    },
     timeId() {
       return `${this.tracker._id}-time`;
     },
     runningId() {
       return `${this.tracker._id}-running`;
     },
+    createdAt() {
+      const date = new Date(this.formData.createdAt);
+      const dayName = days[date.getDay()];
+      const monthName = months[date.getMonth()];
+      return `${dayName}, ${monthName} ${date.getDay()}`;
+    },
+    calculatedTime() {
+      return this.tracker.complete ? this.formData.time : this.time;
+    },
     total() {
-      return `$${this.formData.rate * this.timeAsHours}`;
+      return `$${(this.formData.rate * this.timeAsHours).toFixed(2)}`;
     },
     timeRange() {
       const start = new Date(this.formData.createdAt);
-      const startHours =
-        start.getHours() < 10 ? `0${start.getHours()}` : start.getHours();
-      const startMinutes =
-        start.getMinutes() < 10 ? `0${start.getMinutes()}` : start.getMinutes();
 
-      const endHours = Number(
-        this.formData.time && this.formData.time.split(':')[0]
-      );
-      const endMinutes = Number(
-        this.formData.time && this.formData.time.split(':')[1]
-      );
+      const startHours = start.getHours();
+      const startMinutes = start.getMinutes();
 
-      const diffHours = Math.abs(endHours + Number(start.getHours()));
-      const diffMinutes = Math.abs(endMinutes + Number(start.getMinutes()));
+      const endHours = this.formData.time
+        ? Number(humanReadableValue(this.formData.time, 0))
+        : 0;
 
-      const finalEndHours = diffHours < 10 ? `0${diffHours}` : diffHours;
-      const finalEndMinutes =
-        diffMinutes < 10 ? `0${diffMinutes}` : diffMinutes;
+      const endMinutes = this.formData.time
+        ? Number(humanReadableValue(this.formData.time, 1))
+        : 0;
+
+      var diffDate = new Date(start);
+      diffDate.setHours(diffDate.getHours() + endHours);
+      diffDate.setMinutes(diffDate.getMinutes() + endMinutes);
 
       return (
-        startHours +
-        ':' +
-        startMinutes +
+        timeToHumanReadable([
+          formatTime(startHours),
+          formatTime(startMinutes),
+        ]) +
         '-' +
-        finalEndHours +
-        ':' +
-        finalEndMinutes
+        timeToHumanReadable([
+          formatTime(diffDate.getHours()),
+          formatTime(diffDate.getMinutes()),
+        ])
       );
     },
     timeAsHours() {
-      const milliseconds =
-        Number(this.formData.time && this.formData.time.split(':')[0]) *
-          60000 *
-          60 +
-        Number(this.formData.time && this.formData.time.split(':')[1]) * 60000 +
-        Number(this.formData.time && this.formData.time.split(':')[2]) * 1000;
-
-      return Math.ceil((milliseconds / (1000 * 60 * 60)) % 60);
+      return this.formData.time && humanReadableToHours(this.formData.time);
     },
   },
   watch: {
