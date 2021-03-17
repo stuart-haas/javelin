@@ -176,12 +176,8 @@ export default {
         this.formData.time && this.formData.time.split(':')[1]
       );
 
-      console.log(endHours, endMinutes);
-
       const diffHours = Math.abs(endHours + Number(start.getHours()));
       const diffMinutes = Math.abs(endMinutes + Number(start.getMinutes()));
-
-      console.log(diffHours, diffMinutes);
 
       const finalEndHours = diffHours < 10 ? `0${diffHours}` : diffHours;
       const finalEndMinutes =
