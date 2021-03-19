@@ -1,4 +1,12 @@
 import Timer from 'tiny-timer';
+import {
+  humanReadableToTime,
+  timeToHumanReadable,
+  formatTime,
+  timeToSeconds,
+  timeToMinutes,
+  timeToHours,
+} from '../utils/time';
 
 export const timerMixin = {
   data() {
@@ -12,53 +20,26 @@ export const timerMixin = {
   computed: {
     time: {
       get() {
-        return (
-          this.formattedHours +
-          ':' +
-          this.formattedMinutes +
-          ':' +
-          this.formattedSeconds
-        );
+        return timeToHumanReadable([
+          formatTime(this.hours),
+          formatTime(this.minutes),
+          formatTime(this.seconds),
+        ]);
       },
       set(newVal) {
-        const time = isNaN(newVal)
-          ? Number(newVal.split(':')[0]) * 60000 * 60 +
-            Number(newVal.split(':')[1]) * 60000 +
-            Number(newVal.split(':')[2]) * 1000
-          : newVal;
-        this.currentTime = parseInt(time);
-        this.lastTime = parseInt(time);
+        const time = parseInt(humanReadableToTime(newVal));
+        this.currentTime = time;
+        this.lastTime = time;
       },
     },
-    formattedSeconds() {
-      return this.seconds < 10 ? `0${this.seconds}` : this.seconds;
-    },
-    formattedMinutes() {
-      return this.minutes < 10 ? `0${this.minutes}` : this.minutes;
-    },
-    formattedHours() {
-      return this.hours < 10 ? `0${this.hours}` : this.hours;
-    },
-    milliseconds() {
-      return this.currentTime;
-    },
-    totalSeconds() {
-      return parseInt(Math.floor(this.milliseconds / 1000));
-    },
-    totalMinutes() {
-      return parseInt(Math.floor(this.totalSeconds / 60));
-    },
-    totalHours() {
-      return parseInt(Math.floor(this.totalMinutes / 60));
-    },
     seconds() {
-      return parseInt(this.totalSeconds % 60);
+      return timeToSeconds(this.currentTime);
     },
     minutes() {
-      return parseInt(this.totalMinutes % 60);
+      return timeToMinutes(this.currentTime);
     },
     hours() {
-      return parseInt(this.totalHours % 24);
+      return timeToHours(this.currentTime);
     },
   },
   mounted() {
