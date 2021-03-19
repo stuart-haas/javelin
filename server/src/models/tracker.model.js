@@ -5,8 +5,6 @@ const fields = {
   name: String,
   duration: Number,
   durationDisplay: String,
-  startedAt: String,
-  endedAt: String,
   rate: Number,
   complete: Boolean,
   project: String,

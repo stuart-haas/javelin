@@ -63,7 +63,6 @@
                   v-model="durationDisplay"
                   @keydown.enter="handleSetDuration"
                   @focus="handleEditDuration"
-                  @blur="handleSetDuration"
                   @keyup.esc="handleCancel('duration')"
                 />
               </p>
@@ -168,8 +167,8 @@ export default {
     },
     handleEditDuration() {
       if (!this.tracker.complete) {
+        this.stop();
         this.formData.duration = this.duration;
-        this.pause();
       }
     },
     handleSetDuration() {
@@ -178,13 +177,13 @@ export default {
       if (this.tracker.complete) {
         this.handleSave();
       } else {
-        this.resume();
+        this.start();
       }
     },
     handleCancel(key) {
       this.formData[key] = this.tracker[key];
       if (key == 'duration' && !this.tracker.complete) {
-        this.resume();
+        this.start();
       }
     },
     async handleComplete() {

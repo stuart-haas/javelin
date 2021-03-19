@@ -45,13 +45,19 @@ export const timerMixin = {
   mounted() {
     this.timer = new Timer({ interval: 1000, stopwatch: true });
 
-    this.timer.on('tick', (currentTime) => {
-      this.currentTime = parseInt(Math.floor(currentTime + this.lastTime));
-    });
+    this.timer.on('tick', this.update);
+  },
+  beforeDestroy() {
+    this.timer.stop();
   },
   methods: {
+    update(currentTime) {
+      this.currentTime = parseInt(Math.floor(currentTime + this.lastTime));
+    },
     start() {
       this.timer.start(86400000);
+      this.running = true;
+      localStorage.setItem(this.runningId, true);
     },
     resume() {
       this.timer.resume();
@@ -60,6 +66,11 @@ export const timerMixin = {
     },
     pause() {
       this.timer.pause();
+      this.running = false;
+      localStorage.setItem(this.runningId, false);
+    },
+    stop() {
+      this.timer.stop();
       this.running = false;
       localStorage.setItem(this.runningId, false);
     },
