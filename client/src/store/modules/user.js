@@ -7,7 +7,7 @@ const state = {
 const getters = {};
 
 const mutations = {
-  setState(state, { name, value }) {
+  set(state, { name, value }) {
     state[name] = value;
   },
 };
@@ -22,7 +22,7 @@ const actions = {
       { root: true }
     );
     if (user) {
-      commit('setState', { name: 'user', value: user });
+      commit('set', { name: 'user', value: user });
       if (router.history.current.name === 'login') {
         const { from } = router.history.current.query;
         if (from) {
@@ -40,7 +40,7 @@ const actions = {
       { root: true }
     );
     if (success) {
-      commit('setState', { name: 'user', value: user });
+      commit('set', { name: 'user', value: user });
       return success;
     }
   },
@@ -51,7 +51,7 @@ const actions = {
       { root: true }
     );
     if (success || error) {
-      commit('setState', { name: 'user', value: null });
+      commit('set', { name: 'user', value: null });
     }
     return success;
   },

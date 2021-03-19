@@ -1,5 +1,5 @@
 const { Schema, model } = require('mongoose');
-const { timeToSeconds, timeToDecimal, timeToMinutes, timeToHours, formatTime, timeToHumanReadable } = require('../utils/time');
+const { timeToSeconds, timeToMinutes, timeToHours, formatTime, timeToHumanReadable } = require('../utils/time');
 
 const fields = {
   name: String,

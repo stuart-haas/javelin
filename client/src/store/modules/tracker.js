@@ -12,13 +12,17 @@ const getters = {
 };
 
 const mutations = {
-  setState(state, { name, value }) {
+  set(state, { name, value }) {
     state[name] = value;
   },
-  push(state, { name, value }) {
+  add(state, { name, value }) {
     state[name].push(value);
   },
-  splice(state, { name, param }) {
+  update(state, { name, param, value }) {
+    const index = state[name].findIndex((item) => item._id === param);
+    state[name].splice(index, 1, value);
+  },
+  remove(state, { name, param }) {
     state[name] = state[name].filter((item) => item._id !== param);
   },
 };
@@ -26,7 +30,7 @@ const mutations = {
 const actions = {
   async fetch({ dispatch, commit }) {
     const trackers = await dispatch('get', { api: 'tracker' }, { root: true });
-    commit('setState', { name: 'trackers', value: trackers });
+    commit('set', { name: 'trackers', value: trackers });
   },
   async add({ dispatch, commit }, { formData }) {
     const { tracker } = await dispatch(
@@ -37,10 +41,10 @@ const actions = {
       },
       { root: true }
     );
-    commit('push', { name: 'trackers', value: tracker });
+    commit('add', { name: 'trackers', value: tracker });
     return tracker;
   },
-  async update({ dispatch }, { formData, param }) {
+  async update({ dispatch, commit }, { formData, param }) {
     const { tracker } = await dispatch(
       'put',
       {
@@ -50,6 +54,7 @@ const actions = {
       },
       { root: true }
     );
+    commit('update', { name: 'trackers', param, value: tracker });
     return tracker;
   },
   async remove({ dispatch, commit }, { param }) {
@@ -61,7 +66,7 @@ const actions = {
       },
       { root: true }
     );
-    commit('splice', { name: 'trackers', param });
+    commit('remove', { name: 'trackers', param });
     return tracker;
   },
 };

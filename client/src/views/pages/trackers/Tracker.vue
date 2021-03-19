@@ -195,11 +195,7 @@ export default {
 
       this.formData.complete = true;
 
-      const param = this.tracker._id;
-      const tracker = await this.handleSave();
-
-      this.$store.commit('tracker/splice', { name: 'trackers', param });
-      this.$store.commit('tracker/push', { name: 'trackers', value: tracker });
+      await this.handleSave();
     },
     async handleSave() {
       this.formData.duration = humanReadableToTime(this.formData.duration);

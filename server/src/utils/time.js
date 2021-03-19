@@ -44,7 +44,7 @@ module.exports = {
     return Number(value) * 1000;
   },
   humanReadableValue(value, index, split = ':') {
-    return value.split(split)[index];
+    return value && value.split(split)[index];
   },
   timeToSeconds(value) {
     return parseInt(Math.floor(value / 1000) % 60);
@@ -54,12 +54,6 @@ module.exports = {
   },
   timeToHours(value) {
     return parseInt(Math.floor((value / (1000 * 60 * 60)) % 24));
-  },
-  timeToDecimal(value) {
-    var hoursMinutes = value.split(/[.:]/);
-    var hours = parseInt(hoursMinutes[0], 10);
-    var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
-    return hours + minutes / 60;
   },
   timeDuration(start, end) {
     const startDate = new Date(start);
