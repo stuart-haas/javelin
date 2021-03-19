@@ -69,7 +69,7 @@
               </p>
             </div>
           </div>
-          <div class="level-item">{{ total }}</div>
+          <div v-if="tracker.complete" class="level-item">{{ total }}</div>
           <div v-if="!tracker.complete" class="level-item">
             <span class="icon is-clickable" @click="toggle">
               <Icon v-if="!running" icon="play" />
@@ -142,8 +142,6 @@ export default {
   },
   mounted() {
     this.formData = this.tracker;
-    this.duration = this.getDuration();
-    this.total = this.getTotal();
 
     if (localStorage.getItem(this.timeId)) {
       const currentTime = localStorage.getItem(this.timeId);
@@ -158,6 +156,8 @@ export default {
 
     if (this.tracker.complete) {
       this.running = false;
+      this.duration = this.getDuration();
+      this.total = this.getTotal();
     }
 
     if (this.running) {
