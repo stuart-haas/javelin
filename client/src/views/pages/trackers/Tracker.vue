@@ -79,6 +79,9 @@
               <div class="button is-primary" @click="handleComplete">Log</div>
             </div>
           </div>
+          <div v-if="tracker.complete" class="level-item">
+            &#36;{{ tracker.total }}
+          </div>
           <div class="level-item">
             <button
               class="delete has-background-danger"
@@ -190,18 +193,19 @@ export default {
       localStorage.removeItem(this.runningId);
       localStorage.removeItem(this.timeId);
 
-      this.formData.duration = humanReadableToTime(this.duration);
       this.formData.complete = true;
 
       const param = this.tracker._id;
       const tracker = await this.handleSave();
+
       this.$store.commit('tracker/splice', { name: 'trackers', param });
       this.$store.commit('tracker/push', { name: 'trackers', value: tracker });
     },
     async handleSave() {
-      const param = this.tracker._id;
       this.formData.duration = humanReadableToTime(this.formData.duration);
+
       const { formData } = this;
+      const param = this.tracker._id;
       return await this.$store.dispatch('tracker/update', {
         formData,
         param,

@@ -4,8 +4,10 @@ const { timeToSeconds, timeToDecimal, timeToMinutes, timeToHours, formatTime, ti
 const fields = {
   name: String,
   duration: Number,
+  durationFloat: Number,
   durationDisplay: String,
   rate: Number,
+  total: Number,
   complete: Boolean,
   project: String,
   user: {
@@ -23,6 +25,10 @@ const Tracker = new Schema(fields, {
 
 Tracker.pre('save', function() {
   this.durationDisplay = durationDisplay(this.duration);
+
+  this.durationFloat = timeToHours(this.duration) + timeToMinutes(this.duration) / 60;
+
+  this.total = (this.rate * this.durationFloat).toFixed(2);
 });
 
 function durationDisplay(duration) {
