@@ -47,7 +47,7 @@ export default {
       if (query) {
         this.$router.replace(query);
       } else {
-        this.$router.replace('/');
+        this.$router.replace('/trackers');
       }
     },
   },

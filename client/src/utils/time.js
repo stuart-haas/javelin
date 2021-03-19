@@ -64,3 +64,27 @@ export function timeToMinutes(value) {
 export function timeToHours(value) {
   return parseInt(Math.floor((value / (1000 * 60 * 60)) % 24));
 }
+
+export function timeDuration(start, end) {
+  const startDate = new Date(start);
+
+  const startHours = startDate.getHours();
+  const startMinutes = startDate.getMinutes();
+
+  const endHours = end ? Number(humanReadableValue(end, 0)) : 0;
+
+  const endMinutes = end ? Number(humanReadableValue(end, 1)) : 0;
+
+  var diffDate = new Date(startDate);
+  diffDate.setHours(diffDate.getHours() + endHours);
+  diffDate.setMinutes(diffDate.getMinutes() + endMinutes);
+
+  return (
+    timeToHumanReadable([formatTime(startHours), formatTime(startMinutes)]) +
+    '-' +
+    timeToHumanReadable([
+      formatTime(diffDate.getHours()),
+      formatTime(diffDate.getMinutes()),
+    ])
+  );
+}

@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-5">
     <header v-if="tracker.complete" class="card-header">
-      <p class="card-header-title">{{ createdAt }} &vert; {{ timeRange }}</p>
+      <p class="card-header-title">{{ createdAt }} &vert; {{ duration }}</p>
     </header>
     <div class="card-content">
       <div class="level">
@@ -10,15 +10,13 @@
             <div class="field">
               <p class="control">
                 <input
-                  ref="name"
                   type="text"
                   class="input"
                   v-model="formData.name"
                   placeholder="Name"
-                  @keydown.enter="handleUpdate('name')"
+                  @keydown.enter="handleSave"
+                  @blur="handleSave"
                   @keyup.esc="handleCancel('name')"
-                  @blur="handleUpdate('name')"
-                  @keydown.tab.prevent="handleNext('name', 'project')"
                 />
               </p>
             </div>
@@ -27,15 +25,13 @@
             <div class="field">
               <p class="control">
                 <input
-                  ref="project"
                   type="text"
                   class="input"
                   v-model="formData.project"
-                  :placeholder="tracker.project"
-                  @keydown.enter="handleUpdate('project')"
+                  placeholder="Project"
+                  @keydown.enter="handleSave"
+                  @blur="handleSave"
                   @keyup.esc="handleCancel('project')"
-                  @blur="handleUpdate('project')"
-                  @keydown.tab.prevent="handleNext('project', 'time')"
                 />
               </p>
             </div>
@@ -46,15 +42,14 @@
             <div class="field">
               <p class="control">
                 <input
-                  ref="time"
                   type="text"
                   class="input"
                   placeholder="00:00:00"
                   v-model="calculatedTime"
                   @keydown.enter="handleSetTime"
+                  @focus="handleEditTime"
+                  @blur="handleSetTime"
                   @keyup.esc="handleCancel('time')"
-                  @click.stop="handleEdit('time')"
-                  @blur="handleCancel('time')"
                 />
               </p>
             </div>
@@ -85,13 +80,7 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import { timerMixin } from '../../../mixins/timer-mixin';
-import {
-  days,
-  months,
-  timeToHumanReadable,
-  humanReadableValue,
-  formatTime,
-} from '../../../utils/time';
+import { days, months, timeDuration } from '../../../utils/time';
 
 export default {
   mixins: [timerMixin],
@@ -103,13 +92,8 @@ export default {
   },
   data() {
     return {
-      edit: {
-        name: false,
-        time: false,
-        project: false,
-        rate: false,
-      },
       formData: {},
+      duration: '',
     };
   },
   computed: {
@@ -124,36 +108,6 @@ export default {
       const dayName = days[date.getDay()];
       const monthName = months[date.getMonth()];
       return `${dayName}, ${monthName} ${date.getDay()}`;
-    },
-    timeRange() {
-      const start = new Date(this.tracker.createdAt);
-
-      const startHours = start.getHours();
-      const startMinutes = start.getMinutes();
-
-      const endHours = this.tracker.time
-        ? Number(humanReadableValue(this.tracker.time, 0))
-        : 0;
-
-      const endMinutes = this.tracker.time
-        ? Number(humanReadableValue(this.tracker.time, 1))
-        : 0;
-
-      var diffDate = new Date(start);
-      diffDate.setHours(diffDate.getHours() + endHours);
-      diffDate.setMinutes(diffDate.getMinutes() + endMinutes);
-
-      return (
-        timeToHumanReadable([
-          formatTime(startHours),
-          formatTime(startMinutes),
-        ]) +
-        '-' +
-        timeToHumanReadable([
-          formatTime(diffDate.getHours()),
-          formatTime(diffDate.getMinutes()),
-        ])
-      );
     },
     calculatedTime: {
       get() {
@@ -171,6 +125,7 @@ export default {
   },
   mounted() {
     this.formData = this.tracker;
+    this.duration = this.getDuration();
 
     if (localStorage.getItem(this.timeId)) {
       const currentTime = localStorage.getItem(this.timeId);
@@ -195,42 +150,28 @@ export default {
     toggle() {
       this.running ? this.pause() : this.resume();
     },
-    handleNext(current, next) {
-      this.handleCancel(current);
-      this.handleEdit(next);
-    },
-    handleEdit(key) {
-      this.edit[key] = true;
-      if (key === 'time' && !this.tracker.complete) {
+    handleEditTime() {
+      if (!this.tracker.complete) {
         this.pause();
         this.formData.time = this.time;
       }
-      this.$nextTick(() => {
-        this.$refs[key].focus();
-      });
+    },
+    handleSetTime() {
+      this.time = this.formData.time;
+
+      if (this.tracker.complete) {
+        this.formData.time = this.time;
+        this.handleSave();
+      } else {
+        this.resume();
+      }
     },
     handleCancel(key) {
-      this.edit[key] = false;
       this.formData[key] = this.tracker[key];
 
       if (key == 'time' && !this.tracker.complete) {
         this.resume();
       }
-    },
-    handleSetTime() {
-      this.time = this.formData.time;
-      this.edit.time = false;
-
-      if (this.tracker.complete) {
-        this.formData.time = this.time;
-        this.handleUpdate('time');
-      } else {
-        this.resume();
-      }
-    },
-    handleUpdate(key) {
-      this.handleSave();
-      this.edit[key] = false;
     },
     async handleComplete() {
       localStorage.removeItem(this.runningId);
@@ -247,6 +188,7 @@ export default {
         formData,
         param,
       });
+      this.duration = this.getDuration();
     },
     handleRemove() {
       const param = this.tracker._id;
@@ -255,6 +197,9 @@ export default {
           param,
         });
       }
+    },
+    getDuration() {
+      return timeDuration(this.tracker.createdAt, this.tracker.time);
     },
   },
 };
