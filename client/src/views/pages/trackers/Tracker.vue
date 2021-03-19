@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-5">
     <header v-if="tracker.complete" class="card-header">
-      <p class="card-header-title">{{ createdAt }} &vert; {{ duration }}</p>
+      <p class="card-header-title">{{ createdAt }}</p>
     </header>
     <div class="card-content">
       <div class="level">
@@ -60,16 +60,15 @@
                   type="text"
                   class="input"
                   placeholder="00:00:00"
-                  v-model="calculatedTime"
-                  @keydown.enter="handleSetTime"
-                  @focus="handleEditTime"
-                  @blur="handleSetTime"
-                  @keyup.esc="handleCancel('time')"
+                  v-model="durationDisplay"
+                  @keydown.enter="handleSetDuration"
+                  @focus="handleEditDuration"
+                  @blur="handleSetDuration"
+                  @keyup.esc="handleCancel('duration')"
                 />
               </p>
             </div>
           </div>
-          <div v-if="tracker.complete" class="level-item">{{ total }}</div>
           <div v-if="!tracker.complete" class="level-item">
             <span class="icon is-clickable" @click="toggle">
               <Icon v-if="!running" icon="play" />
@@ -96,7 +95,7 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import { timerMixin } from '../../../mixins/timer-mixin';
-import { days, months, timeDuration, timeToDecimal } from '../../../utils/time';
+import { days, humanReadableToTime, months } from '../../../utils/time';
 
 export default {
   mixins: [timerMixin],
@@ -109,8 +108,6 @@ export default {
   data() {
     return {
       formData: {},
-      total: 0,
-      duration: '',
     };
   },
   computed: {
@@ -126,12 +123,14 @@ export default {
       const monthName = months[date.getMonth()];
       return `${dayName}, ${monthName} ${date.getDay()}`;
     },
-    calculatedTime: {
+    durationDisplay: {
       get() {
-        return this.tracker.complete ? this.tracker.time : this.time;
+        return this.tracker.complete
+          ? this.tracker.durationDisplay
+          : this.duration;
       },
       set(newVal) {
-        this.formData.time = newVal;
+        this.formData.duration = newVal;
       },
     },
   },
@@ -143,42 +142,40 @@ export default {
   mounted() {
     this.formData = this.tracker;
 
-    if (localStorage.getItem(this.timeId)) {
-      const currentTime = localStorage.getItem(this.timeId);
-      this.lastTime = parseInt(currentTime);
-    }
-
-    if (localStorage.getItem(this.runningId)) {
-      this.running = localStorage.getItem(this.runningId) === 'true';
-    }
-
-    this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
+    this.applyLocalStorage();
 
     if (this.tracker.complete) {
-      this.running = false;
-      this.duration = this.getDuration();
-      this.total = this.getTotal();
+      return (this.running = false);
     }
 
-    if (this.running) {
-      this.start();
-    }
+    this.start();
   },
   methods: {
+    applyLocalStorage() {
+      if (localStorage.getItem(this.timeId)) {
+        const currentTime = localStorage.getItem(this.timeId);
+        this.lastTime = parseInt(currentTime);
+      }
+
+      if (localStorage.getItem(this.runningId)) {
+        this.running = localStorage.getItem(this.runningId) === 'true';
+      }
+
+      this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
+    },
     toggle() {
       this.running ? this.pause() : this.resume();
     },
-    handleEditTime() {
+    handleEditDuration() {
       if (!this.tracker.complete) {
+        this.formData.duration = this.duration;
         this.pause();
-        this.formData.time = this.time;
       }
     },
-    handleSetTime() {
-      this.time = this.formData.time;
+    handleSetDuration() {
+      this.duration = this.formData.duration;
 
       if (this.tracker.complete) {
-        this.formData.time = this.time;
         this.handleSave();
       } else {
         this.resume();
@@ -186,28 +183,26 @@ export default {
     },
     handleCancel(key) {
       this.formData[key] = this.tracker[key];
-
-      if (key == 'time' && !this.tracker.complete) {
+      if (key == 'duration' && !this.tracker.complete) {
         this.resume();
       }
     },
     async handleComplete() {
       localStorage.removeItem(this.runningId);
       localStorage.removeItem(this.timeId);
-      this.formData.time = this.time;
+      this.formData.duration = humanReadableToTime(this.duration);
       this.formData.complete = true;
       await this.handleSave();
       this.$emit('complete');
     },
     async handleSave() {
       const param = this.tracker._id;
+      this.formData.duration = humanReadableToTime(this.formData.duration);
       const { formData } = this;
       await this.$store.dispatch('tracker/update', {
         formData,
         param,
       });
-      this.duration = this.getDuration();
-      this.total = this.getTotal();
     },
     handleRemove() {
       const param = this.tracker._id;
@@ -216,13 +211,6 @@ export default {
           param,
         });
       }
-    },
-    getDuration() {
-      return timeDuration(this.tracker.createdAt, this.tracker.time);
-    },
-    getTotal() {
-      const time = timeToDecimal(this.tracker.time);
-      return `$${time * this.tracker.rate}`;
     },
   },
 };

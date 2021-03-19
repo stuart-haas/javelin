@@ -19,7 +19,7 @@ module.exports = {
       await tracker.save();
       res.json({ success: true, message: 'Tracker created', tracker });
     } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
+      return res.status(422).json(error);
     }
   },
   update: async (req, res) => {
@@ -32,7 +32,7 @@ module.exports = {
       await tracker.save();
       res.json({ success: true, message: 'Tracker updated', tracker });
     } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
+      return res.status(422).json(error);
     }
   },
   delete: async (req, res) => {
@@ -41,7 +41,7 @@ module.exports = {
       const category = await Tracker.findByIdAndDelete(id);
       res.json({ success: true, message: 'Tracker deleted', category });
     } catch (error) {
-      res.status(422).json({ error: true, message: 'Something went wrong' });
+      return res.status(422).json(error);
     }
   },
 };

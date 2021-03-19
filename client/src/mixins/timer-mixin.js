@@ -18,7 +18,7 @@ export const timerMixin = {
     };
   },
   computed: {
-    time: {
+    duration: {
       get() {
         return timeToHumanReadable([
           formatTime(this.hours),
@@ -55,7 +55,6 @@ export const timerMixin = {
     },
     resume() {
       this.timer.resume();
-      this.start();
       this.running = true;
       localStorage.setItem(this.runningId, true);
     },

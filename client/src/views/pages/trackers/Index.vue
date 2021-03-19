@@ -50,9 +50,6 @@
           :key="tracker._id"
           :tracker="tracker"
         />
-        <p class="is-size-5 has-text-right has-text-weight-bold">
-          Total: &#36;{{ total }}
-        </p>
       </div>
       <div v-else class="box has-text-centered">No completed trackers</div>
     </section>
@@ -60,7 +57,6 @@
 </template>
 
 <script>
-import { timeToDecimal } from '../../../utils/time';
 import Tracker from './Tracker';
 
 export default {
@@ -88,11 +84,6 @@ export default {
     },
     completedTrackers() {
       return this.filteredTrackers.filter((item) => item.complete);
-    },
-    total() {
-      return this.completedTrackers.reduce((acc, obj) => {
-        return acc + obj.rate * timeToDecimal(obj.time);
-      }, 0);
     },
   },
   mounted() {
