@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-fluid">
+  <div>
     <section class="section">
       <div class="level">
         <div class="level-left">
@@ -37,7 +37,6 @@
           v-for="tracker in inProgressTrackers"
           :key="tracker._id"
           :tracker="tracker"
-          @complete="fetch"
         />
       </div>
       <div v-else class="box has-text-centered">No in-progress trackers</div>

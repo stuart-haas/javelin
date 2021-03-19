@@ -1,5 +1,5 @@
 <template>
-  <div class="container is-fluid">
+  <div>
     <nav
       class="navbar is-light is-spaced"
       role="navigation"

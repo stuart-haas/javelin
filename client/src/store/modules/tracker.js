@@ -38,9 +38,10 @@ const actions = {
       { root: true }
     );
     commit('push', { name: 'trackers', value: tracker });
+    return tracker;
   },
   async update({ dispatch }, { formData, param }) {
-    await dispatch(
+    const { tracker } = await dispatch(
       'put',
       {
         api: 'tracker',
@@ -49,9 +50,10 @@ const actions = {
       },
       { root: true }
     );
+    return tracker;
   },
   async remove({ dispatch, commit }, { param }) {
-    await dispatch(
+    const { tracker } = dispatch(
       'delete',
       {
         api: 'tracker',
@@ -60,6 +62,7 @@ const actions = {
       { root: true }
     );
     commit('splice', { name: 'trackers', param });
+    return tracker;
   },
 };
 

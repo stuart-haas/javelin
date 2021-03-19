@@ -1,7 +1,7 @@
 <template>
   <div class="card mb-5">
     <header v-if="tracker.complete" class="card-header">
-      <p class="card-header-title">{{ createdAt }}</p>
+      <p class="card-header-title">{{ date }}</p>
     </header>
     <div class="card-content">
       <div class="level">
@@ -116,7 +116,7 @@ export default {
     runningId() {
       return `${this.tracker._id}-running`;
     },
-    createdAt() {
+    date() {
       const date = new Date(this.formData.createdAt);
       const dayName = days[date.getDay()];
       const monthName = months[date.getMonth()];
@@ -189,16 +189,20 @@ export default {
     async handleComplete() {
       localStorage.removeItem(this.runningId);
       localStorage.removeItem(this.timeId);
+
       this.formData.duration = humanReadableToTime(this.duration);
       this.formData.complete = true;
-      await this.handleSave();
-      this.$emit('complete');
+
+      const param = this.tracker._id;
+      const tracker = await this.handleSave();
+      this.$store.commit('tracker/splice', { name: 'trackers', param });
+      this.$store.commit('tracker/push', { name: 'trackers', value: tracker });
     },
     async handleSave() {
       const param = this.tracker._id;
       this.formData.duration = humanReadableToTime(this.formData.duration);
       const { formData } = this;
-      await this.$store.dispatch('tracker/update', {
+      return await this.$store.dispatch('tracker/update', {
         formData,
         param,
       });
@@ -216,6 +220,17 @@ export default {
 </script>
 
 <style scoped>
+.input {
+  border-color: transparent;
+  box-shadow: inset 0 0.0625em 0.125em transparent;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.input:hover,
+.input:focus {
+  border-color: #dbdbdb;
+  box-shadow: inset 0 0.0625em 0.125em rgb(10 10 10 / 5%);
+}
 .icon.check {
   cursor: pointer;
   pointer-events: all;
