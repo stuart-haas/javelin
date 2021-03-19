@@ -65,6 +65,13 @@ export function timeToHours(value) {
   return parseInt(Math.floor((value / (1000 * 60 * 60)) % 24));
 }
 
+export function timeToDecimal(value) {
+  var hoursMinutes = value.split(/[.:]/);
+  var hours = parseInt(hoursMinutes[0], 10);
+  var minutes = hoursMinutes[1] ? parseInt(hoursMinutes[1], 10) : 0;
+  return hours + minutes / 60;
+}
+
 export function timeDuration(start, end) {
   const startDate = new Date(start);
 

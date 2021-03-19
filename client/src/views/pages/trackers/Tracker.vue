@@ -6,7 +6,7 @@
     <div class="card-content">
       <div class="level">
         <div class="level-left">
-          <div class="level-item is-clickable">
+          <div class="level-item">
             <div class="field">
               <p class="control">
                 <input
@@ -21,7 +21,7 @@
               </p>
             </div>
           </div>
-          <div class="level-item ml-6 is-clickable">
+          <div class="level-item">
             <div class="field">
               <p class="control">
                 <input
@@ -38,7 +38,22 @@
           </div>
         </div>
         <div class="level-right">
-          <div class="level-item is-clickable ml-4">
+          <div class="level-item">
+            <div class="field">
+              <p class="control">
+                <input
+                  type="text"
+                  class="input"
+                  v-model="formData.rate"
+                  placeholder="Rate"
+                  @keydown.enter="handleSave"
+                  @blur="handleSave"
+                  @keyup.esc="handleCancel('rate')"
+                />
+              </p>
+            </div>
+          </div>
+          <div class="level-item">
             <div class="field">
               <p class="control">
                 <input
@@ -54,18 +69,19 @@
               </p>
             </div>
           </div>
-          <div v-if="!tracker.complete" class="level-item ml-4">
+          <div class="level-item">{{ total }}</div>
+          <div v-if="!tracker.complete" class="level-item">
             <span class="icon is-clickable" @click="toggle">
               <Icon v-if="!running" icon="play" />
               <Icon v-else icon="pause" />
             </span>
           </div>
-          <div v-if="!tracker.complete" class="level-item ml-4">
+          <div v-if="!tracker.complete" class="level-item">
             <div class="buttons">
               <div class="button is-primary" @click="handleComplete">Log</div>
             </div>
           </div>
-          <div class="level-item ml-4">
+          <div class="level-item">
             <button
               class="delete has-background-danger"
               @click="handleRemove"
@@ -80,7 +96,7 @@
 <script>
 import ClickOutside from 'vue-click-outside';
 import { timerMixin } from '../../../mixins/timer-mixin';
-import { days, months, timeDuration } from '../../../utils/time';
+import { days, months, timeDuration, timeToDecimal } from '../../../utils/time';
 
 export default {
   mixins: [timerMixin],
@@ -93,6 +109,7 @@ export default {
   data() {
     return {
       formData: {},
+      total: 0,
       duration: '',
     };
   },
@@ -126,6 +143,7 @@ export default {
   mounted() {
     this.formData = this.tracker;
     this.duration = this.getDuration();
+    this.total = this.getTotal();
 
     if (localStorage.getItem(this.timeId)) {
       const currentTime = localStorage.getItem(this.timeId);
@@ -189,6 +207,7 @@ export default {
         param,
       });
       this.duration = this.getDuration();
+      this.total = this.getTotal();
     },
     handleRemove() {
       const param = this.tracker._id;
@@ -200,6 +219,10 @@ export default {
     },
     getDuration() {
       return timeDuration(this.tracker.createdAt, this.tracker.time);
+    },
+    getTotal() {
+      const time = timeToDecimal(this.tracker.time);
+      return `$${time * this.tracker.rate}`;
     },
   },
 };
