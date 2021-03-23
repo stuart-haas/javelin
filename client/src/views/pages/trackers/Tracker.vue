@@ -140,7 +140,7 @@ export default {
       this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
     },
     toggle() {
-      this.running ? this.pause() : this.start();
+      this.running ? this.pause() : this.resume();
     },
     handleEditDuration() {
       if (!this.tracker.complete) {
