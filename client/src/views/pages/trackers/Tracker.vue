@@ -14,8 +14,8 @@
                   class="input"
                   v-model="formData.name"
                   placeholder="Name"
-                  @keydown.enter="handleSave"
-                  @blur="handleSave"
+                  @keydown.enter="handleSave('name')"
+                  @blur="handleSave('name')"
                   @keyup.esc="handleCancel('name')"
                 />
               </p>
@@ -29,8 +29,8 @@
                   class="input"
                   v-model="formData.project"
                   placeholder="Project"
-                  @keydown.enter="handleSave"
-                  @blur="handleSave"
+                  @keydown.enter="handleSave('project')"
+                  @blur="handleSave('project')"
                   @keyup.esc="handleCancel('project')"
                 />
               </p>
@@ -46,8 +46,8 @@
                   class="input"
                   v-model="formData.rate"
                   placeholder="Rate"
-                  @keydown.enter="handleSave"
-                  @blur="handleSave"
+                  @keydown.enter="handleSave('rate')"
+                  @blur="handleSave('rate')"
                   @keyup.esc="handleCancel('rate')"
                 />
               </p>
@@ -63,7 +63,7 @@
                   v-model="durationDisplay"
                   @keydown.enter="handleSetDuration"
                   @focus="handleEditDuration"
-                  @blur="handleCancel('duration')"
+                  @blur="handleSetDuration('duration')"
                   @keyup.esc="handleCancel('duration')"
                 />
               </p>
@@ -96,21 +96,18 @@
 </template>
 
 <script>
-import ClickOutside from 'vue-click-outside';
 import { timerMixin } from '../../../mixins/timer-mixin';
 import { days, humanReadableToTime, months } from '../../../utils/time';
 
 export default {
   mixins: [timerMixin],
-  directives: {
-    ClickOutside,
-  },
   props: {
     tracker: Object,
   },
   data() {
     return {
       formData: {},
+      pristineData: {},
     };
   },
   computed: {
@@ -128,9 +125,7 @@ export default {
     },
     durationDisplay: {
       get() {
-        return this.tracker.complete
-          ? this.tracker.durationDisplay
-          : this.duration;
+        return this.duration;
       },
       set(newVal) {
         this.formData.duration = newVal;
@@ -144,10 +139,12 @@ export default {
   },
   mounted() {
     this.formData = this.tracker;
+    this.pristineData = { ...this.formData };
 
     this.applyLocalStorage();
 
     if (this.tracker.complete) {
+      this.duration = this.tracker.durationDisplay;
       return (this.running = false);
     }
 
@@ -176,13 +173,14 @@ export default {
       }
     },
     handleSetDuration() {
+      if (this.formData.duration === this.tracker.duration) return;
+
       this.duration = this.formData.duration;
 
       if (this.tracker.complete) {
         this.handleSave();
       } else {
-        this.stop();
-        this.start();
+        this.restart();
       }
     },
     handleCancel(key) {
@@ -199,8 +197,12 @@ export default {
 
       await this.handleSave();
     },
-    async handleSave() {
-      this.formData.duration = humanReadableToTime(this.formData.duration);
+    async handleSave(key) {
+      if (this.formData[key] === this.pristineData[key]) return;
+
+      this.pristineData = { ...this.formData };
+
+      this.formData.duration = humanReadableToTime(this.duration);
 
       const { formData } = this;
       const param = this.tracker._id;
@@ -209,12 +211,13 @@ export default {
         param,
       });
     },
-    handleRemove() {
+    async handleRemove() {
       const param = this.tracker._id;
       if (window.confirm('Are you sure?')) {
-        this.$store.dispatch('tracker/remove', {
+        const { message } = await this.$store.dispatch('tracker/remove', {
           param,
         });
+        this.$toast({ type: 'success', message, duration: 2000 });
       }
     },
   },

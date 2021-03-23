@@ -58,7 +58,7 @@ const actions = {
     return tracker;
   },
   async remove({ dispatch, commit }, { param }) {
-    const { tracker } = dispatch(
+    const { tracker, message } = await dispatch(
       'delete',
       {
         api: 'tracker',
@@ -67,7 +67,7 @@ const actions = {
       { root: true }
     );
     commit('remove', { name: 'trackers', param });
-    return tracker;
+    return { tracker, message };
   },
 };
 

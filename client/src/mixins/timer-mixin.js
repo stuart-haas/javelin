@@ -20,10 +20,15 @@ export const timerMixin = {
   computed: {
     duration: {
       get() {
+        const { currentTime } = this;
+        const hours = timeToHours(currentTime);
+        const minutes = timeToMinutes(currentTime);
+        const seconds = timeToSeconds(currentTime);
+
         return timeToHumanReadable([
-          formatTime(this.hours),
-          formatTime(this.minutes),
-          formatTime(this.seconds),
+          formatTime(hours),
+          formatTime(minutes),
+          formatTime(seconds),
         ]);
       },
       set(newVal) {
@@ -31,15 +36,6 @@ export const timerMixin = {
         this.currentTime = time;
         this.lastTime = time;
       },
-    },
-    seconds() {
-      return timeToSeconds(this.currentTime);
-    },
-    minutes() {
-      return timeToMinutes(this.currentTime);
-    },
-    hours() {
-      return timeToHours(this.currentTime);
     },
   },
   mounted() {
@@ -73,6 +69,10 @@ export const timerMixin = {
       this.timer.stop();
       this.running = false;
       localStorage.setItem(this.runningId, false);
+    },
+    restart() {
+      this.stop();
+      this.start();
     },
   },
 };

@@ -38,8 +38,8 @@ module.exports = {
   delete: async (req, res) => {
     const { id } = req.params;
     try {
-      const category = await Tracker.findByIdAndDelete(id);
-      res.json({ success: true, message: 'Tracker deleted', category });
+      const tracker = await Tracker.findByIdAndDelete(id);
+      res.json({ success: true, message: 'Tracker deleted', tracker });
     } catch (error) {
       return res.status(422).json(error);
     }
