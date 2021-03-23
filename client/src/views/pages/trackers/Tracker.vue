@@ -173,8 +173,6 @@ export default {
       }
     },
     handleSetDuration() {
-      if (this.formData.duration === this.tracker.duration) return;
-
       this.duration = this.formData.duration;
 
       if (this.tracker.complete) {
@@ -199,8 +197,8 @@ export default {
     },
     async handleSave(key) {
       if (
-        this.formData[key] === this.pristineData[key] &&
-        !this.formData.complete
+        typeof key !== 'undefined' &&
+        this.formData[key] === this.pristineData[key]
       )
         return;
 
