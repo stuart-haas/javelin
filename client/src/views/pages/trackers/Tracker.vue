@@ -7,67 +7,39 @@
       <div class="level">
         <div class="level-left">
           <div class="level-item">
-            <div class="field">
-              <p class="control">
-                <input
-                  type="text"
-                  class="input"
-                  v-model="formData.name"
-                  placeholder="Name"
-                  @keydown.enter="handleSave('name')"
-                  @blur="handleSave('name')"
-                  @keyup.esc="handleCancel('name')"
-                />
-              </p>
-            </div>
+            <Field
+              :value="formData.name"
+              name="name"
+              placeholder="Name"
+              @save="handleSave"
+            />
           </div>
           <div class="level-item">
-            <div class="field">
-              <p class="control">
-                <input
-                  type="text"
-                  class="input"
-                  v-model="formData.project"
-                  placeholder="Project"
-                  @keydown.enter="handleSave('project')"
-                  @blur="handleSave('project')"
-                  @keyup.esc="handleCancel('project')"
-                />
-              </p>
-            </div>
+            <Field
+              :value="formData.project"
+              name="project"
+              placeholder="Project"
+              @save="handleSave"
+            />
           </div>
         </div>
         <div class="level-right">
           <div class="level-item">
-            <div class="field">
-              <p class="control">
-                <input
-                  type="text"
-                  class="input"
-                  v-model="formData.rate"
-                  placeholder="Rate"
-                  @keydown.enter="handleSave('rate')"
-                  @blur="handleSave('rate')"
-                  @keyup.esc="handleCancel('rate')"
-                />
-              </p>
-            </div>
+            <Field
+              :value="formData.rate"
+              name="rate"
+              placeholder="Rate"
+              @save="handleSave"
+            />
           </div>
           <div class="level-item">
-            <div class="field">
-              <p class="control">
-                <input
-                  type="text"
-                  class="input"
-                  placeholder="00:00:00"
-                  v-model="durationDisplay"
-                  @keydown.enter="handleSetDuration"
-                  @focus="handleEditDuration"
-                  @blur="handleSetDuration('duration')"
-                  @keyup.esc="handleCancel('duration')"
-                />
-              </p>
-            </div>
+            <Field
+              :value="durationDisplay"
+              name="time"
+              placeholder="Time"
+              @focus="handleEditDuration"
+              @save="handleSetDuration"
+            />
           </div>
           <div v-if="!tracker.complete" class="level-item">
             <span class="icon is-clickable" @click="toggle">
@@ -98,16 +70,19 @@
 <script>
 import { timerMixin } from '../../../mixins/timer-mixin';
 import { days, humanReadableToTime, months } from '../../../utils/time';
+import Field from './Field';
 
 export default {
   mixins: [timerMixin],
+  components: {
+    Field,
+  },
   props: {
     tracker: Object,
   },
   data() {
     return {
       formData: {},
-      pristineData: {},
     };
   },
   computed: {
@@ -139,7 +114,6 @@ export default {
   },
   mounted() {
     this.formData = this.tracker;
-    this.pristineData = { ...this.formData };
 
     this.applyLocalStorage();
 
@@ -172,19 +146,14 @@ export default {
         this.formData.duration = this.duration;
       }
     },
-    handleSetDuration() {
-      this.duration = this.formData.duration;
+    handleSetDuration(options, callback) {
+      const { model } = options;
+      this.duration = model;
 
       if (this.tracker.complete) {
-        this.handleSave();
+        this.handleSave(options, callback);
       } else {
         this.restart();
-      }
-    },
-    handleCancel(key) {
-      this.formData[key] = this.tracker[key];
-      if (key == 'duration' && !this.tracker.complete) {
-        this.resume();
       }
     },
     async handleComplete() {
@@ -195,23 +164,23 @@ export default {
 
       await this.handleSave();
     },
-    async handleSave(key) {
-      if (
-        typeof key !== 'undefined' &&
-        this.formData[key] === this.pristineData[key]
-      )
-        return;
-
-      this.pristineData = { ...this.formData };
-
+    async handleSave(options, callback) {
+      if (options) {
+        const { name, model } = options;
+        this.formData[name] = model;
+      }
       this.formData.duration = humanReadableToTime(this.duration);
 
       const { formData } = this;
       const param = this.tracker._id;
-      return await this.$store.dispatch('tracker/update', {
+      const response = await this.$store.dispatch('tracker/update', {
         formData,
         param,
       });
+      if (callback) {
+        callback();
+      }
+      return response;
     },
     async handleRemove() {
       const param = this.tracker._id;
@@ -225,24 +194,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-.input {
-  border-color: transparent;
-  box-shadow: inset 0 0.0625em 0.125em transparent;
-  cursor: pointer;
-  transition: all 0.3s ease;
-}
-.input:hover,
-.input:focus {
-  border-color: #dbdbdb;
-  box-shadow: inset 0 0.0625em 0.125em rgb(10 10 10 / 5%);
-}
-.icon.check {
-  cursor: pointer;
-  pointer-events: all;
-}
-.icon.check svg path {
-  fill: hsl(171, 100%, 41%);
-}
-</style>
