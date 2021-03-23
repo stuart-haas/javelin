@@ -122,7 +122,9 @@ export default {
       return (this.running = false);
     }
 
-    this.start();
+    if (this.running) {
+      this.start();
+    }
   },
   methods: {
     applyLocalStorage() {
@@ -138,7 +140,7 @@ export default {
       this.currentTime = parseInt(Math.floor(this.currentTime + this.lastTime));
     },
     toggle() {
-      this.running ? this.pause() : this.resume();
+      this.running ? this.pause() : this.start();
     },
     handleEditDuration() {
       if (!this.tracker.complete) {
