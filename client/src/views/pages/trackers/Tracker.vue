@@ -198,7 +198,11 @@ export default {
       await this.handleSave();
     },
     async handleSave(key) {
-      if (this.formData[key] === this.pristineData[key]) return;
+      if (
+        this.formData[key] === this.pristineData[key] &&
+        !this.formData.complete
+      )
+        return;
 
       this.pristineData = { ...this.formData };
 
