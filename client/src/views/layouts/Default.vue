@@ -21,10 +21,51 @@
         <router-link v-else to="/login">Login</router-link>
       </div>
     </nav>
-    <div class="container">
-      <transition name="page" mode="out-in">
-        <router-view />
-      </transition>
+    <div class="columns">
+      <div class="column is-one-fifth">
+        <div class="section">
+          <aside class="menu">
+            <p class="menu-label">
+              Routine
+            </p>
+            <ul class="menu-list">
+              <li><a class="is-active">Trackers</a></li>
+              <li><a>Tasks</a></li>
+              <li><a>Estimates</a></li>
+            </ul>
+            <p class="menu-label">
+              Explore
+            </p>
+            <ul class="menu-list">
+              <li><a>Dashboard</a></li>
+              <li><a>Reports</a></li>
+            </ul>
+            <p class="menu-label">
+              Maintain
+            </p>
+            <ul class="menu-list">
+              <li><a>Clients</a></li>
+              <li><a>Projects</a></li>
+            </ul>
+            <p class="menu-label">
+              Settings
+            </p>
+            <ul class="menu-list">
+              <li><a>General</a></li>
+              <li><a>Export</a></li>
+              <li><a>Import</a></li>
+              <li><a>Integrations</a></li>
+            </ul>
+          </aside>
+        </div>
+      </div>
+      <div class="column">
+        <div class="container">
+          <transition name="page" mode="out-in">
+            <router-view />
+          </transition>
+        </div>
+      </div>
     </div>
     <Toast />
   </div>

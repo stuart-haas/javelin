@@ -20,7 +20,6 @@ services:
       context: ./server
     depends_on:
       - database
-      - redis
     volumes:
       - ./server:/app/server
       - /app/server/node_modules
@@ -32,28 +31,15 @@ services:
   database:
     image: mongo:4.4.2
     container_name: javelin_database
-    depends_on:
-      - redis
     volumes:
       - mongo-data:/data/db
     environment:
       - MONGO_INITDB_DATABASE=javelin
     networks: 
       - backend
-
-  redis:
-    image: redis:6.0.9
-    container_name: javelin_redis
-    volumes:
-      - redis-data:/data/redis
-    ports:
-      - 6379:6379
-    networks:
-      - backend
       
 volumes:
   mongo-data:
-  redis-data:
 
 networks:
   frontend:

@@ -1,8 +1,5 @@
-dev:
-	docker-compose up
-
 start:
-	docker-compose up -d
+	docker-compose up
 
 setup:
 	 docker-compose exec server node ./scripts/setup.js
